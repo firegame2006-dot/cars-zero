@@ -192,6 +192,14 @@
           </div>` : ''}
       </section>
 
+      <div class="carbar">
+        <div class="carbar__price">${esc(Store.fmtPrice(car.price))}
+          <small>${esc(CarsUI.mileageText(car))} · ${car.year}</small>
+        </div>
+        <button class="btn btn--accent carbar__btn" type="button" data-booking
+                data-service="${esc(t('catalog.testDrive'))}">${esc(t('catalog.testDrive'))}</button>
+      </div>
+
       <section class="similar">
         <div class="section-head">
           <div class="section-head__text">

@@ -164,7 +164,28 @@
     }
 
     renderChips();
+    renderQuick();
     syncFilterButton();
+  }
+
+  /* швидкі фільтри — один дотик замість відкривання панелі */
+  const QUICK = [
+    { key: 'condition', value: 'new', label: () => t('cond.new') },
+    { key: 'condition', value: 'used', label: () => t('cond.used') },
+    { key: 'body', value: 'crossover', label: () => t('body.crossover') },
+    { key: 'body', value: 'suv', label: () => t('body.suv') },
+    { key: 'body', value: 'sedan', label: () => t('body.sedan') },
+    { key: 'fuel', value: 'electric', label: () => t('fuel.electric') },
+    { key: 'fuel', value: 'hybrid', label: () => t('fuel.hybrid') },
+    { key: 'priceMax', value: '30000', label: () => t('catalog.priceTo') + ' $30 000' }
+  ];
+
+  function renderQuick() {
+    const box = $('#quick');
+    if (!box) return;
+    box.innerHTML = QUICK.map((q, i) => `
+      <button class="quick__item${String(state[q.key]) === q.value ? ' is-on' : ''}"
+              type="button" data-quick="${i}">${esc(q.label())}</button>`).join('');
   }
 
   /** Кнопка «Обране»: кількість збережених авто та стан перемикача. */
@@ -405,6 +426,17 @@
     $('#grid').addEventListener('click', (e) => {
       if (!e.target.closest('[data-fav]')) return;
       if (state.fav) render(); else syncFav();
+      Layout.syncTabFav();
+    });
+
+    $('#quick').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-quick]');
+      if (!btn) return;
+      const q = QUICK[Number(btn.dataset.quick)];
+      state[q.key] = String(state[q.key]) === q.value ? '' : q.value;
+      state.visible = PAGE;
+      fillSelects();
+      render();
     });
 
     $('#favToggle').addEventListener('click', () => {

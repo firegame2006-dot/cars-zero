@@ -105,6 +105,7 @@
       const on = Store.toggleFavorite(card.dataset.id);
       fav.classList.toggle('is-on', on);
       Layout.toast(on ? t('catalog.favAdded') : t('catalog.favRemoved'));
+      document.dispatchEvent(new CustomEvent('velora:favchange'));
     });
   }
 

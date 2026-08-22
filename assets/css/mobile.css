@@ -1,0 +1,588 @@
+/* ==========================================================================
+   Velora Motors — мобільна версія
+   Підключається після style.css і повністю визначає вигляд на телефоні.
+
+   1. База й нижнє меню      4. Сторінка авто
+   2. Шапка                  5. Головна, СТО, контакти
+   3. Каталог                6. Форми та дрібниці
+   ========================================================================== */
+
+@media (max-width: 860px) {
+
+  /* ----------------------------------------------------------------------
+     1. База й нижнє меню
+     ---------------------------------------------------------------------- */
+  :root {
+    --header-h: 60px;
+    --gutter: 16px;
+    --tabbar-h: 66px;
+  }
+
+  body {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+    background-attachment: scroll;
+  }
+
+  .tabbar,
+  .carbar,
+  .nav__cta { display: flex; }
+
+  .tabbar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 70;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: rgba(252, 250, 246, .93);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 30px rgba(60, 46, 24, .07);
+  }
+
+  .tabbar__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 2px;
+    border-radius: 14px;
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: var(--ink-3);
+    text-align: center;
+    transition: color .2s var(--ease), background .2s var(--ease);
+  }
+
+  .tabbar__item svg {
+    width: 21px; height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+  }
+
+  .tabbar__item span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tabbar__item.is-active { color: var(--accent); background: var(--accent-soft); }
+  .tabbar__item:active { background: var(--paper-2); }
+
+  .tabbar__badge {
+    position: absolute;
+    top: 2px;
+    right: 50%;
+    transform: translateX(20px);
+    min-width: 17px;
+    height: 17px;
+    padding: 0 5px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--pill);
+    background: var(--danger);
+    color: #fff;
+    font-size: .62rem;
+    font-weight: 700;
+  }
+
+  .tabbar__badge[hidden] { display: none !important; }
+
+  /* кнопка «вгору» не перекриває нижнє меню */
+  .up {
+    right: 14px;
+    bottom: calc(var(--tabbar-h) + 14px + env(safe-area-inset-bottom, 0px));
+    width: 42px; height: 42px;
+  }
+
+  .toast { bottom: calc(var(--tabbar-h) + 16px + env(safe-area-inset-bottom, 0px)); }
+
+  /* ----------------------------------------------------------------------
+     2. Шапка
+     ---------------------------------------------------------------------- */
+  .topbar { display: none; }               /* телефон і адреса є в контактах та підвалі */
+
+  .header { border-bottom: 1px solid var(--line); background: rgba(252, 250, 246, .92); }
+  .header__inner { gap: 10px; min-height: var(--header-h); }
+
+  .logo { font-size: 1.12rem; gap: 9px; }
+  .logo__mark { width: 30px; height: 30px; font-size: .84rem; }
+
+  .lang__btn { padding: 7px 11px; font-size: .78rem; }
+  .burger { width: 40px; height: 40px; }
+
+  .nav { padding: 10px var(--gutter) 20px; }
+  .nav__link { padding: 13px 8px; font-size: 1rem; }
+
+  /* ----------------------------------------------------------------------
+     3. Каталог
+     ---------------------------------------------------------------------- */
+  .pagehead { padding: 18px 0 16px; }
+  .pagehead__title { font-size: 1.75rem; margin-bottom: 8px; }
+  .pagehead .lead { font-size: .9rem; }
+  .crumbs { margin-bottom: 10px; font-size: .74rem; }
+  .section--flat { padding: 18px 0 30px; }
+
+  .searchpanel {
+    padding: 12px;
+    border-radius: 22px;
+    margin-bottom: 14px;
+  }
+
+  .searchpanel__main { flex-direction: column; gap: 8px; }
+  .searchinput { flex: 1 1 auto; width: 100%; }
+
+  .searchinput input {
+    padding: 14px 42px 14px 44px;
+    font-size: .95rem;
+    background: var(--paper-2);
+    border-color: transparent;
+  }
+
+  .searchinput > svg { left: 16px; }
+  .select--sort { width: 100%; }
+  .select--sort > label { display: none; }
+
+  .select--sort select {
+    padding: 13px 34px 13px 16px;
+    font-size: .88rem;
+    background: var(--paper-2);
+    border-color: transparent;
+    font-weight: 500;
+  }
+
+  .select--sort .select__caret { bottom: 15px; }
+
+  /* кнопка фільтрів */
+  .filters__toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px 18px;
+    border: 1px solid var(--ink);
+    border-radius: var(--pill);
+    background: var(--ink);
+    color: var(--ink-inv);
+    font-size: .88rem;
+    font-weight: 600;
+  }
+
+  .filters__toggle svg { width: 17px; height: 17px; color: currentColor; }
+  .filters__count { background: rgba(255, 255, 255, .22); }
+  .searchpanel.filters-open .filters__toggle { background: var(--forest); border-color: var(--forest); }
+
+  .filters {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .searchpanel.filters-open .filters { display: grid; }
+
+  .filters__actions {
+    display: flex !important;
+    grid-column: 1 / -1;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .filters__actions .btn { flex: 1; padding: 13px 12px; }
+
+  .select > label { font-size: .58rem; letter-spacing: .1em; padding-left: 12px; }
+  .select select,
+  .select input { padding: 12px 28px 12px 13px; font-size: .84rem; }
+  .select__caret { bottom: 14px; right: 11px; }
+
+  /* швидкі фільтри одним дотиком */
+  .quick {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px var(--gutter) 12px;
+    margin: 0 calc(-1 * var(--gutter));
+    scrollbar-width: none;
+  }
+
+  .quick::-webkit-scrollbar { display: none; }
+
+  .quick__item {
+    flex: 0 0 auto;
+    padding: 9px 16px;
+    border-radius: var(--pill);
+    border: 1px solid var(--line-2);
+    background: var(--card);
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  .quick__item.is-on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--ink-inv);
+  }
+
+  .chips { gap: 6px; margin-bottom: 12px; }
+  .chip { font-size: .75rem; padding: 6px 6px 6px 12px; }
+
+  .toolbar { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; }
+  .toolbar__count { font-size: .84rem; }
+  .toolbar__count b { font-size: 1.25rem; }
+  .toolbar__right { width: 100%; justify-content: space-between; align-items: center; }
+  .favtoggle { padding: 8px 14px; font-size: .8rem; }
+
+  /* картка авто */
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+
+  .card {
+    border-radius: 22px;
+    border-color: transparent;
+    box-shadow: var(--shadow-sm);
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .card__media { aspect-ratio: 4 / 3; }
+  .card__tags { top: 10px; left: 10px; }
+  .tag { font-size: .64rem; padding: 4px 10px; }
+  .card__fav { width: 38px; height: 38px; top: 8px; right: 8px; }
+  .card__count { right: 10px; bottom: 10px; font-size: .7rem; padding: 4px 9px; }
+
+  .card__body { padding: 14px 15px 16px; }
+  .card__title { font-size: 1.2rem; line-height: 1.2; }
+  .card__sub { font-size: .78rem; margin-bottom: 12px; }
+
+  .card__specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 0 14px;
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  .card__spec {
+    gap: 6px;
+    padding: 6px 11px;
+    border-radius: var(--pill);
+    background: var(--paper-2);
+    font-size: .76rem;
+    color: var(--ink-2);
+  }
+
+  .card__spec svg { width: 13px; height: 13px; }
+
+  .card__foot {
+    align-items: center;
+    gap: 10px;
+    padding-top: 13px;
+  }
+
+  .card__price { font-size: 1.42rem; }
+  .card__price s { font-size: .74rem; margin-top: 2px; }
+  .card__state { font-size: .72rem; margin-top: 4px; }
+
+  .card__foot .btn {
+    padding: 11px 18px;
+    font-size: .82rem;
+    background: var(--ink);
+    color: var(--ink-inv);
+    border-color: var(--ink);
+  }
+
+  /* «показати ще» */
+  .more { margin-top: 24px; gap: 10px; }
+  .more__btn { width: 58px; height: 58px; }
+  .more__btn svg { width: 20px; height: 20px; }
+  .more__label { font-size: .84rem; }
+  .empty { padding: 44px 18px; border-radius: 22px; }
+
+  /* підказки пошуку */
+  .suggest { max-height: 56vh; border-radius: 18px; }
+  .suggest__item { padding: 10px; }
+  .suggest__item img { width: 52px; height: 36px; }
+
+  /* ----------------------------------------------------------------------
+     4. Сторінка авто
+     ---------------------------------------------------------------------- */
+  .carhead {
+    position: static;
+    padding: 12px 0 10px;
+    justify-content: space-between;
+  }
+
+  .carhead__back { padding: 9px 16px 9px 12px; font-size: .82rem; }
+  .carhead__close { width: 42px; height: 42px; }
+
+  .carpage { gap: 14px; padding-bottom: 18px; }
+
+  /* галерея на всю ширину екрана */
+  .carpage__media { margin: 0 calc(-1 * var(--gutter)); }
+  .gallery { border-radius: 0; box-shadow: none; }
+  .gallery__nav { width: 36px; height: 36px; }
+  .gallery__nav--prev { left: 10px; }
+  .gallery__nav--next { right: 10px; }
+  .gallery__counter { right: 12px; bottom: 12px; font-size: .72rem; padding: 5px 11px; }
+  .gallery__tags { top: 12px; left: 12px; }
+
+  .thumbs { gap: 8px; padding: 10px var(--gutter) 0; margin: 0 calc(-1 * var(--gutter)); }
+  .thumb { flex-basis: 72px; height: 50px; opacity: .95; border-radius: 10px; }
+
+  .carpage__side {
+    padding: 18px 16px;
+    border-radius: 22px;
+    border-color: transparent;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .carpage__title { font-size: 1.5rem; }
+  .carpage__sub { font-size: .84rem; margin-bottom: 14px; }
+  .carpage__price { font-size: 1.75rem; margin-bottom: 14px; }
+
+  .carpage__quick {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px 0;
+  }
+
+  .carpage__quick .card__spec {
+    background: var(--paper-2);
+    border-radius: var(--pill);
+    padding: 7px 11px;
+    font-size: .76rem;
+  }
+
+  .carpage__form { gap: 10px; }
+  .carpage__form input { padding: 13px 16px; }
+
+  /* липка панель дій знизу */
+  .carbar {
+    position: fixed;
+    left: 0; right: 0;
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+    z-index: 65;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px var(--gutter);
+    background: rgba(252, 250, 246, .95);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+  }
+
+  .carbar__price {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -.03em;
+    font-size: 1.3rem;
+    line-height: 1.1;
+  }
+
+  .carbar__price small {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: .7rem;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+
+  .carbar__btn { padding: 12px 22px; font-size: .86rem; }
+
+  .carinfo { gap: 20px; padding-bottom: 24px; }
+  .detail__section-title { font-size: .68rem; }
+  .detail__specs { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 18px; }
+  .detail__spec { padding: 12px 14px; }
+  .detail__spec dt { font-size: .62rem; }
+  .detail__spec dd { font-size: .86rem; }
+  .detail__feature { font-size: .78rem; padding: 6px 12px; }
+  .detail__desc { font-size: .92rem; }
+  .similar { padding-bottom: 30px; }
+  .similar .section-title { font-size: 1.4rem; }
+
+  /* ----------------------------------------------------------------------
+     5. Головна, новинки, СТО, контакти, підвал
+     ---------------------------------------------------------------------- */
+  .hero { padding: 18px 0 30px; }
+  .hero__grid { gap: 22px; }
+  .hero__media { max-width: 100%; }
+  .hero__frame { border-radius: 22px; aspect-ratio: 4 / 3; }
+  .hero__note { font-size: .68rem; padding: 6px 11px; }
+  .hero__note--1 { left: 10px; bottom: 16%; }
+  .hero__note--2 { right: 10px; bottom: 6%; }
+  .hero__badge { font-size: .62rem; padding: 5px 11px; top: 12px; left: 12px; }
+
+  .hero .eyebrow { font-size: .66rem; margin-bottom: 10px; }
+  .hero__title { font-size: 2rem; margin-bottom: 12px; }
+  .hero__lead { font-size: .92rem; margin-bottom: 18px; }
+
+  .searchbar__tabs { gap: 6px; margin-bottom: 10px; }
+  .searchbar__tab { flex: 1 1 auto; text-align: center; padding: 10px 12px; font-size: .78rem; }
+
+  .searchbar__panel {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 12px;
+    border-radius: 22px;
+  }
+
+  .field { border-right: 0; border-bottom: 1px solid var(--line); padding: 9px 2px; }
+  .field:nth-of-type(3) { border-bottom: 0; }
+  .field__label { font-size: .62rem; }
+  .field select { font-size: .95rem; padding: 4px 0; }
+
+  .searchbar__submit {
+    width: 100%;
+    height: 50px;
+    border-radius: var(--pill);
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .searchbar__submit:hover { transform: none; }
+  .searchbar__submit::after { content: attr(data-label); font-weight: 600; font-size: .9rem; }
+  .searchbar__submit svg { width: 17px; height: 17px; }
+
+  .hero__stats { gap: 16px; margin-top: 22px; }
+  .stat__value { font-size: 1.5rem; }
+  .stat__label { font-size: .7rem; margin-top: 4px; }
+
+  .brands { padding: 14px 0; }
+  .brands__inner { gap: 12px 16px; justify-content: flex-start; }
+  .brands__title { width: 100%; font-size: .62rem; }
+  .brands__item { font-size: .92rem; }
+
+  .section { padding: 36px 0; }
+  .section-head { margin-bottom: 22px; gap: 12px; }
+  .section-title { font-size: 1.6rem; }
+  .eyebrow { font-size: .66rem; margin-bottom: 10px; }
+  .lead { font-size: .92rem; }
+  .section-cta { margin-top: 24px; }
+  .section-cta .btn { width: 100%; }
+
+  .showcase__item { padding: 16px 0; gap: 16px; }
+  .showcase__media { border-radius: 20px; }
+  .showcase__num { font-size: 2rem; margin-bottom: 4px; }
+  .showcase__title { font-size: 1.4rem; }
+  .showcase__sub { font-size: .72rem; margin-bottom: 12px; }
+  .showcase__text { font-size: .9rem; margin-bottom: 16px; }
+  .showcase__specs { gap: 16px; padding: 12px 0; margin-bottom: 16px; }
+  .showcase__spec dt { font-size: .6rem; }
+  .showcase__spec dd { font-size: 1.05rem; }
+  .showcase__actions { gap: 8px; }
+  .showcase__actions .btn { flex: 1 1 calc(50% - 4px); padding: 12px 14px; font-size: .84rem; }
+  .showcase__hint { font-size: .74rem; }
+
+  .services { grid-template-columns: 1fr; gap: 12px; }
+  .service { padding: 18px 16px; border-radius: 20px; }
+  .service__ico { width: 40px; height: 40px; margin-bottom: 12px; }
+  .service h3 { font-size: 1.08rem; }
+  .service p { font-size: .84rem; margin-bottom: 12px; }
+  .service__foot { padding-top: 12px; }
+  .service__price b { font-size: 1.1rem; }
+  .service__go { font-size: .76rem; }
+
+  .sto__grid { gap: 16px; }
+
+  .about__grid { grid-template-columns: 1fr; gap: 12px; }
+  .about__card { padding: 20px 18px; border-radius: 20px; }
+  .about__card h3 { font-size: 1.12rem; }
+  .about__card p { font-size: .86rem; }
+  .about__hero { gap: 18px; }
+  .about__hero-media { max-width: 100%; aspect-ratio: 3 / 4; border-radius: 22px; }
+  .about__actions { gap: 8px; }
+  .about__actions .btn { flex: 1; }
+
+  .figures { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; padding: 22px 0; }
+  .figure__value { font-size: 1.8rem; }
+  .figure__label { font-size: .72rem; }
+
+  .ctaband { padding: 32px 0; }
+  .ctaband__inner { padding: 24px 20px; border-radius: 24px; gap: 18px; }
+  .ctaband h2 { font-size: 1.5rem; }
+  .ctaband p { font-size: .9rem; }
+  .ctaband__actions { width: 100%; gap: 8px; }
+  .ctaband__actions .btn { flex: 1; }
+
+  .contacts__grid { gap: 16px; }
+  .contacts__cards { grid-template-columns: 1fr; gap: 10px; }
+  .contactcard { padding: 15px; border-radius: 18px; }
+  .contactcard__ico { width: 38px; height: 38px; }
+  .contactcard__body span { font-size: .88rem; }
+  .mapblock__canvas { height: 190px; border-radius: 22px; }
+  .mapblock__head .section-title { font-size: 1.35rem; }
+  .socialblock .section-title { font-size: 1.35rem; }
+
+  .footer { padding-top: 32px; }
+  .footer__grid { grid-template-columns: 1fr; gap: 24px; padding-bottom: 24px; }
+  .footer h4 { margin-bottom: 12px; }
+  .footer__list li { margin-bottom: 9px; }
+  .footer__bottom { padding: 14px 0 20px; font-size: .76rem; gap: 10px; }
+  .footer__bottom nav { gap: 12px; flex-wrap: wrap; }
+
+  /* ----------------------------------------------------------------------
+     6. Форми та дрібниці
+     ---------------------------------------------------------------------- */
+  .btn { padding: 13px 22px; }
+  .btn--sm { padding: 10px 16px; }
+
+  .booking { padding: 20px 16px; border-radius: 22px; }
+  .booking h2, .booking h3 { font-size: 1.35rem; }
+  .booking p { font-size: .85rem; margin-bottom: 16px; }
+  .booking input, .booking select, .booking textarea { padding: 13px 14px; font-size: .92rem; }
+  .form-row label { font-size: .64rem; }
+
+  .demo-note { font-size: .8rem; padding: 11px 13px; border-radius: 14px; }
+
+  /* картка запису — аркуш знизу, над нижнім меню */
+  .modal { padding: 0; align-items: flex-end; }
+  .modal__box--form { width: 100%; }
+
+  .booking--modal {
+    border-radius: 24px 24px 0 0;
+    max-height: 88vh;
+    padding: 34px 18px calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .modal__box--form .modal__close { top: 10px; right: 20px; width: 38px; height: 38px; }
+
+  /* без ефектів наведення — на дотику вони «залипають» */
+  .card:hover, .service:hover, .about__card:hover, .contactcard:not(.contactcard--static):hover,
+  .btn:hover, .clipcard:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+  .card:active { transform: scale(.995); }
+  .quick__item:active, .filters__toggle:active { opacity: .85; }
+}
+
+/* дуже вузькі екрани */
+@media (max-width: 344px) {
+  .detail__specs { grid-template-columns: 1fr; }
+  .carpage__quick { grid-template-columns: 1fr; }
+  .tabbar__item { font-size: .6rem; }
+  .tabbar__item svg { width: 19px; height: 19px; }
+  .card__title { font-size: 1.1rem; }
+  .card__price { font-size: 1.3rem; }
+  .figures { grid-template-columns: 1fr 1fr; }
+}
+
+/* пейзажна орієнтація телефона */
+@media (max-width: 860px) and (orientation: landscape) {
+  .hero__frame { aspect-ratio: 16 / 9; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .carpage { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
+}

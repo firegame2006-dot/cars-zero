@@ -26,6 +26,15 @@
     { id: 'contacts', href: 'contacts.html', key: 'nav.contacts' }
   ];
 
+  /* нижня панель на телефоні — головні розділи завжди під рукою */
+  const TABBAR = [
+    { id: 'home', href: 'index.html', key: 'nav.home', icon: 'i-home' },
+    { id: 'catalog', href: 'catalog.html', key: 'nav.catalog', icon: 'i-car' },
+    { id: 'showcase', href: 'showcase.html', key: 'nav.showcase', icon: 'i-play' },
+    { id: 'service', href: 'service.html', key: 'nav.service', icon: 'i-wrench' },
+    { id: 'fav', href: 'catalog.html?fav=1', key: 'catalog.favOnly', icon: 'i-heart' }
+  ];
+
   const SERVICES = [
     { icon: 'i-shield', k: 's1', price: 35 },
     { icon: 'i-wrench', k: 's2', price: 60 },
@@ -43,6 +52,7 @@
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19Z"/><path d="M10 20.5v-6h4v6"/></symbol>
   <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
@@ -127,6 +137,28 @@
     </div>
   </div>
 </header>`;
+  }
+
+  function tabbarHTML(active) {
+    const favActive = location.search.includes('fav=1');
+    return `
+<nav class="tabbar" aria-label="mobile">
+  ${TABBAR.map((item) => {
+    const on = item.id === 'fav' ? favActive : (item.id === active && !favActive);
+    return `<a class="tabbar__item${on ? ' is-active' : ''}" href="${item.href}">
+      ${icon(item.icon)}<span data-i18n="${item.key}"></span>
+      ${item.id === 'fav' ? '<b class="tabbar__badge" id="tabFavCount" hidden></b>' : ''}
+    </a>`;
+  }).join('')}
+</nav>`;
+  }
+
+  function syncTabFav() {
+    const badge = document.getElementById('tabFavCount');
+    if (!badge) return;
+    const n = (window.Store && Store.favorites) ? Store.favorites().length : 0;
+    badge.hidden = n === 0;
+    badge.textContent = n;
   }
 
   function footerHTML() {
@@ -437,15 +469,19 @@
    */
   function mount(active) {
     document.body.insertAdjacentHTML('afterbegin', SPRITE + headerHTML(active));
-    document.body.insertAdjacentHTML('beforeend', footerHTML() + bookingHTML() +
+    document.body.insertAdjacentHTML('beforeend', footerHTML() + tabbarHTML(active) + bookingHTML() +
       '<div class="toast" id="toast" role="status"></div>' +
       `<button class="up" id="upBtn" aria-label="Up">${icon('i-arrow-up')}</button>`);
     buildLangMenu();
     bindCommon();
     bindBooking();
+    syncTabFav();
+    document.addEventListener('velora:favchange', syncTabFav);
     I18N.applyDom();
     reveal();
   }
 
-  global.Layout = { mount, toast, reveal, icon, esc, PAGES, SERVICES, openBooking, closeBooking };
+  global.Layout = {
+    mount, toast, reveal, icon, esc, PAGES, SERVICES, openBooking, closeBooking, syncTabFav
+  };
 })(window);
