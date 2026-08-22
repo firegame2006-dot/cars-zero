@@ -154,6 +154,20 @@
     }
 
     renderChips();
+    syncFilterButton();
+  }
+
+  /** Скільки фільтрів увімкнено (без тексту пошуку). */
+  function activeFilters() {
+    return KEYS.filter((k) => k !== 'q' && k !== 'sort' && state[k]).length;
+  }
+
+  function syncFilterButton() {
+    const n = activeFilters();
+    const badge = $('#filtersCount');
+    badge.hidden = n === 0;
+    badge.textContent = n;
+    $('#filtersDoneCount').textContent = filtered.length;
   }
 
   function renderChips() {
@@ -338,6 +352,19 @@
     });
 
     $('#emptyReset').addEventListener('click', resetFilters);
+    $('#filtersReset').addEventListener('click', resetFilters);
+
+    // на телефоні фільтри згорнуті — відкриваються кнопкою
+    $('#filtersToggle').addEventListener('click', () => {
+      const open = document.querySelector('.searchpanel').classList.toggle('filters-open');
+      $('#filtersToggle').setAttribute('aria-expanded', String(open));
+    });
+
+    $('#filtersDone').addEventListener('click', () => {
+      document.querySelector('.searchpanel').classList.remove('filters-open');
+      $('#filtersToggle').setAttribute('aria-expanded', 'false');
+      $('#catalogTop').scrollIntoView({ behavior: 'smooth' });
+    });
 
     $('#moreBtn').addEventListener('click', () => {
       if (state.visible >= filtered.length) {

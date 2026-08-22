@@ -43,6 +43,7 @@
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M7 12h10M10 17h4"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-chev-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></symbol>
@@ -108,6 +109,9 @@
         ${PAGES.map((p) => `
           <li><a class="nav__link${p.id === active ? ' is-active' : ''}" href="${p.href}"
                  data-i18n="${p.key}"></a></li>`).join('')}
+        <li class="nav__cta">
+          <button class="btn btn--primary btn--block" data-booking data-i18n="nav.cta"></button>
+        </li>
       </ul>
     </nav>
 
@@ -250,6 +254,7 @@
   function openBooking(service) {
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
+    document.body.classList.remove('menu-open');   // мобільне меню не має лишатися відкритим
     fillBookingServices(service);
     document.getElementById('bookingModalMsg').textContent = '';
     modal.classList.add('is-open');

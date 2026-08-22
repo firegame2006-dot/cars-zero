@@ -14,3 +14,7 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# копії репозиторію, зроблені вручну
+cars1/
+cars/

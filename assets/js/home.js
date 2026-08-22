@@ -31,6 +31,8 @@
       BODIES.map((b) => option(b, t('body.' + b))).join('');
     $('#heroBudget').innerHTML = BUDGETS.map((b) => option(b.v, b.v ? b.l : t(b.l))).join('');
     $('#statCars').innerHTML = cars.length + '<span>+</span>';
+    // на телефоні кнопка пошуку показує підпис — беремо його з перекладу
+    $('.searchbar__submit').setAttribute('data-label', t('hero.search'));
   }
 
   /* ---------- ролики ---------- */
