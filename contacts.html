@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n-doc="meta.contacts">Контакти — Velora Motors</title>
+<meta name="description" data-i18n-doc="page.contactsLead" content="Контакти Velora Motors">
+<meta name="theme-color" content="#fcfaf6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%239c6b33'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>V</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<main>
+  <section class="pagehead">
+    <div class="wrap">
+      <nav class="crumbs">
+        <a href="index.html" data-i18n="nav.home"></a>
+        <span>/</span>
+        <span data-i18n="nav.contacts"></span>
+      </nav>
+      <span class="eyebrow" data-i18n="demo.badge"></span>
+      <h1 class="pagehead__title" data-i18n="contacts.title"></h1>
+      <p class="lead" data-i18n="page.contactsLead"></p>
+      <p class="demo-note"><svg><use href="#i-info"/></svg><span data-i18n="demo.note"></span></p>
+    </div>
+  </section>
+
+  <section class="section section--flat">
+    <div class="wrap">
+      <div class="contacts__grid">
+        <div class="contacts__cards reveal">
+          <button class="contactcard" data-demo="phone">
+            <span class="contactcard__ico"><svg><use href="#i-phone"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.phoneTitle"></b>
+              <span data-i18n="top.phone"></span>
+              <small data-i18n="demo.badge"></small>
+            </span>
+          </button>
+
+          <button class="contactcard" data-demo="email">
+            <span class="contactcard__ico"><svg><use href="#i-mail"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.emailTitle"></b>
+              <span>info@velora-motors.demo</span>
+              <small data-i18n="demo.badge"></small>
+            </span>
+          </button>
+
+          <button class="contactcard" data-demo="map">
+            <span class="contactcard__ico"><svg><use href="#i-pin"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.showroomTitle"></b>
+              <span data-i18n="footer.addressShowroom"></span>
+              <small data-i18n="demo.badge"></small>
+            </span>
+          </button>
+
+          <button class="contactcard" data-demo="map">
+            <span class="contactcard__ico"><svg><use href="#i-wrench"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.serviceTitle"></b>
+              <span data-i18n="footer.addressService"></span>
+              <small data-i18n="demo.badge"></small>
+            </span>
+          </button>
+
+          <div class="contactcard contactcard--static">
+            <span class="contactcard__ico"><svg><use href="#i-clock"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.hoursTitle"></b>
+              <span data-i18n="footer.hours1"></span>
+              <span data-i18n="footer.hours2"></span>
+            </span>
+          </div>
+
+          <div class="contactcard contactcard--static">
+            <span class="contactcard__ico"><svg><use href="#i-info"/></svg></span>
+            <span class="contactcard__body">
+              <b data-i18n="contacts.req"></b>
+              <span data-i18n="contacts.reqText"></span>
+            </span>
+          </div>
+        </div>
+
+        <form class="booking reveal" id="contactForm">
+          <h2 data-i18n="contacts.formTitle"></h2>
+          <p data-i18n="contacts.formLead"></p>
+          <div class="form-row">
+            <label for="cName" data-i18n="modal.name"></label>
+            <input id="cName" type="text" autocomplete="name">
+          </div>
+          <div class="form-row">
+            <label for="cPhone" data-i18n="modal.phone"></label>
+            <input id="cPhone" type="tel" placeholder="+380 __ ___ __ **" autocomplete="tel">
+          </div>
+          <div class="form-row">
+            <label for="cMessage" data-i18n="contacts.message"></label>
+            <textarea id="cMessage" rows="3"></textarea>
+          </div>
+          <button class="btn btn--light btn--block" type="submit" data-i18n="contacts.send"></button>
+          <div class="form-msg" id="contactMsg" role="status"></div>
+        </form>
+      </div>
+
+      <div class="mapblock reveal">
+        <div class="mapblock__head">
+          <h2 class="section-title" data-i18n="contacts.mapTitle"></h2>
+          <span class="demo-chip" data-i18n="contacts.mapHint"></span>
+        </div>
+        <button class="mapblock__canvas" data-demo="map">
+          <span class="mapblock__pin"><svg><use href="#i-pin"/></svg></span>
+          <span class="mapblock__label" data-i18n="footer.addressShowroom"></span>
+        </button>
+      </div>
+
+      <div class="socialblock reveal">
+        <h2 class="section-title" data-i18n="contacts.socialTitle"></h2>
+        <div class="socials socials--lg">
+          <button class="demo-link" data-demo="social" aria-label="Facebook"><svg><use href="#i-fb"/></svg></button>
+          <button class="demo-link" data-demo="social" aria-label="Instagram"><svg><use href="#i-ig"/></svg></button>
+          <button class="demo-link" data-demo="social" aria-label="Telegram"><svg><use href="#i-tg"/></svg></button>
+          <button class="demo-link" data-demo="social" aria-label="YouTube"><svg><use href="#i-yt"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/seed.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/contacts.js"></script>
+</body>
+</html>

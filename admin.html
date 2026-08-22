@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n-doc="admin.title">Адмінпанель Velora Motors</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%232f4034'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>A</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16Z"/><path d="m14.5 5.5 4 4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5"/><path d="m11 5.5-6.5 6.5 6.5 6.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+</svg>
+
+<header class="header is-stuck">
+  <div class="wrap header__inner">
+    <a class="logo" href="index.html">
+      <span class="logo__mark">V</span>
+      <span><b>Velora</b> <span>Motors</span></span>
+    </a>
+    <div class="header__actions" style="margin-left:auto">
+      <div class="lang" id="lang">
+        <button class="lang__btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          <span id="langCurrent">UA</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="lang__menu" id="langMenu" role="menu"></div>
+      </div>
+      <a class="btn btn--ghost btn--sm" href="catalog.html">
+        <svg width="15" height="15"><use href="#i-back"/></svg>
+        <span data-i18n="nav.catalog">Каталог</span>
+      </a>
+      <button class="btn btn--primary btn--sm" id="logoutBtn" hidden data-i18n="admin.logout">Вийти</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Вхід ===== -->
+<section class="login" id="login">
+  <h1 data-i18n="admin.login">Вхід</h1>
+  <p data-i18n="admin.hint">Демо-пароль: admin</p>
+  <form id="loginForm">
+    <input type="password" id="pwd" data-i18n-placeholder="admin.password" placeholder="Пароль" autocomplete="current-password">
+    <button class="btn btn--primary btn--block" type="submit" data-i18n="admin.enter">Увійти</button>
+    <div class="login__err" id="loginErr"></div>
+  </form>
+</section>
+
+<!-- ===== Панель ===== -->
+<main class="admin wrap" id="panel" hidden>
+  <div class="admin__head">
+    <div>
+      <h1 class="admin__title" data-i18n="admin.title">Адмінпанель Velora Motors</h1>
+      <div class="admin__meta">
+        <span class="badge-mode" id="modeBadge"><i></i><span id="modeText"></span></span>
+        <span><span data-i18n="admin.total">Всього авто</span>: <b id="total">0</b></span>
+      </div>
+    </div>
+    <div class="admin__meta">
+      <button class="btn btn--ghost btn--sm" id="exportBtn" data-i18n="admin.export">Експорт JSON</button>
+      <label class="btn btn--ghost btn--sm" for="importFile" data-i18n="admin.import">Імпорт JSON</label>
+      <input type="file" id="importFile" accept="application/json" hidden>
+      <button class="btn btn--ghost btn--sm" id="resetBtn" data-i18n="admin.reset">Скинути</button>
+    </div>
+  </div>
+
+  <div class="admin__grid">
+    <!-- форма -->
+    <form class="panel" id="carForm">
+      <h2 class="panel__title">
+        <span id="formTitle" data-i18n="admin.add">Додати авто</span>
+        <button class="iconbtn" type="button" id="newBtn" data-i18n-title="admin.add"><svg><use href="#i-plus"/></svg></button>
+      </h2>
+
+      <input type="hidden" id="cId">
+
+      <div class="form-grid">
+        <div class="f"><label for="cBrand" data-i18n="catalog.brand">Марка</label><input id="cBrand" required></div>
+        <div class="f"><label for="cModel">Model</label><input id="cModel" required></div>
+        <div class="f full"><label for="cTrim">Trim / версія</label><input id="cTrim" placeholder="3.0 TDI quattro"></div>
+
+        <div class="f"><label for="cYear" data-i18n="catalog.year">Рік</label><input id="cYear" type="number" min="1980" max="2030" required></div>
+        <div class="f"><label for="cPrice" data-i18n="catalog.priceLabel">Ціна, $</label><input id="cPrice" type="number" min="0" step="100" required></div>
+        <div class="f"><label for="cOldPrice">Стара ціна, $</label><input id="cOldPrice" type="number" min="0" step="100"></div>
+        <div class="f"><label for="cMileage" data-i18n="catalog.mileage">Пробіг, km</label><input id="cMileage" type="number" min="0" step="500" value="0"></div>
+
+        <div class="f"><label for="cCondition" data-i18n="catalog.condition">Стан</label><select id="cCondition"></select></div>
+        <div class="f"><label for="cState" data-i18n="catalog.state">Технічний стан</label><select id="cState"></select></div>
+        <div class="f"><label for="cBody" data-i18n="catalog.body">Кузов</label><select id="cBody"></select></div>
+        <div class="f"><label for="cFuel" data-i18n="catalog.fuel">Паливо</label><select id="cFuel"></select></div>
+        <div class="f"><label for="cGearbox" data-i18n="catalog.gearbox">КПП</label><select id="cGearbox"></select></div>
+        <div class="f"><label for="cDrive" data-i18n="catalog.drive">Привід</label><select id="cDrive"></select></div>
+        <div class="f"><label for="cColor">Color</label><select id="cColor"></select></div>
+        <div class="f"><label for="cCity" data-i18n="hero.city">Місто</label><select id="cCity"></select></div>
+
+        <div class="f"><label for="cEngine">Engine, L</label><input id="cEngine" type="number" min="0" step="0.1" value="2.0"></div>
+        <div class="f"><label for="cPower">Power, hp</label><input id="cPower" type="number" min="0" step="5" value="150"></div>
+        <div class="f"><label for="cOwners" data-i18n="catalog.owners">Власників</label><input id="cOwners" type="number" min="0" max="10" value="1"></div>
+        <div class="f"><label for="cVin" data-i18n="catalog.vin">VIN</label><input id="cVin" maxlength="24"></div>
+
+        <div class="f full">
+          <label data-i18n="badge.hit">Бейджі</label>
+          <div class="checks" id="badgeChecks"></div>
+        </div>
+
+        <div class="f full">
+          <label data-i18n="catalog.features">Комплектація</label>
+          <div class="checks" id="featureChecks"></div>
+        </div>
+
+        <div class="f full">
+          <label for="cImageFile" data-i18n="admin.photos">Фотографії авто</label>
+          <input id="cImageFile" type="file" accept="image/*" multiple>
+          <textarea id="cGallery" rows="3" style="margin-top:8px"
+                    placeholder="assets/img/cars/my-car.jpg"></textarea>
+          <small class="f__hint" data-i18n="admin.photosHint"></small>
+          <div class="previews" id="previews"></div>
+        </div>
+
+        <div class="f full"><label for="cDescUa">Опис (UA)</label><textarea id="cDescUa"></textarea></div>
+        <div class="f full"><label for="cDescEn">Description (EN)</label><textarea id="cDescEn"></textarea></div>
+        <div class="f full"><label for="cDescPl">Opis (PL)</label><textarea id="cDescPl"></textarea></div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn--primary" type="submit" data-i18n="admin.save">Зберегти</button>
+        <button class="btn btn--ghost" type="button" id="cancelBtn" data-i18n="admin.cancel">Скасувати</button>
+        <div class="form-msg" id="formMsg" role="status"></div>
+      </div>
+    </form>
+
+    <!-- список -->
+    <section class="panel">
+      <h2 class="panel__title"><span data-i18n="admin.list">Автомобілі в каталозі</span></h2>
+      <div class="admin__toolbar">
+        <input type="search" id="adminSearch" data-i18n-placeholder="admin.search" placeholder="Пошук">
+      </div>
+      <div class="rows" id="rows"></div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/seed.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

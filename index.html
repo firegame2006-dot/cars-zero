@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n-doc="meta.title">Velora Motors — автосалон преміальних та кастомних авто</title>
+<meta name="description" data-i18n-doc="meta.description" content="Автосалон Velora Motors: нові та вживані автомобілі з перевіреною історією, кастомні збірки та власне СТО.">
+<meta name="theme-color" content="#fcfaf6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%239c6b33'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>V</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<main>
+  <!-- ===== Герой ===== -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__content">
+        <span class="eyebrow" data-i18n="hero.eyebrow"></span>
+        <h1 class="display hero__title">
+          <span data-i18n="hero.title1"></span><br>
+          <span data-i18n="hero.title2"></span><br>
+          <em data-i18n="hero.title3"></em>
+        </h1>
+        <p class="lead hero__lead" data-i18n="hero.lead"></p>
+
+        <form class="searchbar" id="heroSearch">
+          <div class="searchbar__tabs">
+            <a class="searchbar__tab is-active" href="catalog.html" data-i18n="hero.tabBuy"></a>
+            <a class="searchbar__tab" href="contacts.html" data-i18n="hero.tabContact"></a>
+            <a class="searchbar__tab" href="showcase.html" data-i18n="hero.tabCustom"></a>
+          </div>
+          <div class="searchbar__panel">
+            <label class="field">
+              <span class="field__label" data-i18n="hero.city"></span>
+              <select id="heroCity"></select>
+            </label>
+            <label class="field">
+              <span class="field__label" data-i18n="hero.type"></span>
+              <select id="heroBody"></select>
+            </label>
+            <label class="field">
+              <span class="field__label" data-i18n="hero.budget"></span>
+              <select id="heroBudget"></select>
+            </label>
+            <button class="searchbar__submit" type="submit" data-i18n-aria="hero.searchAria" data-label="Search">
+              <svg><use href="#i-search"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="hero__stats">
+          <div class="stat">
+            <div class="stat__value" id="statCars">24<span>+</span></div>
+            <div class="stat__label" data-i18n="hero.stat1"></div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">12<span>+</span></div>
+            <div class="stat__label" data-i18n="hero.stat2"></div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">128</div>
+            <div class="stat__label" data-i18n="hero.stat3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <div class="hero__frame">
+          <span class="hero__badge">Velora Motors</span>
+          <img src="assets/img/hero-911.jpg" alt="Porsche 911 GT3 RS" width="1400" height="1102">
+        </div>
+        <a class="hero__note hero__note--1" href="showcase.html" data-i18n="hero.tagAero"></a>
+        <a class="hero__note hero__note--2" href="catalog.html?brand=Porsche" data-i18n="hero.tagInterior"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Бренди ===== -->
+  <div class="brands">
+    <div class="wrap brands__inner">
+      <span class="brands__title" data-i18n="brands.title"></span>
+      <a class="brands__item" href="catalog.html?brand=BMW">BMW</a>
+      <a class="brands__item" href="catalog.html?brand=Mercedes-Benz">Mercedes-Benz</a>
+      <a class="brands__item" href="catalog.html?brand=Audi">Audi</a>
+      <a class="brands__item" href="catalog.html?brand=Porsche">Porsche</a>
+      <a class="brands__item" href="catalog.html?brand=Tesla">Tesla</a>
+      <a class="brands__item" href="catalog.html?brand=Lexus">Lexus</a>
+      <a class="brands__item" href="catalog.html?brand=Volvo">Volvo</a>
+      <a class="brands__item" href="catalog.html?brand=Land%20Rover">Land Rover</a>
+    </div>
+  </div>
+
+  <!-- ===== Три ролики ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-head__text">
+          <span class="eyebrow" data-i18n="showcase.eyebrow"></span>
+          <h2 class="section-title" data-i18n="showcase.title"></h2>
+          <p class="lead" data-i18n="showcase.lead"></p>
+        </div>
+        <a class="link-arrow" href="showcase.html">
+          <span data-i18n="nav.showcase"></span><svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+      <div class="showcase" id="clips"></div>
+    </div>
+  </section>
+
+  <!-- ===== Добірка авто ===== -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-head__text">
+          <span class="eyebrow" data-i18n="catalog.eyebrow"></span>
+          <h2 class="section-title" data-i18n="catalog.title"></h2>
+          <p class="lead" data-i18n="catalog.lead"></p>
+        </div>
+        <a class="link-arrow" href="catalog.html">
+          <span data-i18n="nav.catalog"></span><svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+      <div class="grid" id="picks"></div>
+      <div class="section-cta">
+        <a class="btn btn--primary" href="catalog.html" data-i18n="nav.catalog"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== СТО ===== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-head__text">
+          <span class="eyebrow" data-i18n="sto.eyebrow"></span>
+          <h2 class="section-title" data-i18n="sto.title"></h2>
+          <p class="lead" data-i18n="sto.lead"></p>
+        </div>
+        <a class="link-arrow" href="service.html">
+          <span data-i18n="nav.service"></span><svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+      <div class="services" id="servicesPreview"></div>
+    </div>
+  </section>
+
+  <!-- ===== Про нас ===== -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-head__text">
+          <span class="eyebrow" data-i18n="about.eyebrow"></span>
+          <h2 class="section-title" data-i18n="about.title"></h2>
+          <p class="lead" data-i18n="about.lead"></p>
+        </div>
+        <a class="link-arrow" href="about.html">
+          <span data-i18n="nav.about"></span><svg width="16" height="16"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+
+      <div class="figures reveal">
+        <div class="figure">
+          <div class="figure__value" data-count="12">12<span>+</span></div>
+          <div class="figure__label" data-i18n="about.y1"></div>
+        </div>
+        <div class="figure">
+          <div class="figure__value" data-count="4200">4200<span>+</span></div>
+          <div class="figure__label" data-i18n="about.y2"></div>
+        </div>
+        <div class="figure">
+          <div class="figure__value" data-count="980">980<span>+</span></div>
+          <div class="figure__label" data-i18n="about.y3"></div>
+        </div>
+        <div class="figure">
+          <div class="figure__value" data-count="64">64</div>
+          <div class="figure__label" data-i18n="about.y4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="ctaband">
+    <div class="wrap">
+      <div class="ctaband__inner reveal">
+        <div>
+          <h2 data-i18n="cta.title"></h2>
+          <p data-i18n="cta.lead"></p>
+        </div>
+        <div class="ctaband__actions">
+          <a class="btn btn--accent" href="service.html" data-i18n="cta.button"></a>
+          <button class="btn btn--light" data-demo="phone" data-i18n="cta.secondary"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/seed.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/cars-ui.js"></script>
+<script src="assets/js/showcase-data.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

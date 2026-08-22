@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# службові файли каталогу
+data/cars.backup.json
+
+# системне сміття
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# редактори
+.vscode/
+.idea/
+*.swp
