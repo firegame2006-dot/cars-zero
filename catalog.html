@@ -119,15 +119,22 @@
           <span data-i18n="catalog.found"></span>
           <span data-i18n="catalog.cars"></span>
         </div>
-        <div class="toolbar__count" id="showingInfo"></div>
+        <div class="toolbar__right">
+          <button class="favtoggle" id="favToggle" type="button" aria-pressed="false">
+            <svg><use href="#i-heart"/></svg>
+            <span data-i18n="catalog.favOnly"></span>
+            <b id="favCount">0</b>
+          </button>
+          <span class="toolbar__count" id="showingInfo"></span>
+        </div>
       </div>
 
       <div class="grid" id="grid"></div>
 
       <div class="empty" id="empty" hidden>
         <svg><use href="#i-sad"/></svg>
-        <h3 data-i18n="catalog.empty"></h3>
-        <p data-i18n="catalog.emptyHint"></p>
+        <h3 id="emptyTitle" data-i18n="catalog.empty"></h3>
+        <p id="emptyHint" data-i18n="catalog.emptyHint"></p>
         <button class="btn btn--ghost" id="emptyReset" data-i18n="catalog.reset"></button>
       </div>
 

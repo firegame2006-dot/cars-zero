@@ -220,7 +220,7 @@
       </div>
       <div class="form-row">
         <label for="mPhone" data-i18n="sto.fPhone"></label>
-        <input id="mPhone" type="tel" placeholder="+380 __ ___ __ **" autocomplete="tel">
+        <input id="mPhone" type="tel" placeholder="+380 __ ___ __ __" autocomplete="tel">
       </div>
       <div class="form-row">
         <label for="mCar" data-i18n="sto.fCar"></label>
@@ -244,10 +244,21 @@
   function fillBookingServices(selected) {
     const sel = document.getElementById('mService');
     if (!sel) return;
-    sel.innerHTML = SERVICES.map((s) => {
-      const label = t('sto.' + s.k + 't');
-      return `<option value="${esc(label)}"${label === selected ? ' selected' : ''}>${esc(label)}</option>`;
-    }).join('');
+    const labels = SERVICES.map((s) => t('sto.' + s.k + 't')).concat(t('sto.other'));
+    sel.innerHTML = labels
+      .map((label) => `<option value="${esc(label)}"${label === selected ? ' selected' : ''}>${esc(label)}</option>`)
+      .join('');
+    syncOtherHint();
+  }
+
+  /** Коли обрано «Інше» — просимо описати проблему в коментарі. */
+  function syncOtherHint() {
+    const sel = document.getElementById('mService');
+    const comment = document.getElementById('mComment');
+    if (!sel || !comment) return;
+    const isOther = sel.value === t('sto.other');
+    comment.placeholder = isOther ? t('sto.otherHint') : '';
+    comment.closest('.form-row').classList.toggle('is-highlighted', isOther);
   }
 
   /** Відкриває картку запису; можна одразу підставити послугу. */
@@ -288,6 +299,13 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeBooking();
+    });
+
+    document.getElementById('mService').addEventListener('change', () => {
+      syncOtherHint();
+      if (document.getElementById('mService').value === t('sto.other')) {
+        document.getElementById('mComment').focus();
+      }
     });
 
     document.getElementById('bookingModalForm').addEventListener('submit', (e) => {

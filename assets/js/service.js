@@ -23,13 +23,21 @@
       </button>`).join('');
 
     $('#bService').innerHTML = Layout.SERVICES
-      .map((s) => `<option value="${esc(t('sto.' + s.k + 't'))}">${esc(t('sto.' + s.k + 't'))}</option>`)
+      .map((s) => t('sto.' + s.k + 't')).concat(t('sto.other'))
+      .map((label) => `<option value="${esc(label)}">${esc(label)}</option>`)
       .join('');
 
     Layout.reveal($('#services'));
   }
 
   function bind() {
+    $('#bService').addEventListener('change', () => {
+      const isOther = $('#bService').value === t('sto.other');
+      $('#bComment').placeholder = isOther ? t('sto.otherHint') : '';
+      $('#bComment').closest('.form-row').classList.toggle('is-highlighted', isOther);
+      if (isOther) $('#bComment').focus();
+    });
+
     $('#bookingForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const msg = $('#bookingMsg');

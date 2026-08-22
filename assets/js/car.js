@@ -156,7 +156,7 @@
             </div>
             <div class="f">
               <label for="lPhone">${esc(t('modal.phone'))}</label>
-              <input id="lPhone" type="tel" placeholder="+380 __ ___ __ **" autocomplete="tel">
+              <input id="lPhone" type="tel" placeholder="+380 __ ___ __ __" autocomplete="tel">
             </div>
             <button class="btn btn--accent btn--block" type="submit">${esc(t('catalog.testDrive'))}</button>
             <button class="btn btn--ghost btn--block" type="button" data-demo="phone">

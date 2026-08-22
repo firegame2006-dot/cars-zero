@@ -465,29 +465,30 @@ body.menu-open .burger span::after { top: 0; transform: rotate(-45deg); }
 .searchbar { position: relative; z-index: 5; }
 
 .searchbar__tabs {
-  display: inline-flex;
-  gap: 4px;
-  padding: 5px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--pill);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: -22px;
-  margin-left: 18px;
-  position: relative;
-  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .searchbar__tab {
-  padding: 8px 20px;
+  padding: 10px 20px;
+  border: 1px solid var(--line-2);
   border-radius: var(--pill);
-  font-size: .82rem;
+  background: var(--card);
+  font-size: .84rem;
   font-weight: 600;
-  color: var(--ink-2);
-  transition: background .25s var(--ease), color .25s var(--ease);
+  color: var(--ink);
+  box-shadow: var(--shadow-xs);
+  transition: border-color .25s var(--ease), color .25s var(--ease),
+              background .25s var(--ease), transform .25s var(--ease);
 }
 
-.searchbar__tab.is-active { background: var(--ink); color: var(--ink-inv); }
+.searchbar__tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
 
 .searchbar__panel {
   display: grid;
@@ -1373,6 +1374,13 @@ a.brands__item:hover { border-color: currentColor; }
 
 .booking .btn { margin-top: 8px; }
 
+.form-row.is-highlighted textarea {
+  border-color: rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .18);
+}
+
+.form-row.is-highlighted label { opacity: 1; color: #fff; }
+
 .form-msg {
   font-size: .84rem;
   margin-top: 10px;
@@ -1441,6 +1449,9 @@ a.brands__item:hover { border-color: currentColor; }
 }
 
 .about__card:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); }
+.about__card[data-demo] { cursor: pointer; }
+.about__card[data-demo]:hover { border-color: var(--accent); }
+.about__card[data-demo]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 .about__card::before {
   content: '';
@@ -1561,10 +1572,10 @@ a.brands__item:hover { border-color: currentColor; }
 .footer__contact svg { width: 16px; height: 16px; color: var(--accent); flex: none; margin-top: 3px; }
 .footer__contact b { display: block; color: var(--ink); font-weight: 600; }
 
-.subscribe { display: flex; gap: 8px; margin-top: 14px; }
+.subscribe { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
 
 .subscribe input {
-  flex: 1;
+  width: 100%;
   padding: 11px 16px;
   border: 1px solid var(--line-2);
   border-radius: var(--pill);
@@ -1574,6 +1585,7 @@ a.brands__item:hover { border-color: currentColor; }
 }
 
 .subscribe input:focus { outline: none; border-color: var(--accent); }
+.subscribe .btn { width: 100%; }
 
 .socials { display: flex; gap: 10px; margin-top: 18px; }
 
@@ -2411,10 +2423,13 @@ a.brands__item:hover { border-color: currentColor; }
   border-radius: var(--r-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 3 / 4;
+  max-width: 420px;
+  background: #14120e;
 }
 
-.about__hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.about__hero-media img,
+.about__hero-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .about__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
 
 /* адаптив нових блоків */
@@ -2461,13 +2476,19 @@ a.brands__item:hover { border-color: currentColor; }
 .booking--modal p { font-size: .88rem; margin-bottom: 22px; color: rgba(255, 255, 255, .72); }
 
 .modal__box--form .modal__close {
-  top: 12px;
-  right: 12px;
-  width: 38px;
-  height: 38px;
-  background: rgba(255, 255, 255, .16);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 6;
+  width: 40px;
+  height: 40px;
+  background: rgba(20, 26, 21, .55);
   color: #fff;
+  backdrop-filter: blur(6px);
 }
+
+/* місце під хрестик, щоб він не наїжджав на заголовок */
+.booking--modal { padding-top: 34px; }
 
 .modal__box--form .modal__close:hover { background: #fff; color: var(--forest); }
 
@@ -2724,4 +2745,65 @@ a.brands__item:hover { border-color: currentColor; }
   .card:active { transform: scale(.995); }
   .btn:hover { transform: none; }
   .service--action:active { border-color: var(--accent); }
+}
+
+
+/* ==========================================================================
+   17. Обране в каталозі
+   ========================================================================== */
+
+.toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.favtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--pill);
+  background: var(--card);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+
+.favtoggle svg {
+  width: 16px; height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+.favtoggle b {
+  min-width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  border-radius: var(--pill);
+  background: var(--paper-2);
+  font-size: .74rem;
+}
+
+.favtoggle:hover { border-color: var(--danger); color: var(--danger); }
+
+.favtoggle.is-on {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: #fdf1ee;
+}
+
+.favtoggle.is-on svg { fill: currentColor; }
+.favtoggle.is-on b { background: rgba(166, 70, 47, .14); color: var(--danger); }
+
+@media (max-width: 640px) {
+  .toolbar { flex-direction: column; align-items: flex-start; }
+  .toolbar__right { width: 100%; justify-content: space-between; }
+  .favtoggle { padding: 8px 14px; font-size: .8rem; }
 }

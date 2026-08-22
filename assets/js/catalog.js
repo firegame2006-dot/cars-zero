@@ -22,11 +22,12 @@
   ];
 
   const KEYS = ['q', 'brand', 'body', 'fuel', 'gearbox', 'drive', 'condition',
-    'city', 'year', 'priceMin', 'priceMax', 'mileage', 'sort'];
+    'city', 'year', 'priceMin', 'priceMax', 'mileage', 'fav', 'sort'];
 
   const state = {
     q: '', brand: '', body: '', fuel: '', gearbox: '', drive: '', condition: '',
-    city: '', year: '', priceMin: '', priceMax: '', mileage: '', sort: 'new', visible: PAGE
+    city: '', year: '', priceMin: '', priceMax: '', mileage: '', fav: '',
+    sort: 'new', visible: PAGE
   };
 
   let allCars = [];
@@ -95,7 +96,10 @@
   function applyFilters() {
     const parsed = Store.parseQuery(state.q);
 
+    const favs = Store.favorites();
+
     filtered = Store.search(allCars, parsed).filter(({ car }) => {
+      if (state.fav && !favs.includes(car.id)) return false;
       if (state.brand && car.brand !== state.brand) return false;
       if (state.body && car.body !== state.body) return false;
       if (state.fuel && car.fuel !== state.fuel) return false;
@@ -137,6 +141,12 @@
     $('#grid').innerHTML = shown.map((car, i) => CarsUI.cardHTML(car, i, words)).join('');
     $('#foundCount').textContent = filtered.length;
     $('#empty').hidden = filtered.length !== 0;
+    if (filtered.length === 0) {
+      const favMode = !!state.fav;
+      $('#emptyTitle').textContent = favMode ? t('catalog.favEmpty') : t('catalog.empty');
+      $('#emptyHint').textContent = favMode ? t('catalog.favEmptyHint') : t('catalog.emptyHint');
+    }
+    syncFav();
     $('#showingInfo').textContent = filtered.length
       ? `${t('catalog.showing')} ${shown.length} ${t('catalog.of')} ${filtered.length}`
       : '';
@@ -155,6 +165,14 @@
 
     renderChips();
     syncFilterButton();
+  }
+
+  /** Кнопка «Обране»: кількість збережених авто та стан перемикача. */
+  function syncFav() {
+    const n = Store.favorites().length;
+    $('#favCount').textContent = n;
+    $('#favToggle').classList.toggle('is-on', !!state.fav);
+    $('#favToggle').setAttribute('aria-pressed', String(!!state.fav));
   }
 
   /** Скільки фільтрів увімкнено (без тексту пошуку). */
@@ -187,6 +205,7 @@
     if (state.priceMin) add('priceMin', t('catalog.priceFrom') + ' $' + Store.fmtNum(state.priceMin));
     if (state.priceMax) add('priceMax', t('catalog.priceTo') + ' $' + Store.fmtNum(state.priceMax));
     if (state.mileage) add('mileage', t('catalog.mileageTo') + ' ' + Store.fmtNum(state.mileage) + ' ' + t('catalog.km'));
+    if (state.fav) add('fav', t('catalog.favOnly'));
 
     if (items.length) items.push(`<button class="chip chip--reset" data-chip="all">${esc(t('catalog.reset'))}</button>`);
     $('#chips').innerHTML = items.join('');
@@ -381,6 +400,19 @@
     });
 
     CarsUI.bindCards($('#grid'));
+
+    // сердечко на картці змінює список обраного — оновлюємо лічильник і фільтр
+    $('#grid').addEventListener('click', (e) => {
+      if (!e.target.closest('[data-fav]')) return;
+      if (state.fav) render(); else syncFav();
+    });
+
+    $('#favToggle').addEventListener('click', () => {
+      state.fav = state.fav ? '' : '1';
+      state.visible = PAGE;
+      render();
+      $('#catalogTop').scrollIntoView({ behavior: 'smooth' });
+    });
 
     document.addEventListener('layout:lang', () => {
       fillSelects();
