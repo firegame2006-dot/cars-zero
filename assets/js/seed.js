@@ -40,9 +40,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-28",
   "gallery": [
-   "assets/img/cars/bmw-m5.jpg",
-   "assets/img/cars/bmw-m5-2.jpg",
-   "assets/img/cars/bmw-m5-3.jpg"
+   "assets/img/cars/bmw-m5.jpg"
   ]
  },
  {
@@ -85,9 +83,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-02",
   "gallery": [
-   "assets/img/cars/audi-rs6.jpg",
-   "assets/img/cars/audi-rs6-2.jpg",
-   "assets/img/cars/audi-rs6-3.jpg"
+   "assets/img/cars/audi-rs6.jpg"
   ]
  },
  {
@@ -131,9 +127,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-10",
   "gallery": [
-   "assets/img/cars/mercedes-s-class.jpg",
-   "assets/img/cars/mercedes-s-class-2.jpg",
-   "assets/img/cars/mercedes-s-class-3.jpg"
+   "assets/img/cars/mercedes-s-class.jpg"
   ]
  },
  {
@@ -175,9 +169,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-14",
   "gallery": [
-   "assets/img/cars/porsche-911.jpg",
-   "assets/img/cars/porsche-911-2.jpg",
-   "assets/img/cars/porsche-911-3.jpg"
+   "assets/img/cars/porsche-911.jpg"
   ]
  },
  {
@@ -219,9 +211,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-12",
   "gallery": [
-   "assets/img/cars/tesla-model-3.jpg",
-   "assets/img/cars/tesla-model-3-2.jpg",
-   "assets/img/cars/tesla-model-3-3.jpg"
+   "assets/img/cars/tesla-model-3.jpg"
   ]
  },
  {
@@ -262,9 +252,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-30",
   "gallery": [
-   "assets/img/cars/range-rover-sport.jpg",
-   "assets/img/cars/range-rover-sport-2.jpg",
-   "assets/img/cars/range-rover-sport-3.jpg"
+   "assets/img/cars/range-rover-sport.jpg"
   ]
  },
  {
@@ -303,9 +291,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-05",
   "gallery": [
-   "assets/img/cars/toyota-camry.jpg",
-   "assets/img/cars/toyota-camry-2.jpg",
-   "assets/img/cars/toyota-camry-3.jpg"
+   "assets/img/cars/toyota-camry.jpg"
   ]
  },
  {
@@ -347,9 +333,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-18",
   "gallery": [
-   "assets/img/cars/vw-golf-gti.jpg",
-   "assets/img/cars/vw-golf-gti-2.jpg",
-   "assets/img/cars/vw-golf-gti-3.jpg"
+   "assets/img/cars/vw-golf-gti.jpg"
   ]
  },
  {
@@ -391,8 +375,7 @@ window.CARS_SEED = [
   "createdAt": "2026-07-22",
   "gallery": [
    "assets/img/cars/mazda-cx5.jpg",
-   "assets/img/cars/mazda-cx5-2.jpg",
-   "assets/img/cars/mazda-cx5-3.jpg"
+   "assets/img/cars/mazda-cx5-2.jpg"
   ]
  },
  {
@@ -437,8 +420,7 @@ window.CARS_SEED = [
   "createdAt": "2026-08-06",
   "gallery": [
    "assets/img/cars/lexus-rx.jpg",
-   "assets/img/cars/lexus-rx-2.jpg",
-   "assets/img/cars/lexus-rx-3.jpg"
+   "assets/img/cars/lexus-rx-2.jpg"
   ]
  },
  {
@@ -477,9 +459,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-24",
   "gallery": [
-   "assets/img/cars/ford-mustang.jpg",
-   "assets/img/cars/ford-mustang-2.jpg",
-   "assets/img/cars/ford-mustang-3.jpg"
+   "assets/img/cars/ford-mustang.jpg"
   ]
  },
  {
@@ -519,9 +499,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-11",
   "gallery": [
-   "assets/img/cars/skoda-octavia.jpg",
-   "assets/img/cars/skoda-octavia-2.jpg",
-   "assets/img/cars/skoda-octavia-3.jpg"
+   "assets/img/cars/skoda-octavia.jpg"
   ]
  },
  {
@@ -562,9 +540,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-19",
   "gallery": [
-   "assets/img/cars/volvo-xc90.jpg",
-   "assets/img/cars/volvo-xc90-2.jpg",
-   "assets/img/cars/volvo-xc90-3.jpg"
+   "assets/img/cars/volvo-xc90.jpg"
   ]
  },
  {
@@ -606,8 +582,7 @@ window.CARS_SEED = [
   "createdAt": "2026-07-26",
   "gallery": [
    "assets/img/cars/hyundai-tucson.jpg",
-   "assets/img/cars/hyundai-tucson-2.jpg",
-   "assets/img/cars/hyundai-tucson-3.jpg"
+   "assets/img/cars/hyundai-tucson-2.jpg"
   ]
  },
  {
@@ -652,8 +627,7 @@ window.CARS_SEED = [
   "createdAt": "2026-08-08",
   "gallery": [
    "assets/img/cars/kia-sportage.jpg",
-   "assets/img/cars/kia-sportage-2.jpg",
-   "assets/img/cars/kia-sportage-3.jpg"
+   "assets/img/cars/kia-sportage-2.jpg"
   ]
  },
  {
@@ -694,8 +668,7 @@ window.CARS_SEED = [
   "createdAt": "2026-06-14",
   "gallery": [
    "assets/img/cars/nissan-leaf.jpg",
-   "assets/img/cars/nissan-leaf-2.jpg",
-   "assets/img/cars/nissan-leaf-3.jpg"
+   "assets/img/cars/nissan-leaf-2.jpg"
   ]
  },
  {
@@ -739,9 +712,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-30",
   "gallery": [
-   "assets/img/cars/bmw-x5.jpg",
-   "assets/img/cars/bmw-x5-2.jpg",
-   "assets/img/cars/bmw-x5-3.jpg"
+   "assets/img/cars/bmw-x5.jpg"
   ]
  },
  {
@@ -785,9 +756,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-15",
   "gallery": [
-   "assets/img/cars/audi-q7.jpg",
-   "assets/img/cars/audi-q7-2.jpg",
-   "assets/img/cars/audi-q7-3.jpg"
+   "assets/img/cars/audi-q7.jpg"
   ]
  },
  {
@@ -832,9 +801,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-04",
   "gallery": [
-   "assets/img/cars/mercedes-gle.jpg",
-   "assets/img/cars/mercedes-gle-2.jpg",
-   "assets/img/cars/mercedes-gle-3.jpg"
+   "assets/img/cars/mercedes-gle.jpg"
   ]
  },
  {
@@ -877,8 +844,7 @@ window.CARS_SEED = [
   "createdAt": "2026-08-11",
   "gallery": [
    "assets/img/cars/honda-cr-v.jpg",
-   "assets/img/cars/honda-cr-v-2.jpg",
-   "assets/img/cars/honda-cr-v-3.jpg"
+   "assets/img/cars/honda-cr-v-2.jpg"
   ]
  },
  {
@@ -920,9 +886,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-15",
   "gallery": [
-   "assets/img/cars/vw-touareg.jpg",
-   "assets/img/cars/vw-touareg-2.jpg",
-   "assets/img/cars/vw-touareg-3.jpg"
+   "assets/img/cars/vw-touareg.jpg"
   ]
  },
  {
@@ -967,8 +931,7 @@ window.CARS_SEED = [
   "createdAt": "2026-08-01",
   "gallery": [
    "assets/img/cars/tesla-model-y.jpg",
-   "assets/img/cars/tesla-model-y-2.jpg",
-   "assets/img/cars/tesla-model-y-3.jpg"
+   "assets/img/cars/tesla-model-y-2.jpg"
   ]
  },
  {
@@ -1009,9 +972,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-08",
   "gallery": [
-   "assets/img/cars/porsche-cayenne.jpg",
-   "assets/img/cars/porsche-cayenne-2.jpg",
-   "assets/img/cars/porsche-cayenne-3.jpg"
+   "assets/img/cars/porsche-cayenne.jpg"
   ]
  },
  {
@@ -1052,9 +1013,7 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-02",
   "gallery": [
-   "assets/img/cars/subaru-outback.jpg",
-   "assets/img/cars/subaru-outback-2.jpg",
-   "assets/img/cars/subaru-outback-3.jpg"
+   "assets/img/cars/subaru-outback.jpg"
   ]
  }
 ];

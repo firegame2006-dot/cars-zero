@@ -61,6 +61,7 @@
       <article class="card" data-id="${esc(car.id)}" style="animation-delay:${Math.min(index || 0, 9) * 45}ms">
         <a class="card__media" href="car.html?id=${encodeURIComponent(car.id)}"
            aria-label="${esc(carName(car))}">
+          <span class="card__bg" style="background-image:url('${esc(photos[0])}')"></span>
           <div class="card__tags">${tagsHTML(car)}</div>
           <img src="${esc(photos[0])}" alt="${esc(carName(car))}" loading="lazy" width="1200" height="800"
                onerror="this.src='${FALLBACK}'">

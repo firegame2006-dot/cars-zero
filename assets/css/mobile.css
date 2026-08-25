@@ -207,6 +207,7 @@
   /* швидкі фільтри одним дотиком */
   .quick {
     display: flex;
+    flex-wrap: nowrap;
     gap: 8px;
     overflow-x: auto;
     padding: 2px var(--gutter) 12px;
@@ -255,7 +256,7 @@
     transform: none;
   }
 
-  .card__media { aspect-ratio: 4 / 3; }
+  .card__media { aspect-ratio: 3 / 2; }
   .card__tags { top: 10px; left: 10px; }
   .tag { font-size: .64rem; padding: 4px 10px; }
   .card__fav { width: 38px; height: 38px; top: 8px; right: 8px; }

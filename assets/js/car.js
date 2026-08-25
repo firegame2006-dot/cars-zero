@@ -24,6 +24,7 @@
         <div class="gallery__track" id="track">
           ${photos.map((src, i) => `
             <figure class="gallery__slide">
+              <span class="gallery__bg" style="background-image:url('${esc(src)}')"></span>
               <img src="${esc(src)}" alt="${esc(CarsUI.carName(car))} — ${t('page.photo')} ${i + 1}"
                    draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}"
                    onerror="this.src='${CarsUI.FALLBACK}'">
