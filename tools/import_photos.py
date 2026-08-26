@@ -33,14 +33,14 @@ QUALITY = 92
 
 # колір авто на нових фотографіях (застосовується під час імпорту)
 COLORS = {
-    "toyota-camry": "black", "mercedes-s-class": "black", "kia-sportage": "white",
-    "audi-q7": "black", "porsche-911": "black", "tesla-model-3": "grey",
-    "honda-cr-v": "white", "lexus-rx": "white", "nissan-leaf": "white",
-    "volvo-xc90": "black", "ford-mustang": "yellow", "range-rover-sport": "black",
-    "mercedes-gle": "black", "audi-rs6": "grey", "tesla-model-y": "grey",
-    "bmw-x5": "grey", "bmw-m5": "blue", "hyundai-tucson": "grey",
-    "mazda-cx5": "red", "vw-golf-gti": "grey", "porsche-cayenne": "black",
-    "skoda-octavia": "red", "subaru-outback": "silver", "vw-touareg": "black",
+    "subaru-outback": "green", "porsche-cayenne": "grey", "skoda-octavia": "grey",
+    "vw-touareg": "black", "vw-golf-gti": "grey", "mazda-cx5": "red",
+    "hyundai-tucson": "grey", "bmw-m5": "blue", "bmw-x5": "grey",
+    "tesla-model-y": "grey", "audi-rs6": "grey", "mercedes-gle": "black",
+    "range-rover-sport": "black", "ford-mustang": "yellow", "volvo-xc90": "black",
+    "nissan-leaf": "white", "lexus-rx": "white", "honda-cr-v": "white",
+    "tesla-model-3": "grey", "porsche-911": "black", "audi-q7": "black",
+    "kia-sportage": "white", "mercedes-s-class": "black", "toyota-camry": "black",
 }
 
 # дрібні уточнення опису, які видно на фото
@@ -174,7 +174,7 @@ def do_import():
 
         with Image.open(src) as im:
             im = im.convert("RGB")
-            parts = [to_32(p) for p in split_quadrants(im)]
+            parts = split_quadrants(im)   # без обрізання — авто видно повністю
 
         names = [f"{slug}.jpg", f"{slug}-2.jpg", f"{slug}-3.jpg", f"{slug}-4.jpg"]
         for part, name in zip(parts, names):

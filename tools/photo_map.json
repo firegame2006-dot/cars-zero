@@ -1,4 +1,26 @@
 {
-  "_коментар": "файл із теки фото/авто → авто з каталогу; приклад нижче, заповнюється під час імпорту",
-  "photo_приклад.jpg": "bmw-m5"
+ "photo_1_2026-08-27_00-36-33.jpg": "subaru-outback",
+ "photo_2_2026-08-27_00-36-33.jpg": "porsche-cayenne",
+ "photo_3_2026-08-27_00-36-33.jpg": "skoda-octavia",
+ "photo_4_2026-08-27_00-36-33.jpg": "vw-touareg",
+ "photo_5_2026-08-27_00-36-33.jpg": "vw-golf-gti",
+ "photo_6_2026-08-27_00-36-33.jpg": "mazda-cx5",
+ "photo_7_2026-08-27_00-36-33.jpg": "hyundai-tucson",
+ "photo_8_2026-08-27_00-36-33.jpg": "bmw-m5",
+ "photo_9_2026-08-27_00-36-33.jpg": "bmw-x5",
+ "photo_10_2026-08-27_00-36-33.jpg": "tesla-model-y",
+ "photo_11_2026-08-27_00-36-33.jpg": "audi-rs6",
+ "photo_12_2026-08-27_00-36-33.jpg": "mercedes-gle",
+ "photo_13_2026-08-27_00-36-33.jpg": "range-rover-sport",
+ "photo_14_2026-08-27_00-36-33.jpg": "ford-mustang",
+ "photo_15_2026-08-27_00-36-33.jpg": "volvo-xc90",
+ "photo_16_2026-08-27_00-36-33.jpg": "nissan-leaf",
+ "photo_17_2026-08-27_00-36-33.jpg": "lexus-rx",
+ "photo_18_2026-08-27_00-36-33.jpg": "honda-cr-v",
+ "photo_19_2026-08-27_00-36-34.jpg": "tesla-model-3",
+ "photo_20_2026-08-27_00-36-34.jpg": "porsche-911",
+ "photo_21_2026-08-27_00-36-34.jpg": "audi-q7",
+ "photo_22_2026-08-27_00-36-34.jpg": "kia-sportage",
+ "photo_23_2026-08-27_00-36-34.jpg": "mercedes-s-class",
+ "photo_24_2026-08-27_00-36-34.jpg": "toyota-camry"
 }

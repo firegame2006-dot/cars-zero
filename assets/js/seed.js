@@ -40,7 +40,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-28",
   "gallery": [
-   "assets/img/cars/bmw-m5.jpg"
+   "assets/img/cars/bmw-m5.jpg",
+   "assets/img/cars/bmw-m5-2.jpg",
+   "assets/img/cars/bmw-m5-3.jpg",
+   "assets/img/cars/bmw-m5-4.jpg"
   ]
  },
  {
@@ -62,7 +65,7 @@ window.CARS_SEED = [
   "vin": "WUAZZZF29NN901882",
   "city": "kyiv",
   "price": 112000,
-  "color": "silver",
+  "color": "grey",
   "image": "assets/img/cars/audi-rs6.jpg",
   "badges": [
    "hit"
@@ -83,7 +86,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-02",
   "gallery": [
-   "assets/img/cars/audi-rs6.jpg"
+   "assets/img/cars/audi-rs6.jpg",
+   "assets/img/cars/audi-rs6-2.jpg",
+   "assets/img/cars/audi-rs6-3.jpg",
+   "assets/img/cars/audi-rs6-4.jpg"
   ]
  },
  {
@@ -127,14 +133,17 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-10",
   "gallery": [
-   "assets/img/cars/mercedes-s-class.jpg"
+   "assets/img/cars/mercedes-s-class.jpg",
+   "assets/img/cars/mercedes-s-class-2.jpg",
+   "assets/img/cars/mercedes-s-class-3.jpg",
+   "assets/img/cars/mercedes-s-class-4.jpg"
   ]
  },
  {
   "id": "porsche-911-2024",
   "brand": "Porsche",
   "model": "911 Carrera S",
-  "trim": "992 Cabriolet",
+  "trim": "992 Coupé",
   "year": 2024,
   "body": "convertible",
   "fuel": "petrol",
@@ -149,7 +158,7 @@ window.CARS_SEED = [
   "vin": "WP0ZZZ99ZRS210554",
   "city": "kyiv",
   "price": 215000,
-  "color": "grey",
+  "color": "black",
   "image": "assets/img/cars/porsche-911.jpg",
   "badges": [
    "new",
@@ -169,7 +178,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-14",
   "gallery": [
-   "assets/img/cars/porsche-911.jpg"
+   "assets/img/cars/porsche-911.jpg",
+   "assets/img/cars/porsche-911-2.jpg",
+   "assets/img/cars/porsche-911-3.jpg",
+   "assets/img/cars/porsche-911-4.jpg"
   ]
  },
  {
@@ -191,7 +203,7 @@ window.CARS_SEED = [
   "vin": "LRW3E7FA8RC456120",
   "city": "lviv",
   "price": 48900,
-  "color": "white",
+  "color": "grey",
   "image": "assets/img/cars/tesla-model-3.jpg",
   "badges": [
    "new"
@@ -211,7 +223,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-12",
   "gallery": [
-   "assets/img/cars/tesla-model-3.jpg"
+   "assets/img/cars/tesla-model-3.jpg",
+   "assets/img/cars/tesla-model-3-2.jpg",
+   "assets/img/cars/tesla-model-3-3.jpg",
+   "assets/img/cars/tesla-model-3-4.jpg"
   ]
  },
  {
@@ -234,7 +249,7 @@ window.CARS_SEED = [
   "city": "odesa",
   "price": 62000,
   "oldPrice": 65500,
-  "color": "silver",
+  "color": "black",
   "image": "assets/img/cars/range-rover-sport.jpg",
   "badges": [],
   "features": [
@@ -252,7 +267,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-30",
   "gallery": [
-   "assets/img/cars/range-rover-sport.jpg"
+   "assets/img/cars/range-rover-sport.jpg",
+   "assets/img/cars/range-rover-sport-2.jpg",
+   "assets/img/cars/range-rover-sport-3.jpg",
+   "assets/img/cars/range-rover-sport-4.jpg"
   ]
  },
  {
@@ -274,7 +292,7 @@ window.CARS_SEED = [
   "vin": "JTNBF3EK103654221",
   "city": "dnipro",
   "price": 23900,
-  "color": "white",
+  "color": "black",
   "image": "assets/img/cars/toyota-camry.jpg",
   "badges": [],
   "features": [
@@ -291,7 +309,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-05",
   "gallery": [
-   "assets/img/cars/toyota-camry.jpg"
+   "assets/img/cars/toyota-camry.jpg",
+   "assets/img/cars/toyota-camry-2.jpg",
+   "assets/img/cars/toyota-camry-3.jpg",
+   "assets/img/cars/toyota-camry-4.jpg"
   ]
  },
  {
@@ -333,7 +354,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-18",
   "gallery": [
-   "assets/img/cars/vw-golf-gti.jpg"
+   "assets/img/cars/vw-golf-gti.jpg",
+   "assets/img/cars/vw-golf-gti-2.jpg",
+   "assets/img/cars/vw-golf-gti-3.jpg",
+   "assets/img/cars/vw-golf-gti-4.jpg"
   ]
  },
  {
@@ -355,7 +379,7 @@ window.CARS_SEED = [
   "vin": "JMZKF5W7A00551203",
   "city": "kharkiv",
   "price": 28700,
-  "color": "blue",
+  "color": "red",
   "image": "assets/img/cars/mazda-cx5.jpg",
   "badges": [],
   "features": [
@@ -375,7 +399,9 @@ window.CARS_SEED = [
   "createdAt": "2026-07-22",
   "gallery": [
    "assets/img/cars/mazda-cx5.jpg",
-   "assets/img/cars/mazda-cx5-2.jpg"
+   "assets/img/cars/mazda-cx5-2.jpg",
+   "assets/img/cars/mazda-cx5-3.jpg",
+   "assets/img/cars/mazda-cx5-4.jpg"
   ]
  },
  {
@@ -397,7 +423,7 @@ window.CARS_SEED = [
   "vin": "JTJAAAAA605120774",
   "city": "kyiv",
   "price": 79000,
-  "color": "grey",
+  "color": "white",
   "image": "assets/img/cars/lexus-rx.jpg",
   "badges": [
    "new"
@@ -420,7 +446,9 @@ window.CARS_SEED = [
   "createdAt": "2026-08-06",
   "gallery": [
    "assets/img/cars/lexus-rx.jpg",
-   "assets/img/cars/lexus-rx-2.jpg"
+   "assets/img/cars/lexus-rx-2.jpg",
+   "assets/img/cars/lexus-rx-3.jpg",
+   "assets/img/cars/lexus-rx-4.jpg"
   ]
  },
  {
@@ -459,7 +487,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-24",
   "gallery": [
-   "assets/img/cars/ford-mustang.jpg"
+   "assets/img/cars/ford-mustang.jpg",
+   "assets/img/cars/ford-mustang-2.jpg",
+   "assets/img/cars/ford-mustang-3.jpg",
+   "assets/img/cars/ford-mustang-4.jpg"
   ]
  },
  {
@@ -481,7 +512,7 @@ window.CARS_SEED = [
   "vin": "TMBJJ7NX2M0087145",
   "city": "lviv",
   "price": 27400,
-  "color": "red",
+  "color": "grey",
   "image": "assets/img/cars/skoda-octavia.jpg",
   "badges": [],
   "features": [
@@ -499,7 +530,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-11",
   "gallery": [
-   "assets/img/cars/skoda-octavia.jpg"
+   "assets/img/cars/skoda-octavia.jpg",
+   "assets/img/cars/skoda-octavia-2.jpg",
+   "assets/img/cars/skoda-octavia-3.jpg",
+   "assets/img/cars/skoda-octavia-4.jpg"
   ]
  },
  {
@@ -521,7 +555,7 @@ window.CARS_SEED = [
   "vin": "YV1LFBMBDK1600942",
   "city": "kyiv",
   "price": 44500,
-  "color": "blue",
+  "color": "black",
   "image": "assets/img/cars/volvo-xc90.jpg",
   "badges": [],
   "features": [
@@ -540,7 +574,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-06-19",
   "gallery": [
-   "assets/img/cars/volvo-xc90.jpg"
+   "assets/img/cars/volvo-xc90.jpg",
+   "assets/img/cars/volvo-xc90-2.jpg",
+   "assets/img/cars/volvo-xc90-3.jpg",
+   "assets/img/cars/volvo-xc90-4.jpg"
   ]
  },
  {
@@ -562,7 +599,7 @@ window.CARS_SEED = [
   "vin": "TMAJ3815ANJ118460",
   "city": "dnipro",
   "price": 29900,
-  "color": "white",
+  "color": "grey",
   "image": "assets/img/cars/hyundai-tucson.jpg",
   "badges": [],
   "features": [
@@ -582,7 +619,9 @@ window.CARS_SEED = [
   "createdAt": "2026-07-26",
   "gallery": [
    "assets/img/cars/hyundai-tucson.jpg",
-   "assets/img/cars/hyundai-tucson-2.jpg"
+   "assets/img/cars/hyundai-tucson-2.jpg",
+   "assets/img/cars/hyundai-tucson-3.jpg",
+   "assets/img/cars/hyundai-tucson-4.jpg"
   ]
  },
  {
@@ -604,7 +643,7 @@ window.CARS_SEED = [
   "vin": "U5YPH81ADPL013877",
   "city": "kharkiv",
   "price": 41200,
-  "color": "black",
+  "color": "white",
   "image": "assets/img/cars/kia-sportage.jpg",
   "badges": [
    "new"
@@ -627,7 +666,9 @@ window.CARS_SEED = [
   "createdAt": "2026-08-08",
   "gallery": [
    "assets/img/cars/kia-sportage.jpg",
-   "assets/img/cars/kia-sportage-2.jpg"
+   "assets/img/cars/kia-sportage-2.jpg",
+   "assets/img/cars/kia-sportage-3.jpg",
+   "assets/img/cars/kia-sportage-4.jpg"
   ]
  },
  {
@@ -650,7 +691,7 @@ window.CARS_SEED = [
   "city": "ivano-frankivsk",
   "price": 16800,
   "oldPrice": 18200,
-  "color": "silver",
+  "color": "white",
   "image": "assets/img/cars/nissan-leaf.jpg",
   "badges": [],
   "features": [
@@ -668,7 +709,9 @@ window.CARS_SEED = [
   "createdAt": "2026-06-14",
   "gallery": [
    "assets/img/cars/nissan-leaf.jpg",
-   "assets/img/cars/nissan-leaf-2.jpg"
+   "assets/img/cars/nissan-leaf-2.jpg",
+   "assets/img/cars/nissan-leaf-3.jpg",
+   "assets/img/cars/nissan-leaf-4.jpg"
   ]
  },
  {
@@ -690,7 +733,7 @@ window.CARS_SEED = [
   "vin": "5UXJU4C05L9C71209",
   "city": "kyiv",
   "price": 71000,
-  "color": "white",
+  "color": "grey",
   "image": "assets/img/cars/bmw-x5.jpg",
   "badges": [
    "hit"
@@ -712,7 +755,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-30",
   "gallery": [
-   "assets/img/cars/bmw-x5.jpg"
+   "assets/img/cars/bmw-x5.jpg",
+   "assets/img/cars/bmw-x5-2.jpg",
+   "assets/img/cars/bmw-x5-3.jpg",
+   "assets/img/cars/bmw-x5-4.jpg"
   ]
  },
  {
@@ -734,7 +780,7 @@ window.CARS_SEED = [
   "vin": "WA1VAAF75PD024916",
   "city": "kyiv",
   "price": 96500,
-  "color": "grey",
+  "color": "black",
   "image": "assets/img/cars/audi-q7.jpg",
   "badges": [
    "new"
@@ -756,7 +802,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-15",
   "gallery": [
-   "assets/img/cars/audi-q7.jpg"
+   "assets/img/cars/audi-q7.jpg",
+   "assets/img/cars/audi-q7-2.jpg",
+   "assets/img/cars/audi-q7-3.jpg",
+   "assets/img/cars/audi-q7-4.jpg"
   ]
  },
  {
@@ -778,7 +827,7 @@ window.CARS_SEED = [
   "vin": "W1N1671231A662840",
   "city": "kyiv",
   "price": 92000,
-  "color": "grey",
+  "color": "black",
   "image": "assets/img/cars/mercedes-gle.jpg",
   "badges": [
    "hit"
@@ -801,7 +850,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-08-04",
   "gallery": [
-   "assets/img/cars/mercedes-gle.jpg"
+   "assets/img/cars/mercedes-gle.jpg",
+   "assets/img/cars/mercedes-gle-2.jpg",
+   "assets/img/cars/mercedes-gle-3.jpg",
+   "assets/img/cars/mercedes-gle-4.jpg"
   ]
  },
  {
@@ -823,7 +875,7 @@ window.CARS_SEED = [
   "vin": "SHHRW2870PU304518",
   "city": "lviv",
   "price": 38400,
-  "color": "grey",
+  "color": "white",
   "image": "assets/img/cars/honda-cr-v.jpg",
   "badges": [
    "new"
@@ -844,7 +896,9 @@ window.CARS_SEED = [
   "createdAt": "2026-08-11",
   "gallery": [
    "assets/img/cars/honda-cr-v.jpg",
-   "assets/img/cars/honda-cr-v-2.jpg"
+   "assets/img/cars/honda-cr-v-2.jpg",
+   "assets/img/cars/honda-cr-v-3.jpg",
+   "assets/img/cars/honda-cr-v-4.jpg"
   ]
  },
  {
@@ -886,7 +940,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-15",
   "gallery": [
-   "assets/img/cars/vw-touareg.jpg"
+   "assets/img/cars/vw-touareg.jpg",
+   "assets/img/cars/vw-touareg-2.jpg",
+   "assets/img/cars/vw-touareg-3.jpg",
+   "assets/img/cars/vw-touareg-4.jpg"
   ]
  },
  {
@@ -908,7 +965,7 @@ window.CARS_SEED = [
   "vin": "7SAYGDEE4NF381205",
   "city": "kyiv",
   "price": 39900,
-  "color": "white",
+  "color": "grey",
   "image": "assets/img/cars/tesla-model-y.jpg",
   "badges": [
    "hit"
@@ -931,7 +988,9 @@ window.CARS_SEED = [
   "createdAt": "2026-08-01",
   "gallery": [
    "assets/img/cars/tesla-model-y.jpg",
-   "assets/img/cars/tesla-model-y-2.jpg"
+   "assets/img/cars/tesla-model-y-2.jpg",
+   "assets/img/cars/tesla-model-y-3.jpg",
+   "assets/img/cars/tesla-model-y-4.jpg"
   ]
  },
  {
@@ -972,7 +1031,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-08",
   "gallery": [
-   "assets/img/cars/porsche-cayenne.jpg"
+   "assets/img/cars/porsche-cayenne.jpg",
+   "assets/img/cars/porsche-cayenne-2.jpg",
+   "assets/img/cars/porsche-cayenne-3.jpg",
+   "assets/img/cars/porsche-cayenne-4.jpg"
   ]
  },
  {
@@ -994,7 +1056,7 @@ window.CARS_SEED = [
   "vin": "JF2BTACC5M8241063",
   "city": "ivano-frankivsk",
   "price": 32600,
-  "color": "silver",
+  "color": "green",
   "image": "assets/img/cars/subaru-outback.jpg",
   "badges": [],
   "features": [
@@ -1013,7 +1075,10 @@ window.CARS_SEED = [
   },
   "createdAt": "2026-07-02",
   "gallery": [
-   "assets/img/cars/subaru-outback.jpg"
+   "assets/img/cars/subaru-outback.jpg",
+   "assets/img/cars/subaru-outback-2.jpg",
+   "assets/img/cars/subaru-outback-3.jpg",
+   "assets/img/cars/subaru-outback-4.jpg"
   ]
  }
 ];
