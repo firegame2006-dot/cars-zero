@@ -1,19 +1,44 @@
-# Статичний сайт без збірки — Netlify просто роздає файли з кореня репозиторію.
+# Статичний сайт без збірки — Netlify роздає файли з кореня репозиторію.
 [build]
   publish = "."
   command = ""
 
+# Сторінки та дані ніколи не кешуємо: правки мають бути видні одразу.
 [[headers]]
   for = "/*"
   [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
     X-Content-Type-Options = "nosniff"
 
 [[headers]]
-  for = "/assets/*"
+  for = "/*.html"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/data/*"
   [headers.values]
-    Cache-Control = "no-cache"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Стилі та скрипти мають ?v= у посиланні, тому браузер сам візьме нову версію,
+# але про всяк випадок теж просимо перевіряти.
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Фото й відео можуть полежати в кеші годину — імена файлів стабільні.
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/assets/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
