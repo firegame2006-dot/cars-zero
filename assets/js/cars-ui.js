@@ -131,8 +131,74 @@
     videos.forEach((v) => io.observe(v));
   }
 
+  /* ---------- вікно з описом авто, яке знято на відео ---------- */
+
+  function clipLayer() {
+    let layer = document.getElementById('clipInfo');
+    if (layer) return layer;
+    layer = document.createElement('div');
+    layer.className = 'modal';
+    layer.id = 'clipInfo';
+    layer.innerHTML = `
+      <div class="modal__box modal__box--clip">
+        <button class="modal__close" data-clipinfo-close>${icon('i-x')}</button>
+        <div class="clipinfo" id="clipInfoBody"></div>
+      </div>`;
+    document.body.appendChild(layer);
+
+    layer.addEventListener('click', (e) => {
+      if (e.target === layer || e.target.closest('[data-clipinfo-close]')) closeClipInfo();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeClipInfo();
+    });
+    return layer;
+  }
+
+  /** Показує повний опис кастомного авто з ролика. */
+  function openClipInfo(index) {
+    const item = (window.SHOWCASE || [])[index];
+    if (!item) return;
+    const layer = clipLayer();
+
+    document.getElementById('clipInfoBody').innerHTML = `
+      <div class="clipinfo__media">
+        <img src="${esc(item.poster)}" alt="${esc(t(item.title))}">
+        <span class="clipinfo__badge">${esc(t(item.badge))}</span>
+      </div>
+      <div class="clipinfo__body">
+        <h2>${esc(t(item.title))}</h2>
+        <div class="clipinfo__sub">${esc(t(item.sub))}</div>
+        <dl class="showcase__specs">
+          <div class="showcase__spec"><dt>${esc(t('showcase.specPower'))}</dt>
+            <dd>${item.power} ${esc(t('catalog.hp'))}</dd></div>
+          <div class="showcase__spec"><dt>${esc(t('showcase.specTime'))}</dt>
+            <dd>${item.time}</dd></div>
+          <div class="showcase__spec"><dt>${esc(t('showcase.specStatus'))}</dt>
+            <dd>${esc(t(item.status))}</dd></div>
+        </dl>
+        <h3 class="detail__section-title">${esc(t('clip.specs'))}</h3>
+        <p class="clipinfo__text">${esc(t('clip.i' + (index + 1) + 'long'))}</p>
+        <div class="clipinfo__actions">
+          <button class="btn btn--accent" data-booking
+                  data-service="${esc(t('sto.s5t'))}">${esc(t('clip.ask'))}</button>
+          <button class="btn btn--ghost" data-clipinfo-close>${esc(t('page.close'))}</button>
+        </div>
+      </div>`;
+
+    layer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeClipInfo() {
+    const layer = document.getElementById('clipInfo');
+    if (!layer) return;
+    layer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
   global.CarsUI = {
     carName, gallery, mileageText, engineText, ownersText, highlight,
-    tagsHTML, cardHTML, bindCards, autoplayWhenVisible, FALLBACK
+    tagsHTML, cardHTML, bindCards, autoplayWhenVisible, openClipInfo, closeClipInfo, FALLBACK
   };
 })(window);

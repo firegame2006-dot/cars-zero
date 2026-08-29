@@ -22,35 +22,7 @@
         </div>
       </button>`).join('');
 
-    $('#bService').innerHTML = Layout.SERVICES
-      .map((s) => t('sto.' + s.k + 't')).concat(t('sto.other'))
-      .map((label) => `<option value="${esc(label)}">${esc(label)}</option>`)
-      .join('');
-
     Layout.reveal($('#services'));
-  }
-
-  function bind() {
-    $('#bService').addEventListener('change', () => {
-      const isOther = $('#bService').value === t('sto.other');
-      $('#bComment').placeholder = isOther ? t('sto.otherHint') : '';
-      $('#bComment').closest('.form-row').classList.toggle('is-highlighted', isOther);
-      if (isOther) $('#bComment').focus();
-    });
-
-    $('#bookingForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const msg = $('#bookingMsg');
-      if (!$('#bName').value.trim() || !$('#bPhone').value.trim()) {
-        msg.textContent = t('sto.err');
-        msg.className = 'form-msg is-err';
-        return;
-      }
-      msg.textContent = t('sto.ok') + ' ' + t('demo.form');
-      msg.className = 'form-msg is-ok';
-      Layout.toast(t('demo.form'));
-      e.target.reset();
-    });
   }
 
   async function start() {
@@ -58,7 +30,6 @@
     Layout.mount('service');
     await Store.init();
     render();
-    bind();
     I18N.applyDom();
 
     document.addEventListener('layout:lang', () => {

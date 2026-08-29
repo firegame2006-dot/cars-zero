@@ -57,14 +57,19 @@
             <div class="showcase__spec"><dt>${esc(t('showcase.specStatus'))}</dt>
               <dd>${esc(t(item.status))}</dd></div>
           </dl>
-          <a class="link-arrow" href="showcase.html">
-            <span>${esc(t('showcase.details'))}</span>${icon('i-arrow-right')}
-          </a>
+          <button class="link-arrow" type="button" data-clipinfo="${i}">
+            <span>${esc(t('clip.more'))}</span>${icon('i-arrow-right')}
+          </button>
         </div>
       </article>`).join('');
 
     CarsUI.autoplayWhenVisible($$('#clips video'));
     Layout.reveal($('#clips'));
+
+    $('#clips').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-clipinfo]');
+      if (btn) CarsUI.openClipInfo(Number(btn.dataset.clipinfo));
+    });
   }
 
   /* ---------- добірка авто ---------- */

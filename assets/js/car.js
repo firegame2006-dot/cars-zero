@@ -151,13 +151,18 @@
           </div>
 
           <form class="carpage__form" id="leadForm">
+            <div class="carpage__formhead">
+              <b>${esc(t('testDrive.title'))}</b>
+              <span>${esc(t('testDrive.hint'))}</span>
+            </div>
             <div class="f">
               <label for="lName">${esc(t('modal.name'))}</label>
-              <input id="lName" type="text" autocomplete="name">
+              <input id="lName" type="text" autocomplete="name"
+                     placeholder="${esc(t('testDrive.namePh'))}">
             </div>
             <div class="f">
               <label for="lPhone">${esc(t('modal.phone'))}</label>
-              <input id="lPhone" type="tel" placeholder="+380 __ ___ __ __" autocomplete="tel">
+              <input id="lPhone" type="tel" placeholder="${esc(t('testDrive.phonePh'))}" autocomplete="tel">
             </div>
             <button class="btn btn--accent btn--block" type="submit">${esc(t('catalog.testDrive'))}</button>
             <button class="btn btn--ghost btn--block" type="button" data-demo="phone">
@@ -206,7 +211,6 @@
           <div class="section-head__text">
             <h2 class="section-title">${esc(t('page.similar'))}</h2>
           </div>
-          <a class="link-arrow" href="catalog.html"><span>${esc(t('nav.catalog'))}</span>${icon('i-arrow-right')}</a>
         </div>
         <div class="grid" id="similarGrid"></div>
       </section>`;

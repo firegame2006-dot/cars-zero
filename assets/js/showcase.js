@@ -31,15 +31,19 @@
               <dd>${esc(t(item.status))}</dd></div>
           </dl>
           <div class="showcase__actions">
-            <a class="btn btn--primary" href="catalog.html">${esc(t('nav.catalog'))}</a>
-            <a class="btn btn--ghost" href="contacts.html">${esc(t('nav.contacts'))}</a>
+            <button class="btn btn--primary" data-clipinfo="${i}">${esc(t('clip.more'))}</button>
+            <a class="btn btn--ghost" href="catalog.html">${esc(t('nav.catalog'))}</a>
           </div>
-          <p class="showcase__hint">${icon('i-info')}<span>${esc(t('page.clipHint'))}</span></p>
         </div>
       </article>`).join('');
 
     CarsUI.autoplayWhenVisible($$('#showcaseList video'));
     Layout.reveal($('#showcaseList'));
+
+    $('#showcaseList').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-clipinfo]');
+      if (btn) CarsUI.openClipInfo(Number(btn.dataset.clipinfo));
+    });
   }
 
   async function start() {

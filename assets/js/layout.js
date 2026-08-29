@@ -101,7 +101,6 @@
         <button class="demo-link" data-demo="map" data-i18n="top.address"></button></li>
     </ul>
     <ul class="topbar__list topbar__list--extra">
-      <li class="topbar__item"><span class="demo-chip" data-i18n="demo.badge">Демо-проєкт</span></li>
       <li class="topbar__item">${icon('i-clock')}<span data-i18n="top.hours"></span></li>
     </ul>
   </div>
@@ -132,6 +131,9 @@
         </button>
         <div class="lang__menu" id="langMenu" role="menu"></div>
       </div>
+      <a class="headfav" href="catalog.html?fav=1" data-i18n-aria="catalog.favOnly">
+        ${icon('i-heart')}<b class="headfav__count" id="headFavCount" hidden></b>
+      </a>
       <button class="btn btn--primary" data-booking data-i18n="nav.cta"></button>
       <button class="burger" id="burger" data-i18n-aria="nav.menu" aria-expanded="false"><span></span></button>
     </div>
@@ -172,7 +174,6 @@
           <span><b>Velora</b> <span>Motors</span></span>
         </a>
         <p class="footer__about" data-i18n="footer.about"></p>
-        <p class="footer__demo">${icon('i-info')}<span data-i18n="demo.note"></span></p>
         <div class="socials">
           <button class="demo-link" data-demo="social" aria-label="Facebook">${icon('i-fb')}</button>
           <button class="demo-link" data-demo="social" aria-label="Instagram">${icon('i-ig')}</button>
@@ -236,6 +237,115 @@
     </div>
   </div>
 </footer>`;
+  }
+
+  function evaluateHTML() {
+    return `
+<div class="modal" id="evaluateModal" role="dialog" aria-modal="true" aria-labelledby="evaluateTitle">
+  <div class="modal__box modal__box--form">
+    <button class="modal__close" data-evaluate-close data-i18n-aria="page.close">${icon('i-x')}</button>
+    <form class="booking booking--modal" id="evaluateForm">
+      <h2 id="evaluateTitle" data-i18n="evaluate.title"></h2>
+      <p data-i18n="evaluate.lead"></p>
+      <div class="form-row">
+        <label for="evName" data-i18n="evaluate.name"></label>
+        <input id="evName" type="text" autocomplete="name">
+      </div>
+      <div class="form-row">
+        <label for="evPhone" data-i18n="evaluate.phone"></label>
+        <input id="evPhone" type="tel" placeholder="+380 __ ___ __ __" autocomplete="tel">
+      </div>
+      <div class="form-row">
+        <label for="evCar" data-i18n="evaluate.car"></label>
+        <input id="evCar" type="text">
+      </div>
+      <div class="form-row">
+        <label for="evComment" data-i18n="evaluate.comment"></label>
+        <textarea id="evComment" rows="2"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="evFiles" data-i18n="evaluate.files"></label>
+        <label class="filedrop" for="evFiles">
+          ${icon('i-expand')}<span data-i18n="evaluate.filesHint"></span>
+        </label>
+        <input id="evFiles" type="file" accept="image/*,video/*" multiple hidden>
+        <div class="filedrop__list" id="evFilesList"></div>
+      </div>
+      <button class="btn btn--light btn--block" type="submit" data-i18n="evaluate.submit"></button>
+      <div class="form-msg" id="evaluateMsg" role="status"></div>
+    </form>
+  </div>
+</div>`;
+  }
+
+  function openEvaluate() {
+    const modal = document.getElementById('evaluateModal');
+    if (!modal) return;
+    document.body.classList.remove('menu-open');
+    document.getElementById('evaluateMsg').textContent = '';
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('evName').focus(), 250);
+  }
+
+  function closeEvaluate() {
+    const modal = document.getElementById('evaluateModal');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function bindEvaluate() {
+    const modal = document.getElementById('evaluateModal');
+    if (!modal) return;
+
+    document.addEventListener('click', (e) => {
+      const opener = e.target.closest('[data-evaluate]');
+      if (!opener) return;
+      e.preventDefault();
+      openEvaluate();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.closest('[data-evaluate-close]')) closeEvaluate();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeEvaluate();
+    });
+
+    const files = document.getElementById('evFiles');
+    files.addEventListener('change', () => {
+      const list = Array.from(files.files || []);
+      document.getElementById('evFilesList').innerHTML = list.length
+        ? `<span>${list.length} ${esc(t('evaluate.chosen'))}</span>` +
+          list.slice(0, 4).map((f) => `<small>${esc(f.name)}</small>`).join('')
+        : '';
+    });
+
+    document.getElementById('evaluateForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('evaluateMsg');
+      if (!document.getElementById('evName').value.trim() ||
+          !document.getElementById('evPhone').value.trim()) {
+        msg.textContent = t('sto.err');
+        msg.className = 'form-msg is-err';
+        return;
+      }
+      msg.textContent = t('evaluate.ok');
+      msg.className = 'form-msg is-ok';
+      e.target.reset();
+      document.getElementById('evFilesList').innerHTML = '';
+    });
+  }
+
+  /** Сердечко в шапці показує, скільки авто збережено. */
+  function syncHeadFav() {
+    const badge = document.getElementById('headFavCount');
+    if (!badge) return;
+    const n = (window.Store && Store.favorites) ? Store.favorites().length : 0;
+    badge.hidden = n === 0;
+    badge.textContent = n;
   }
 
   function bookingHTML() {
@@ -469,19 +579,25 @@
    */
   function mount(active) {
     document.body.insertAdjacentHTML('afterbegin', SPRITE + headerHTML(active));
-    document.body.insertAdjacentHTML('beforeend', footerHTML() + tabbarHTML(active) + bookingHTML() +
+    document.body.insertAdjacentHTML('beforeend', footerHTML() + tabbarHTML(active) + bookingHTML() + evaluateHTML() +
       '<div class="toast" id="toast" role="status"></div>' +
       `<button class="up" id="upBtn" aria-label="Up">${icon('i-arrow-up')}</button>`);
     buildLangMenu();
     bindCommon();
     bindBooking();
+    bindEvaluate();
     syncTabFav();
-    document.addEventListener('velora:favchange', syncTabFav);
+    syncHeadFav();
+    document.addEventListener('velora:favchange', () => {
+      syncTabFav();
+      syncHeadFav();
+    });
     I18N.applyDom();
     reveal();
   }
 
   global.Layout = {
-    mount, toast, reveal, icon, esc, PAGES, SERVICES, openBooking, closeBooking, syncTabFav
+    mount, toast, reveal, icon, esc, PAGES, SERVICES,
+    openBooking, closeBooking, openEvaluate, syncTabFav, syncHeadFav
   };
 })(window);
