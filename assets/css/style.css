@@ -1666,6 +1666,9 @@ a.brands__item:hover { border-color: currentColor; }
 
 .modal.is-open { opacity: 1; visibility: visible; }
 
+/* усі вікна на одному шарі — жодне не ховається за іншим */
+#bookingModal, #evaluateModal, #clipInfo { z-index: 110; }
+
 .modal__box {
   background: var(--paper);
   border-radius: var(--r-lg);

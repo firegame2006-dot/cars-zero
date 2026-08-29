@@ -239,6 +239,13 @@
 </footer>`;
   }
 
+  /** Закриває всі інші відкриті вікна, щоб вони не лягали одне на одне. */
+  function closeOthers(keep) {
+    document.querySelectorAll('.modal.is-open').forEach((m) => {
+      if (m !== keep) m.classList.remove('is-open');
+    });
+  }
+
   function evaluateHTML() {
     return `
 <div class="modal" id="evaluateModal" role="dialog" aria-modal="true" aria-labelledby="evaluateTitle">
@@ -282,6 +289,7 @@
     const modal = document.getElementById('evaluateModal');
     if (!modal) return;
     document.body.classList.remove('menu-open');
+    closeOthers(modal);
     document.getElementById('evaluateMsg').textContent = '';
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -408,6 +416,7 @@
     const modal = document.getElementById('bookingModal');
     if (!modal) return;
     document.body.classList.remove('menu-open');   // мобільне меню не має лишатися відкритим
+    closeOthers(modal);                            // одночасно відкрите лише одне вікно
     fillBookingServices(service);
     document.getElementById('bookingModalMsg').textContent = '';
     modal.classList.add('is-open');

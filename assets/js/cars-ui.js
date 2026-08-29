@@ -186,6 +186,9 @@
         </div>
       </div>`;
 
+    document.querySelectorAll('.modal.is-open').forEach((m) => {
+      if (m !== layer) m.classList.remove('is-open');
+    });
     layer.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
