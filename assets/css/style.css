@@ -63,6 +63,9 @@
 * { margin: 0; }
 
 html {
+  /* без цього Chrome на Android вмикає власну темну тему і перефарбовує
+     всю палітру — меню й картки виглядають брудно */
+  color-scheme: only light;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
   -webkit-text-size-adjust: 100%;
@@ -1899,9 +1902,29 @@ a.brands__item:hover { border-color: currentColor; }
   }
 
   body.menu-open .nav { transform: none; opacity: 1; visibility: visible; }
-  .nav__list { flex-direction: column; align-items: stretch; gap: 2px; }
-  .nav__link { padding: 14px 10px; font-size: 1.05rem; border-bottom: 1px solid var(--line); border-radius: 0; }
+  .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
+
+  /* посилання — інлайнові за замовчуванням, через це підкреслення обрізалось
+     по ширині тексту, а вертикальні відступи не діяли */
+  .nav__link {
+    display: flex;
+    align-items: center;
+    padding: 15px 12px;
+    font-size: 1.05rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    border-left: 3px solid transparent;
+  }
+
   .nav__link::after { display: none; }
+  .nav__link.is-active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--paper-2);
+  }
+
+  .nav__cta { margin-top: 16px; }
+  .nav__cta .btn { padding: 15px 20px; font-size: .98rem; }
   .header__actions .btn--primary { display: none; }
   .header__inner { justify-content: space-between; }
 }

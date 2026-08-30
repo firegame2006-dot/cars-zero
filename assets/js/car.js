@@ -26,8 +26,7 @@
             <figure class="gallery__slide">
               <span class="gallery__bg" style="background-image:url('${esc(Media.url(src))}')"></span>
               <img src="${esc(Media.url(src))}" alt="${esc(CarsUI.carName(car))} — ${t('page.photo')} ${i + 1}"
-                   draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}"
-                   onerror="this.src='${esc(Media.url(CarsUI.FALLBACK))}'">
+                   draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}" data-slide="${i}">
             </figure>`).join('')}
         </div>
 
@@ -46,10 +45,35 @@
           ${photos.map((src, i) => `
             <button class="thumb${i === 0 ? ' is-active' : ''}" data-go="${i}"
                     aria-label="${esc(t('page.photo'))} ${i + 1}">
-              <img src="${esc(Media.url(src))}" alt="" loading="lazy"
-                   onerror="this.src='${esc(Media.url(CarsUI.FALLBACK))}'">
+              <img src="${esc(Media.url(src))}" alt="" loading="lazy">
             </button>`).join('')}
         </div>` : ''}`;
+  }
+
+  /**
+   * Якщо файл кадру не завантажився, прибираємо його зі списку й перемальовуємо
+   * галерею. Інакше лічильник обіцяє «1 / 4», а четвертий кадр — порожня плашка.
+   * Орієнтуємось на номер кадру, а не на src: спільний обробник у cars-ui.js
+   * встигає підмінити src на заглушку раніше за цей виклик.
+   */
+  function dropBrokenPhoto(at) {
+    if (!(at >= 0) || at >= photos.length || photos.length < 2) return;
+    photos.splice(at, 1);
+
+    const media = $('.carpage__media');
+    if (!media) return;
+    media.innerHTML = galleryHTML();
+    watchGallery();
+    bindGallery();
+    index = 0;
+    goTo(0);
+  }
+
+  /** Стежить за кадрами галереї: подія error не спливає, вішаємо на кожен. */
+  function watchGallery() {
+    $$('#gallery img[data-slide]').forEach((img) => {
+      img.addEventListener('error', () => dropBrokenPhoto(Number(img.dataset.slide)), { once: true });
+    });
   }
 
   function goTo(i) {
@@ -229,6 +253,7 @@
     $('#similarGrid').innerHTML = similar.map((c, i) => CarsUI.cardHTML(c, i, [])).join('');
     CarsUI.bindCards($('#similarGrid'));
 
+    watchGallery();
     bindGallery();
     goTo(0);
 

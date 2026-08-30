@@ -7,7 +7,30 @@
   const t = (k) => I18N.t(k);
   const esc = Layout.esc;
   const icon = Layout.icon;
-  const FALLBACK = 'assets/img/showcase/poster-3.jpg';
+
+  /*
+   * Нейтральна заглушка на випадок, коли файл фото не знайдено.
+   * Раніше тут стояв постер із червоним Porsche — і будь-яке відсутнє фото
+   * показувало чуже авто, ніби це фото цієї машини. Так робити не можна:
+   * краще порожня плашка, ніж неправдиве фото в картці.
+   */
+  const FALLBACK =
+    'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">' +
+      '<rect width="600" height="400" fill="#efe6d7"/>' +
+      '<g fill="none" stroke="#b9ab92" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M170 232h260"/>' +
+      '<path d="M199 232l22-62a28 28 0 0 1 26-18h106a28 28 0 0 1 26 18l22 62v46h-40v-28H239v28h-40z"/>' +
+      '<circle cx="238" cy="264" r="13"/><circle cx="362" cy="264" r="13"/></g></svg>'
+    );
+
+  document.addEventListener('error', (e) => {
+    const img = e.target;
+    if (!img || img.tagName !== 'IMG' || img.dataset.missing) return;
+    img.dataset.missing = '1';
+    img.src = FALLBACK;
+    img.classList.add('is-missing');
+  }, true);
 
   const carName = (car) => `${car.brand} ${car.model}`;
 
@@ -63,8 +86,7 @@
            aria-label="${esc(carName(car))}">
           <span class="card__bg" style="background-image:url('${esc(Media.url(photos[0]))}')"></span>
           <div class="card__tags">${tagsHTML(car)}</div>
-          <img src="${esc(Media.url(photos[0]))}" alt="${esc(carName(car))}" loading="lazy" width="1200" height="800"
-               onerror="this.src='${esc(Media.url(FALLBACK))}'">
+          <img src="${esc(Media.url(photos[0]))}" alt="${esc(carName(car))}" loading="lazy" width="1200" height="800">
           ${photos.length > 1 ? `<span class="card__count">${icon('i-expand')}${photos.length}</span>` : ''}
         </a>
         <button class="card__fav${favs.includes(car.id) ? ' is-on' : ''}" data-fav
@@ -167,8 +189,7 @@
     document.getElementById('clipInfoBody').innerHTML = `
       <div class="clipinfo__media">
         <span class="clipinfo__bg" style="background-image:url('${esc(Media.url(photo))}')"></span>
-        <img src="${esc(Media.url(photo))}" alt="${esc(clip(item.title))}" loading="lazy"
-             onerror="this.src='${esc(Media.url(item.poster || FALLBACK))}'">
+        <img src="${esc(Media.url(photo))}" alt="${esc(clip(item.title))}" loading="lazy">
         <span class="clipinfo__badge">${esc(clip(item.badge))}</span>
       </div>
       <div class="clipinfo__body">

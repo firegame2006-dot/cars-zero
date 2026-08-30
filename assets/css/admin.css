@@ -3,6 +3,7 @@
    ========================================================================== */
 
 :root {
+  color-scheme: only light;
   --paper: #fcfaf6;
   --paper-2: #f5efe4;
   --card: #ffffff;
