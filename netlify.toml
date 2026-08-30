@@ -3,42 +3,45 @@
   publish = "."
   command = ""
 
-# Сторінки та дані ніколи не кешуємо: правки мають бути видні одразу.
+# Базові заголовки безпеки для всього сайту.
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
     X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Сторінки ніколи не кешуємо: правки мають бути видні одразу після деплою.
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# Запасний каталог тягнеться без версії в адресі — теж не кешуємо.
 [[headers]]
   for = "/data/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Стилі та скрипти мають ?v= у посиланні, тому браузер сам візьме нову версію,
-# але про всяк випадок теж просимо перевіряти.
+# Усі посилання на стилі, скрипти, фото й відео мають ?v= — його проставляє
+# tools/bump_assets.py, і після кожного деплою адреса змінюється. Тому файли
+# можна кешувати надовго: повторні візити не роблять жодного запиту замість
+# перевірки кожного з двох десятків файлів.
 [[headers]]
   for = "/assets/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/assets/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
 
-# Фото й відео можуть полежати в кеші годину — імена файлів стабільні.
 [[headers]]
   for = "/assets/img/*"
   [headers.values]
-    Cache-Control = "public, max-age=3600, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/assets/video/*"
   [headers.values]
-    Cache-Control = "public, max-age=3600, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"

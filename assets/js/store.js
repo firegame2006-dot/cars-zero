@@ -83,11 +83,35 @@
     return cars;
   }
 
+  let seedRequest = null;
+
+  /**
+   * seed.js важить 28 КБ і потрібен лише тоді, коли недоступні і база,
+   * і data/cars.json. Тому підвантажуємо його на вимогу, а не на кожній
+   * сторінці — це прибирає зайвий запит і 28 КБ з кожного відкриття сайту.
+   */
+  function loadSeedScript() {
+    if (Array.isArray(global.CARS_SEED)) return Promise.resolve();
+    if (seedRequest) return seedRequest;
+
+    seedRequest = new Promise((resolve) => {
+      const el = document.createElement('script');
+      const v = global.Media && Media.version ? '?v=' + Media.version : '';
+      el.src = 'assets/js/seed.js' + v;
+      el.onload = resolve;
+      el.onerror = resolve;          // немає файлу — просто підемо далі
+      document.head.appendChild(el);
+    });
+    return seedRequest;
+  }
+
   async function loadSeed() {
     try {
       const data = await fetchJSON('data/cars.json');
       if (Array.isArray(data)) return data;
     } catch (e) { /* file:// або немає файлу */ }
+
+    await loadSeedScript();
     return Array.isArray(global.CARS_SEED) ? global.CARS_SEED.slice() : [];
   }
 
