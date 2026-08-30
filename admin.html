@@ -1,160 +1,295 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n-doc="admin.title">Адмінпанель Velora Motors</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%232f4034'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>A</text></svg>">
+<title>Velora Motors — control panel</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%232f4034'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>V</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=6">
-<link rel="stylesheet" href="assets/css/mobile.css?v=6">
-<link rel="stylesheet" href="assets/css/admin.css?v=6">
+<link rel="stylesheet" href="assets/css/admin.css?v=21">
 </head>
 <body>
 
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h18"/><path d="m5 13 1.6-4.6A2 2 0 0 1 8.5 7h7a2 2 0 0 1 1.9 1.4L19 13v5h-3v-2H8v2H5Z"/><circle cx="7.5" cy="15.5" r="1"/><circle cx="16.5" cy="15.5" r="1"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 12h18"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h4l1.5 3h5L16 13h4"/><path d="M5.5 5h13l2.5 8v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4Z"/></symbol>
   <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16Z"/><path d="m14.5 5.5 4 4"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5"/><path d="m11 5.5-6.5 6.5 6.5 6.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 8 6 12l4 4"/><path d="M6 12h10"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 5.8A9.6 9.6 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3.3 4.1"/><path d="M6.4 7.6A17 17 0 0 0 2.5 12S6 18.5 12 18.5c1.4 0 2.6-.3 3.7-.8"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="m4 4 16 16"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
 </svg>
 
-<header class="header is-stuck">
-  <div class="wrap header__inner">
-    <a class="logo" href="index.html">
-      <span class="logo__mark">V</span>
-      <span><b>Velora</b> <span>Motors</span></span>
-    </a>
-    <div class="header__actions" style="margin-left:auto">
-      <div class="lang" id="lang">
-        <button class="lang__btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
-          <span id="langCurrent">UA</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <div class="lang__menu" id="langMenu" role="menu"></div>
-      </div>
-      <a class="btn btn--ghost btn--sm" href="catalog.html">
-        <svg width="15" height="15"><use href="#i-back"/></svg>
-        <span data-i18n="nav.catalog">Каталог</span>
-      </a>
-      <button class="btn btn--primary btn--sm" id="logoutBtn" hidden data-i18n="admin.logout">Вийти</button>
-    </div>
-  </div>
-</header>
+<!-- ============================ ВХІД ============================ -->
+<section class="signin" id="signin" hidden>
+  <form class="signin__box" id="signinForm">
+    <div class="signin__mark">V</div>
+    <h1>Velora Motors</h1>
+    <p class="signin__lead">Control panel. Sign in with your account.</p>
 
-<!-- ===== Вхід ===== -->
-<section class="login" id="login">
-  <h1 data-i18n="admin.login">Вхід</h1>
-  <p data-i18n="admin.hint">Демо-пароль: admin</p>
-  <form id="loginForm">
-    <input type="password" id="pwd" data-i18n-placeholder="admin.password" placeholder="Пароль" autocomplete="current-password">
-    <button class="btn btn--primary btn--block" type="submit" data-i18n="admin.enter">Увійти</button>
-    <div class="login__err" id="loginErr"></div>
+    <label class="fld">
+      <span>Email</span>
+      <input id="siEmail" type="email" autocomplete="username" required>
+    </label>
+    <label class="fld">
+      <span>Password</span>
+      <span class="peek">
+        <input id="siPassword" type="password" autocomplete="current-password" required>
+        <button class="peek__btn" type="button" data-peek="siPassword"
+                aria-label="Show password" aria-pressed="false">
+          <svg><use href="#i-eye"/></svg>
+        </button>
+      </span>
+    </label>
+
+    <button class="btn btn--primary btn--block" type="submit" id="siSubmit">Sign in</button>
+    <div class="msg" id="siMsg" role="status"></div>
   </form>
 </section>
 
-<!-- ===== Панель ===== -->
-<main class="admin wrap" id="panel" hidden>
-  <div class="admin__head">
-    <div>
-      <h1 class="admin__title" data-i18n="admin.title">Адмінпанель Velora Motors</h1>
-      <div class="admin__meta">
-        <span class="badge-mode" id="modeBadge"><i></i><span id="modeText"></span></span>
-        <span><span data-i18n="admin.total">Всього авто</span>: <b id="total">0</b></span>
+<!-- ============================ ПАНЕЛЬ ============================ -->
+<div class="shell" id="shell" hidden>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">V</span>
+      <span class="brand__name">Velora <b>control panel</b></span>
+    </a>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab is-active" type="button" data-view="cars">
+        <svg><use href="#i-car"/></svg><span>Cars</span><i class="tab__n" id="nCars">0</i>
+      </button>
+      <button class="tab" type="button" data-view="clips">
+        <svg><use href="#i-film"/></svg><span>Showroom clips</span><i class="tab__n" id="nClips">0</i>
+      </button>
+      <button class="tab" type="button" data-view="leads">
+        <svg><use href="#i-inbox"/></svg><span>Enquiries</span><i class="tab__n tab__n--alert" id="nLeads">0</i>
+      </button>
+    </nav>
+
+    <div class="topbar__end">
+      <a class="iconlink" href="index.html" target="_blank" rel="noopener" title="Open the website">
+        <svg><use href="#i-link"/></svg>
+      </a>
+      <span class="who" id="who"></span>
+      <button class="btn btn--ghost btn--sm" type="button" id="signout">
+        <svg width="15" height="15"><use href="#i-out"/></svg><span>Sign out</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ---------------------- АВТО ---------------------- -->
+  <main class="view is-active" id="view-cars">
+    <div class="view__head">
+      <div>
+        <h2>Cars in the catalogue</h2>
+        <p class="view__sub" id="carsSummary">—</p>
+      </div>
+      <div class="view__tools">
+        <label class="search">
+          <svg><use href="#i-search"/></svg>
+          <input type="search" id="carSearch" placeholder="Search make, model, VIN">
+        </label>
+        <button class="btn btn--primary" type="button" id="carNew">
+          <svg width="16" height="16"><use href="#i-plus"/></svg><span>Add a car</span>
+        </button>
       </div>
     </div>
-    <div class="admin__meta">
-      <button class="btn btn--ghost btn--sm" id="exportBtn" data-i18n="admin.export">Експорт JSON</button>
-      <label class="btn btn--ghost btn--sm" for="importFile" data-i18n="admin.import">Імпорт JSON</label>
-      <input type="file" id="importFile" accept="application/json" hidden>
-      <button class="btn btn--ghost btn--sm" id="resetBtn" data-i18n="admin.reset">Скинути</button>
+    <div class="cars" id="carList"></div>
+  </main>
+
+  <!-- ---------------------- РОЛИКИ ---------------------- -->
+  <main class="view" id="view-clips">
+    <div class="view__head">
+      <div>
+        <h2>Showroom clips</h2>
+        <p class="view__sub">The three videos on the home page and the “New arrivals” page.</p>
+      </div>
+      <div class="view__tools">
+        <button class="btn btn--primary" type="button" id="clipNew">
+          <svg width="16" height="16"><use href="#i-plus"/></svg><span>Add a clip</span>
+        </button>
+      </div>
     </div>
-  </div>
+    <div class="clips" id="clipList"></div>
+  </main>
 
-  <div class="admin__grid">
-    <!-- форма -->
-    <form class="panel" id="carForm">
-      <h2 class="panel__title">
-        <span id="formTitle" data-i18n="admin.add">Додати авто</span>
-        <button class="iconbtn" type="button" id="newBtn" data-i18n-title="admin.add"><svg><use href="#i-plus"/></svg></button>
-      </h2>
+  <!-- ---------------------- ЗАЯВКИ ---------------------- -->
+  <main class="view" id="view-leads">
+    <div class="view__head">
+      <div>
+        <h2>Enquiries from the website</h2>
+        <p class="view__sub" id="leadsSummary">—</p>
+      </div>
+      <div class="view__tools">
+        <div class="segmented" id="leadFilter">
+          <button class="is-active" type="button" data-status="all">All</button>
+          <button type="button" data-status="new">New</button>
+          <button type="button" data-status="in_progress">In progress</button>
+          <button type="button" data-status="done">Done</button>
+        </div>
+      </div>
+    </div>
+    <div class="leads" id="leadList"></div>
+  </main>
+</div>
 
-      <input type="hidden" id="cId">
+<!-- ============================ ФОРМА АВТО ============================ -->
+<div class="sheet" id="carSheet" hidden>
+  <form class="sheet__box" id="carForm">
+    <header class="sheet__head">
+      <h3 id="carFormTitle">Add a car</h3>
+      <button class="sheet__x" type="button" data-close-sheet aria-label="Close">&times;</button>
+    </header>
 
-      <div class="form-grid">
-        <div class="f"><label for="cBrand" data-i18n="catalog.brand">Марка</label><input id="cBrand" required></div>
-        <div class="f"><label for="cModel">Model</label><input id="cModel" required></div>
-        <div class="f full"><label for="cTrim">Trim / версія</label><input id="cTrim" placeholder="3.0 TDI quattro"></div>
+    <div class="sheet__body">
+      <input type="hidden" id="fId">
 
-        <div class="f"><label for="cYear" data-i18n="catalog.year">Рік</label><input id="cYear" type="number" min="1980" max="2030" required></div>
-        <div class="f"><label for="cPrice" data-i18n="catalog.priceLabel">Ціна, $</label><input id="cPrice" type="number" min="0" step="100" required></div>
-        <div class="f"><label for="cOldPrice">Стара ціна, $</label><input id="cOldPrice" type="number" min="0" step="100"></div>
-        <div class="f"><label for="cMileage" data-i18n="catalog.mileage">Пробіг, km</label><input id="cMileage" type="number" min="0" step="500" value="0"></div>
+      <div class="grid">
+        <label class="fld"><span>Make *</span><input id="fBrand" required></label>
+        <label class="fld"><span>Model *</span><input id="fModel" required></label>
+        <label class="fld fld--wide"><span>Trim / version</span><input id="fTrim" placeholder="3.0 TDI quattro"></label>
 
-        <div class="f"><label for="cCondition" data-i18n="catalog.condition">Стан</label><select id="cCondition"></select></div>
-        <div class="f"><label for="cState" data-i18n="catalog.state">Технічний стан</label><select id="cState"></select></div>
-        <div class="f"><label for="cBody" data-i18n="catalog.body">Кузов</label><select id="cBody"></select></div>
-        <div class="f"><label for="cFuel" data-i18n="catalog.fuel">Паливо</label><select id="cFuel"></select></div>
-        <div class="f"><label for="cGearbox" data-i18n="catalog.gearbox">КПП</label><select id="cGearbox"></select></div>
-        <div class="f"><label for="cDrive" data-i18n="catalog.drive">Привід</label><select id="cDrive"></select></div>
-        <div class="f"><label for="cColor">Color</label><select id="cColor"></select></div>
-        <div class="f"><label for="cCity" data-i18n="hero.city">Місто</label><select id="cCity"></select></div>
+        <label class="fld"><span>Year *</span><input id="fYear" type="number" min="1950" max="2100" required></label>
+        <label class="fld"><span>Price, $ *</span><input id="fPrice" type="number" min="0" step="100" required></label>
+        <label class="fld"><span>Old price, $</span><input id="fOldPrice" type="number" min="0" step="100"></label>
+        <label class="fld"><span>Mileage, km</span><input id="fMileage" type="number" min="0" step="500" value="0"></label>
 
-        <div class="f"><label for="cEngine">Engine, L</label><input id="cEngine" type="number" min="0" step="0.1" value="2.0"></div>
-        <div class="f"><label for="cPower">Power, hp</label><input id="cPower" type="number" min="0" step="5" value="150"></div>
-        <div class="f"><label for="cOwners" data-i18n="catalog.owners">Власників</label><input id="cOwners" type="number" min="0" max="10" value="1"></div>
-        <div class="f"><label for="cVin" data-i18n="catalog.vin">VIN</label><input id="cVin" maxlength="24"></div>
+        <label class="fld"><span>Condition</span><select id="fCondition"></select></label>
+        <label class="fld"><span>Technical condition</span><select id="fState"></select></label>
+        <label class="fld"><span>Body</span><select id="fBody"></select></label>
+        <label class="fld"><span>Fuel</span><select id="fFuel"></select></label>
+        <label class="fld"><span>Gearbox</span><select id="fGearbox"></select></label>
+        <label class="fld"><span>Drivetrain</span><select id="fDrive"></select></label>
+        <label class="fld"><span>Colour</span><select id="fColor"></select></label>
+        <label class="fld"><span>Location</span><select id="fCity"></select></label>
 
-        <div class="f full">
-          <label data-i18n="badge.hit">Бейджі</label>
-          <div class="checks" id="badgeChecks"></div>
+        <label class="fld"><span>Engine, L</span><input id="fEngine" type="number" min="0" step="0.1" value="2"></label>
+        <label class="fld"><span>Power, hp</span><input id="fPower" type="number" min="0" step="5" value="150"></label>
+        <label class="fld"><span>Owners</span><input id="fOwners" type="number" min="0" max="10" value="1"></label>
+        <label class="fld"><span>VIN</span><input id="fVin" maxlength="24"></label>
+
+        <div class="fld fld--wide">
+          <span>Badges</span>
+          <div class="checks" id="fBadges"></div>
         </div>
 
-        <div class="f full">
-          <label data-i18n="catalog.features">Комплектація</label>
-          <div class="checks" id="featureChecks"></div>
+        <div class="fld fld--wide">
+          <span>Equipment</span>
+          <div class="checks" id="fFeatures"></div>
         </div>
 
-        <div class="f full">
-          <label for="cImageFile" data-i18n="admin.photos">Фотографії авто</label>
-          <input id="cImageFile" type="file" accept="image/*" multiple>
-          <textarea id="cGallery" rows="3" style="margin-top:8px"
-                    placeholder="assets/img/cars/my-car.jpg"></textarea>
-          <small class="f__hint" data-i18n="admin.photosHint"></small>
-          <div class="previews" id="previews"></div>
+        <div class="fld fld--wide">
+          <span>Photos</span>
+          <div class="drop" id="fDrop">
+            <input id="fFiles" type="file" accept="image/*" multiple hidden>
+            <button class="drop__btn" type="button" id="fPick">Choose photos</button>
+            <span class="drop__hint">The first photo is used as the main one. Drag a photo to reorder.</span>
+          </div>
+          <div class="shots" id="fShots"></div>
         </div>
 
-        <div class="f full"><label for="cDescUa">Опис (UA)</label><textarea id="cDescUa"></textarea></div>
-        <div class="f full"><label for="cDescEn">Description (EN)</label><textarea id="cDescEn"></textarea></div>
-        <div class="f full"><label for="cDescPl">Opis (PL)</label><textarea id="cDescPl"></textarea></div>
+        <label class="fld fld--wide"><span>Description (EN)</span><textarea id="fDescEn" rows="3"></textarea></label>
+        <label class="fld fld--wide"><span>Description (UA)</span><textarea id="fDescUa" rows="3"></textarea></label>
+        <label class="fld fld--wide"><span>Description (PL)</span><textarea id="fDescPl" rows="3"></textarea></label>
+
+        <label class="switch fld--wide">
+          <input type="checkbox" id="fPublished" checked>
+          <span>Visible on the website</span>
+        </label>
+      </div>
+    </div>
+
+    <footer class="sheet__foot">
+      <div class="msg" id="carFormMsg" role="status"></div>
+      <div class="sheet__actions">
+        <button class="btn btn--ghost" type="button" data-close-sheet>Cancel</button>
+        <button class="btn btn--primary" type="submit" id="carSave">Save</button>
+      </div>
+    </footer>
+  </form>
+</div>
+
+<!-- ============================ ФОРМА РОЛИКА ============================ -->
+<div class="sheet" id="clipSheet" hidden>
+  <form class="sheet__box" id="clipForm">
+    <header class="sheet__head">
+      <h3 id="clipFormTitle">Edit clip</h3>
+      <button class="sheet__x" type="button" data-close-sheet aria-label="Close">&times;</button>
+    </header>
+
+    <div class="sheet__body">
+      <input type="hidden" id="kId">
+
+      <div class="grid">
+        <label class="fld"><span>Order on the page</span><input id="kPosition" type="number" min="1" max="20" value="1"></label>
+        <label class="fld"><span>Power, hp</span><input id="kPower" placeholder="620"></label>
+        <label class="fld"><span>0–100 km/h</span><input id="kTime" placeholder="3.4 s"></label>
+
+        <div class="fld fld--wide">
+          <span>Video</span>
+          <div class="drop">
+            <input id="kVideoFile" type="file" accept="video/*" hidden>
+            <button class="drop__btn" type="button" data-pick="kVideoFile">Upload video</button>
+            <span class="drop__hint">MP4, up to 50 MB. It plays muted and on a loop.</span>
+          </div>
+          <input class="path" id="kVideo" placeholder="assets/video/showcase-1.mp4">
+          <video class="preview" id="kVideoPreview" muted playsinline controls preload="metadata" hidden></video>
+        </div>
+
+        <div class="fld">
+          <span>Video poster (16:9)</span>
+          <div class="drop">
+            <input id="kPosterFile" type="file" accept="image/*" hidden>
+            <button class="drop__btn" type="button" data-pick="kPosterFile">Upload</button>
+          </div>
+          <input class="path" id="kPoster">
+          <img class="preview" id="kPosterPreview" alt="" hidden>
+        </div>
+
+        <div class="fld">
+          <span>Photo for the pop-up</span>
+          <div class="drop">
+            <input id="kPhotoFile" type="file" accept="image/*" hidden>
+            <button class="drop__btn" type="button" data-pick="kPhotoFile">Upload</button>
+          </div>
+          <input class="path" id="kPhoto">
+          <img class="preview" id="kPhotoPreview" alt="" hidden>
+        </div>
       </div>
 
-      <div class="form-actions">
-        <button class="btn btn--primary" type="submit" data-i18n="admin.save">Зберегти</button>
-        <button class="btn btn--ghost" type="button" id="cancelBtn" data-i18n="admin.cancel">Скасувати</button>
-        <div class="form-msg" id="formMsg" role="status"></div>
-      </div>
-    </form>
+      <div class="langbox" id="clipLangs"></div>
 
-    <!-- список -->
-    <section class="panel">
-      <h2 class="panel__title"><span data-i18n="admin.list">Автомобілі в каталозі</span></h2>
-      <div class="admin__toolbar">
-        <input type="search" id="adminSearch" data-i18n-placeholder="admin.search" placeholder="Пошук">
+      <label class="switch">
+        <input type="checkbox" id="kPublished" checked>
+        <span>Visible on the website</span>
+      </label>
+    </div>
+
+    <footer class="sheet__foot">
+      <div class="msg" id="clipFormMsg" role="status"></div>
+      <div class="sheet__actions">
+        <button class="btn btn--ghost" type="button" data-close-sheet>Cancel</button>
+        <button class="btn btn--primary" type="submit" id="clipSave">Save</button>
       </div>
-      <div class="rows" id="rows"></div>
-    </section>
-  </div>
-</main>
+    </footer>
+  </form>
+</div>
 
 <div class="toast" id="toast" role="status"></div>
+<div class="booting" id="booting">Loading…</div>
 
-<script src="assets/js/i18n.js?v=6"></script>
-<script src="assets/js/seed.js?v=6"></script>
-<script src="assets/js/store.js?v=6"></script>
-<script src="assets/js/admin.js?v=6"></script>
+<script src="assets/js/supabase.js?v=21"></script>
+<script src="assets/js/media.js?v=21"></script>
+<script src="assets/js/admin.js?v=21"></script>
 </body>
 </html>

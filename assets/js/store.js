@@ -1,16 +1,55 @@
 /* ==========================================================================
    Velora Motors — шар даних + пошукові утиліти
-   Джерело даних: /api/cars (коли запущено server.py) → data/cars.json →
-   assets/js/seed.js (запасний варіант для відкриття через file://).
+   Джерело даних: Supabase (таблиця cars) → data/cars.json →
+   assets/js/seed.js (запасний варіант, якщо бази не видно з file://).
    ========================================================================== */
 (function (global) {
   'use strict';
 
-  const LS_CARS = 'velora.cars';
   const LS_FAV = 'velora.favorites';
 
   let cars = [];
-  let mode = 'local';       // 'server' | 'local'
+  let mode = 'offline';     // 'supabase' | 'offline'
+
+  /* ---------- переклад рядка бази у звичне для сайту авто ---------- */
+
+  const FIELDS = [
+    'brand', 'model', 'trim', 'year', 'body', 'fuel', 'gearbox', 'drive',
+    'engine', 'power', 'mileage', 'condition', 'state', 'owners', 'vin',
+    'city', 'price', 'color', 'image'
+  ];
+
+  function fromRow(row) {
+    const car = { id: row.id };
+    FIELDS.forEach((f) => { car[f] = row[f]; });
+    car.engine = row.engine == null ? 0 : Number(row.engine);
+    car.oldPrice = row.old_price || null;
+    car.gallery = row.gallery || [];
+    car.badges = row.badges || [];
+    car.features = row.features || [];
+    car.desc = row.descriptions || {};
+    car.published = row.published !== false;
+    car.createdAt = (row.created_at || '').slice(0, 10);
+    return car;
+  }
+
+  function toRow(car) {
+    const row = { id: car.id };
+    FIELDS.forEach((f) => { row[f] = car[f] == null ? null : car[f]; });
+    row.year = Number(car.year) || new Date().getFullYear();
+    row.price = Number(car.price) || 0;
+    row.mileage = Number(car.mileage) || 0;
+    row.owners = Number(car.owners) || 0;
+    row.power = Number(car.power) || 0;
+    row.engine = Number(car.engine) || 0;
+    row.old_price = car.oldPrice ? Number(car.oldPrice) : null;
+    row.gallery = car.gallery || [];
+    row.badges = car.badges || [];
+    row.features = car.features || [];
+    row.descriptions = car.desc || {};
+    row.published = car.published !== false;
+    return row;
+  }
 
   /* ---------- завантаження ---------- */
 
@@ -21,32 +60,26 @@
   }
 
   async function init() {
-    // 1. API сервера
+    // 1. база
     try {
-      const data = await fetchJSON('api/cars');
-      if (Array.isArray(data)) {
-        cars = data;
-        mode = 'server';
+      const rows = await DB.from('cars').select({ order: 'created_at.desc' });
+      if (Array.isArray(rows) && rows.length) {
+        cars = rows.map(fromRow);
+        mode = 'supabase';
         return cars;
       }
-    } catch (e) { /* сервер не запущено — йдемо далі */ }
-
-    // 2. локальні зміни в браузері
-    const saved = localStorage.getItem(LS_CARS);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length) {
-          cars = parsed;
-          mode = 'local';
-          return cars;
-        }
-      } catch (e) { localStorage.removeItem(LS_CARS); }
+      if (Array.isArray(rows)) {          // база на звʼязку, але каталог порожній
+        cars = [];
+        mode = 'supabase';
+        return cars;
+      }
+    } catch (e) {
+      console.warn('[velora] каталог з бази недоступний, показуємо локальні дані:', e.message);
     }
 
-    // 3. початковий каталог
+    // 2. запасний каталог із репозиторію
     cars = await loadSeed();
-    mode = 'local';
+    mode = 'offline';
     return cars;
   }
 
@@ -58,67 +91,49 @@
     return Array.isArray(global.CARS_SEED) ? global.CARS_SEED.slice() : [];
   }
 
-  function persistLocal() {
-    localStorage.setItem(LS_CARS, JSON.stringify(cars));
+  /** Перечитує каталог із бази (потрібно адмінці після змін). */
+  async function reload() {
+    const rows = await DB.from('cars').select({ order: 'created_at.desc' });
+    cars = (rows || []).map(fromRow);
+    mode = 'supabase';
+    return cars;
   }
 
-  /* ---------- CRUD ---------- */
+  /* ---------- CRUD (лише для адміністратора) ---------- */
 
   async function save(car) {
     delete car._hay;
     delete car._tokens;
     delete car._simple;
-    const idx = cars.findIndex((c) => c.id === car.id);
-    if (idx >= 0) cars[idx] = car; else cars.unshift(car);
 
-    if (mode === 'server') {
-      await fetchJSON('api/cars', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cars)
-      });
-    } else {
-      persistLocal();
-    }
-    return car;
+    const saved = await DB.from('cars').upsert(toRow(car), 'id');
+    const next = fromRow(Array.isArray(saved) ? saved[0] : saved);
+
+    const idx = cars.findIndex((c) => c.id === next.id);
+    if (idx >= 0) cars[idx] = next; else cars.unshift(next);
+    return next;
   }
 
   async function remove(id) {
+    await DB.from('cars').remove({ id: 'eq.' + id });
     cars = cars.filter((c) => c.id !== id);
-    if (mode === 'server') {
-      await fetchJSON('api/cars', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cars)
-      });
-    } else {
-      persistLocal();
-    }
   }
 
+  /** Імпорт JSON: усе, що є у файлі, заливається поверх наявного каталогу. */
   async function replaceAll(list) {
-    cars = list;
-    if (mode === 'server') {
-      await fetchJSON('api/cars', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cars)
-      });
-    } else {
-      persistLocal();
+    const rows = list.map(toRow);
+    for (let i = 0; i < rows.length; i += 20) {
+      await DB.from('cars').upsert(rows.slice(i, i + 20), 'id');
     }
-    return cars;
+    return reload();
   }
 
+  /** Повертає початковий каталог із репозиторію назад у базу. */
   async function resetFactory() {
-    if (mode === 'server') {
-      const data = await fetchJSON('api/cars/reset', { method: 'POST' });
-      cars = data;
-      return cars;
-    }
-    localStorage.removeItem(LS_CARS);
-    cars = await loadSeed();
-    return cars;
+    const seed = await loadSeed();
+    if (!seed.length) throw new Error('немає початкових даних');
+    await DB.from('cars').remove({ id: 'not.is.null' });
+    return replaceAll(seed);
   }
 
   /* ---------- обране ---------- */
@@ -344,7 +359,7 @@
     get mode() { return mode; },
     all() { return cars; },
     get(id) { return cars.find((c) => c.id === id); },
-    save, remove, replaceAll, resetFactory, loadSeed,
+    save, remove, replaceAll, resetFactory, loadSeed, reload,
     favorites, toggleFavorite,
     fmtNum, fmtPrice, norm, parseQuery, score, search
   };

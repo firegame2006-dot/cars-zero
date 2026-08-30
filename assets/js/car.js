@@ -14,7 +14,7 @@
   let photos = [];
   let index = 0;
 
-  const colorLabel = () => ({ ua: 'Колір', en: 'Colour', pl: 'Kolor' }[I18N.lang] || 'Колір');
+  const colorLabel = () => ({ en: 'Colour', ua: 'Колір', pl: 'Kolor' }[I18N.lang] || 'Colour');
 
   /* ---------- галерея ---------- */
 
@@ -24,10 +24,10 @@
         <div class="gallery__track" id="track">
           ${photos.map((src, i) => `
             <figure class="gallery__slide">
-              <span class="gallery__bg" style="background-image:url('${esc(src)}')"></span>
-              <img src="${esc(src)}" alt="${esc(CarsUI.carName(car))} — ${t('page.photo')} ${i + 1}"
+              <span class="gallery__bg" style="background-image:url('${esc(Media.url(src))}')"></span>
+              <img src="${esc(Media.url(src))}" alt="${esc(CarsUI.carName(car))} — ${t('page.photo')} ${i + 1}"
                    draggable="false" loading="${i === 0 ? 'eager' : 'lazy'}"
-                   onerror="this.src='${CarsUI.FALLBACK}'">
+                   onerror="this.src='${esc(Media.url(CarsUI.FALLBACK))}'">
             </figure>`).join('')}
         </div>
 
@@ -46,7 +46,8 @@
           ${photos.map((src, i) => `
             <button class="thumb${i === 0 ? ' is-active' : ''}" data-go="${i}"
                     aria-label="${esc(t('page.photo'))} ${i + 1}">
-              <img src="${esc(src)}" alt="" loading="lazy" onerror="this.src='${CarsUI.FALLBACK}'">
+              <img src="${esc(Media.url(src))}" alt="" loading="lazy"
+                   onerror="this.src='${esc(Media.url(CarsUI.FALLBACK))}'">
             </button>`).join('')}
         </div>` : ''}`;
   }
@@ -116,7 +117,7 @@
   }
 
   function render() {
-    const desc = (car.desc && (car.desc[I18N.lang] || car.desc.ua)) || '';
+    const desc = (car.desc && (car.desc[I18N.lang] || car.desc.en || car.desc.ua)) || '';
     const monthly = Math.round((car.price * 0.75) / 60);
     const favOn = Store.favorites().includes(car.id);
 
@@ -157,8 +158,7 @@
             </div>
             <div class="f">
               <label for="lName">${esc(t('modal.name'))}</label>
-              <input id="lName" type="text" autocomplete="name"
-                     placeholder="${esc(t('testDrive.namePh'))}">
+              <input id="lName" type="text" autocomplete="name">
             </div>
             <div class="f">
               <label for="lPhone">${esc(t('modal.phone'))}</label>
@@ -232,17 +232,48 @@
     bindGallery();
     goTo(0);
 
-    $('#leadForm').addEventListener('submit', (e) => {
+    const leadForm = $('#leadForm');
+    const leadFields = [$('#lName'), $('#lPhone')];
+
+    /** Знімає червону підсвітку, щойно користувач почав виправляти. */
+    function clearLeadError() {
+      leadForm.classList.remove('is-err');
+      leadFields.forEach((el) => el.classList.remove('is-err'));
+      $('#leadMsg').textContent = '';
+      $('#leadMsg').className = 'form-msg';
+    }
+
+    leadFields.forEach((el) => el.addEventListener('input', () => {
+      if (leadForm.classList.contains('is-err')) clearLeadError();
+    }));
+
+    leadForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const msg = $('#leadMsg');
-      if (!$('#lName').value.trim() || !$('#lPhone').value.trim()) {
+      const empty = leadFields.filter((el) => !el.value.trim());
+
+      if (empty.length) {
+        // форма і кнопка стають червоними, поки поля не заповнені
+        leadForm.classList.add('is-err');
+        leadFields.forEach((el) => el.classList.toggle('is-err', empty.includes(el)));
         msg.textContent = t('sto.err');
         msg.className = 'form-msg is-err';
+        empty[0].focus();
         return;
       }
-      msg.textContent = t('modal.sent') + ' ' + t('demo.form');
+
+      clearLeadError();
+      DB.lead({
+        kind: 'test_drive',
+        name: leadFields[0].value,
+        phone: leadFields[1].value,
+        carId: car.id,
+        carTitle: CarsUI.carName(car) + (car.trim ? ' · ' + car.trim : ''),
+        service: t('catalog.testDrive')
+      });
+      msg.textContent = t('modal.sent');
       msg.className = 'form-msg is-ok';
-      $('#leadForm').reset();
+      leadForm.reset();
     });
 
     $('#favBtn').addEventListener('click', () => {

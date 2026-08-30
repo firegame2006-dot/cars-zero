@@ -16,9 +16,14 @@
         msg.className = 'form-msg is-err';
         return;
       }
+      DB.lead({
+        kind: 'contact',
+        name: $('#cName').value,
+        phone: $('#cPhone').value,
+        message: $('#cMessage') ? $('#cMessage').value : ''
+      });
       msg.textContent = t('contacts.sent');
       msg.className = 'form-msg is-ok';
-      Layout.toast(t('demo.form'));
       e.target.reset();
     });
   }

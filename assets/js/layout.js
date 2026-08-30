@@ -127,7 +127,7 @@
     <div class="header__actions">
       <div class="lang" id="lang">
         <button class="lang__btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
-          <span id="langCurrent">UA</span>${icon('i-chev-down')}
+          <span id="langCurrent">EN</span>${icon('i-chev-down')}
         </button>
         <div class="lang__menu" id="langMenu" role="menu"></div>
       </div>
@@ -193,11 +193,9 @@
         <h4 data-i18n="footer.services"></h4>
         <ul class="footer__list">
           <li><a href="catalog.html" data-i18n="footer.srv1"></a></li>
-          <li><a href="service.html" data-i18n="footer.srv2"></a></li>
-          <li><a href="service.html" data-i18n="footer.srv3"></a></li>
+          <li><a href="#" data-evaluate data-i18n="footer.srv2"></a></li>
           <li><a href="service.html" data-i18n="footer.srv4"></a></li>
           <li><a href="showcase.html" data-i18n="footer.srv5"></a></li>
-          <li><a href="contacts.html" data-i18n="footer.srv6"></a></li>
         </ul>
       </div>
 
@@ -340,6 +338,13 @@
         msg.className = 'form-msg is-err';
         return;
       }
+      DB.lead({
+        kind: 'evaluate',
+        name: document.getElementById('evName').value,
+        phone: document.getElementById('evPhone').value,
+        carTitle: document.getElementById('evCar').value,
+        message: document.getElementById('evComment').value
+      });
       msg.textContent = t('evaluate.ok');
       msg.className = 'form-msg is-ok';
       e.target.reset();
@@ -387,6 +392,13 @@
       <button class="btn btn--light btn--block" type="submit" data-i18n="sto.submit"></button>
       <div class="form-msg" id="bookingModalMsg" role="status"></div>
     </form>
+
+    <div class="sent" id="bookingSent" hidden>
+      <span class="sent__mark">${icon('i-check')}</span>
+      <h2 data-i18n="sto.okTitle"></h2>
+      <p data-i18n="sto.ok"></p>
+      <button class="btn btn--light" type="button" data-booking-close data-i18n="sto.okDone"></button>
+    </div>
   </div>
 </div>`;
   }
@@ -418,7 +430,11 @@
     document.body.classList.remove('menu-open');   // мобільне меню не має лишатися відкритим
     closeOthers(modal);                            // одночасно відкрите лише одне вікно
     fillBookingServices(service);
+    showBookingForm();
     document.getElementById('bookingModalMsg').textContent = '';
+    document.getElementById('bookingModalMsg').className = 'form-msg';
+    document.getElementById('bookingModalForm').classList.remove('is-err');
+    ['mName', 'mPhone'].forEach((id) => document.getElementById(id).classList.remove('is-err'));
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => document.getElementById('mName').focus(), 250);
@@ -429,6 +445,15 @@
     if (!modal) return;
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
+  }
+
+  /** Повертає вікно запису у стан форми (після попередньої заявки). */
+  function showBookingForm() {
+    const form = document.getElementById('bookingModalForm');
+    const sent = document.getElementById('bookingSent');
+    if (!form || !sent) return;
+    form.hidden = false;
+    sent.hidden = true;
   }
 
   function bindBooking() {
@@ -459,22 +484,78 @@
       }
     });
 
-    document.getElementById('bookingModalForm').addEventListener('submit', (e) => {
+    const bookingForm = document.getElementById('bookingModalForm');
+    const bookingRequired = ['mName', 'mPhone'].map((id) => document.getElementById(id));
+
+    /** Знімає червону підсвітку, щойно поле починають заповнювати. */
+    function clearBookingError() {
+      bookingForm.classList.remove('is-err');
+      bookingRequired.forEach((el) => el.classList.remove('is-err'));
+      const msg = document.getElementById('bookingModalMsg');
+      msg.textContent = '';
+      msg.className = 'form-msg';
+    }
+
+    bookingRequired.forEach((el) => el.addEventListener('input', () => {
+      if (bookingForm.classList.contains('is-err')) clearBookingError();
+    }));
+
+    bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const msg = document.getElementById('bookingModalMsg');
-      if (!document.getElementById('mName').value.trim() || !document.getElementById('mPhone').value.trim()) {
+      const empty = bookingRequired.filter((el) => !el.value.trim());
+
+      if (empty.length) {
+        // кнопка й поля стають червоними, поки не заповнені імʼя та телефон
+        bookingForm.classList.add('is-err');
+        bookingRequired.forEach((el) => el.classList.toggle('is-err', empty.includes(el)));
         msg.textContent = t('sto.err');
         msg.className = 'form-msg is-err';
+        empty[0].focus();
         return;
       }
-      msg.textContent = t('sto.ok') + ' ' + t('demo.form');
-      msg.className = 'form-msg is-ok';
+
+      clearBookingError();
+      DB.lead({
+        kind: 'booking',
+        name: document.getElementById('mName').value,
+        phone: document.getElementById('mPhone').value,
+        carTitle: document.getElementById('mCar').value,
+        service: document.getElementById('mService').value,
+        message: document.getElementById('mComment').value
+      });
       e.target.reset();
       fillBookingServices();
+
+      // підтвердження на всю картку — його неможливо не помітити
+      document.getElementById('bookingModalForm').hidden = true;
+      document.getElementById('bookingSent').hidden = false;
+      toast(t('sto.okTitle'));
     });
   }
 
   /* ---------- поведінка ---------- */
+
+  /**
+   * Браузер за замовчуванням повертає сторінку на те місце, де її залишили.
+   * Після перезавантаження хочемо бачити початок сторінки — крім випадку,
+   * коли в адресі є якір (посилання на конкретний блок).
+   */
+  function resetScroll() {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) return;
+
+    // html має scroll-behavior: smooth, тому просимо саме миттєвий стрибок,
+    // інакше анімація не встигає і сторінка лишається там, де була.
+    const toTop = () => {
+      try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+      catch (e) { window.scrollTo(0, 0); }
+    };
+
+    toTop();
+    // картинки догружаються і зсувають верстку — повторюємо після повного завантаження
+    window.addEventListener('load', toTop, { once: true });
+  }
 
   function toast(msg) {
     const el = document.getElementById('toast');
@@ -493,7 +574,7 @@
         <span>${esc(l.full)}</span><small>${esc(l.label)}</small>
       </button>`).join('');
     document.getElementById('langCurrent').textContent =
-      (I18N.langs.find((l) => l.code === I18N.lang) || {}).label || 'UA';
+      (I18N.langs.find((l) => l.code === I18N.lang) || {}).label || 'EN';
   }
 
   let revealObserver;
@@ -570,7 +651,8 @@
     if (sub) {
       sub.addEventListener('submit', (e) => {
         e.preventDefault();
-        toast(t('footer.subscribed') + ' ' + t('demo.form'));
+        DB.lead({ kind: 'subscribe', email: document.getElementById('subEmail').value });
+        toast(t('footer.subscribed'));
         sub.reset();
       });
     }
@@ -587,6 +669,7 @@
    * @param {string} active - id поточної сторінки для підсвітки в меню
    */
   function mount(active) {
+    resetScroll();
     document.body.insertAdjacentHTML('afterbegin', SPRITE + headerHTML(active));
     document.body.insertAdjacentHTML('beforeend', footerHTML() + tabbarHTML(active) + bookingHTML() + evaluateHTML() +
       '<div class="toast" id="toast" role="status"></div>' +

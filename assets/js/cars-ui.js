@@ -61,10 +61,10 @@
       <article class="card" data-id="${esc(car.id)}" style="animation-delay:${Math.min(index || 0, 9) * 45}ms">
         <a class="card__media" href="car.html?id=${encodeURIComponent(car.id)}"
            aria-label="${esc(carName(car))}">
-          <span class="card__bg" style="background-image:url('${esc(photos[0])}')"></span>
+          <span class="card__bg" style="background-image:url('${esc(Media.url(photos[0]))}')"></span>
           <div class="card__tags">${tagsHTML(car)}</div>
-          <img src="${esc(photos[0])}" alt="${esc(carName(car))}" loading="lazy" width="1200" height="800"
-               onerror="this.src='${FALLBACK}'">
+          <img src="${esc(Media.url(photos[0]))}" alt="${esc(carName(car))}" loading="lazy" width="1200" height="800"
+               onerror="this.src='${esc(Media.url(FALLBACK))}'">
           ${photos.length > 1 ? `<span class="card__count">${icon('i-expand')}${photos.length}</span>` : ''}
         </a>
         <button class="card__fav${favs.includes(car.id) ? ' is-on' : ''}" data-fav
@@ -157,32 +157,37 @@
 
   /** Показує повний опис кастомного авто з ролика. */
   function openClipInfo(index) {
-    const item = (window.SHOWCASE || [])[index];
+    const item = global.Showcase && Showcase.get(index);
     if (!item) return;
     const layer = clipLayer();
+    const clip = Showcase.text;
+    // у вікні показуємо повний кадр, а не обрізаний під відео постер
+    const photo = item.photo || item.poster || FALLBACK;
 
     document.getElementById('clipInfoBody').innerHTML = `
       <div class="clipinfo__media">
-        <img src="${esc(item.poster)}" alt="${esc(t(item.title))}">
-        <span class="clipinfo__badge">${esc(t(item.badge))}</span>
+        <span class="clipinfo__bg" style="background-image:url('${esc(Media.url(photo))}')"></span>
+        <img src="${esc(Media.url(photo))}" alt="${esc(clip(item.title))}" loading="lazy"
+             onerror="this.src='${esc(Media.url(item.poster || FALLBACK))}'">
+        <span class="clipinfo__badge">${esc(clip(item.badge))}</span>
       </div>
       <div class="clipinfo__body">
-        <h2>${esc(t(item.title))}</h2>
-        <div class="clipinfo__sub">${esc(t(item.sub))}</div>
+        <h2>${esc(clip(item.title))}</h2>
+        <div class="clipinfo__sub">${esc(clip(item.sub))}</div>
         <dl class="showcase__specs">
           <div class="showcase__spec"><dt>${esc(t('showcase.specPower'))}</dt>
             <dd>${item.power} ${esc(t('catalog.hp'))}</dd></div>
           <div class="showcase__spec"><dt>${esc(t('showcase.specTime'))}</dt>
             <dd>${item.time}</dd></div>
           <div class="showcase__spec"><dt>${esc(t('showcase.specStatus'))}</dt>
-            <dd>${esc(t(item.status))}</dd></div>
+            <dd>${esc(clip(item.status))}</dd></div>
         </dl>
         <h3 class="detail__section-title">${esc(t('clip.specs'))}</h3>
-        <p class="clipinfo__text">${esc(t('clip.i' + (index + 1) + 'long'))}</p>
+        <p class="clipinfo__text">${esc(clip(item.details))}</p>
         <div class="clipinfo__actions">
           <button class="btn btn--accent" data-booking
                   data-service="${esc(t('sto.s5t'))}">${esc(t('clip.ask'))}</button>
-          <button class="btn btn--ghost" data-clipinfo-close>${esc(t('page.close'))}</button>
+          <a class="btn btn--ghost" href="catalog.html">${esc(t('nav.catalog'))}</a>
         </div>
       </div>`;
 

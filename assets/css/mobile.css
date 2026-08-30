@@ -339,7 +339,9 @@
   .gallery__counter { right: 12px; bottom: 12px; font-size: .72rem; padding: 5px 11px; }
   .gallery__tags { top: 12px; left: 12px; }
 
-  .thumbs { gap: 8px; padding: 10px var(--gutter) 0; margin: 0 calc(-1 * var(--gutter)); }
+  /* .carpage__media вже виходить на всю ширину — тут потрібні лише відступи,
+     інакше другий відʼємний margin висував стрічку за край екрана */
+  .thumbs { gap: 8px; padding: 10px var(--gutter) 0; margin: 0; }
   .thumb { flex-basis: 72px; height: 50px; opacity: .95; border-radius: 10px; }
 
   .carpage__side {
@@ -478,7 +480,6 @@
 
   .showcase__item { padding: 16px 0; gap: 16px; }
   .showcase__media { border-radius: 20px; }
-  .showcase__num { font-size: 2rem; margin-bottom: 4px; }
   .showcase__title { font-size: 1.4rem; }
   .showcase__sub { font-size: .72rem; margin-bottom: 12px; }
   .showcase__text { font-size: .9rem; margin-bottom: 16px; }
@@ -568,6 +569,17 @@
 
   .card:active { transform: scale(.995); }
   .quick__item:active, .filters__toggle:active { opacity: .85; }
+}
+
+/* вузькі телефони: шапка має вміститись у рядок без переповнення */
+@media (max-width: 380px) {
+  .header__inner { gap: 8px; }
+  .header__actions { gap: 6px; }
+  .logo { font-size: 1rem; gap: 7px; }
+  .logo__mark { width: 27px; height: 27px; font-size: .78rem; }
+  .lang__btn { padding: 6px 8px; font-size: .74rem; gap: 4px; }
+  .headfav { width: 34px; height: 34px; }
+  .burger { width: 34px; height: 34px; }
 }
 
 /* дуже вузькі екрани */

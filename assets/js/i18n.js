@@ -198,6 +198,8 @@
         fComment: 'Коментар',
         submit: 'Записатись',
         ok: 'Дякуємо! Ми зателефонуємо вам найближчим часом.',
+        okTitle: 'Заявку прийнято',
+        okDone: 'Готово',
         err: 'Заповніть ім’я та телефон.'
       },
       about: {
@@ -240,10 +242,8 @@
         contacts: 'Контакти',
         srv1: 'Продаж авто',
         srv2: 'Trade-in та викуп',
-        srv3: 'Кредит і лізинг',
         srv4: 'Технічне обслуговування',
         srv5: 'Кастом і тюнінг',
-        srv6: 'Підбір авто під ключ',
         showroom: 'Шоурум',
         service: 'СТО',
         addressShowroom: 'Київ, вул. Березова 14',
@@ -331,7 +331,7 @@
         type: 'Car type',
         typeAny: 'All',
         budget: 'Budget',
-        budgetAny: 'Any price',
+        budgetAny: 'Any',
         search: 'Find',
         searchAria: 'Search cars',
         stat1: 'cars in stock',
@@ -490,6 +490,8 @@
         fComment: 'Comment',
         submit: 'Book now',
         ok: 'Thank you! We will call you shortly.',
+        okTitle: 'Request sent',
+        okDone: 'Done',
         err: 'Please fill in your name and phone.'
       },
       about: {
@@ -532,10 +534,8 @@
         contacts: 'Contacts',
         srv1: 'Car sales',
         srv2: 'Trade-in & buy-out',
-        srv3: 'Credit & leasing',
         srv4: 'Maintenance',
         srv5: 'Custom & tuning',
-        srv6: 'Turnkey car sourcing',
         showroom: 'Showroom',
         service: 'Workshop',
         addressShowroom: 'Kyiv, 14 Berezova St.',
@@ -782,6 +782,8 @@
         fComment: 'Komentarz',
         submit: 'Umów wizytę',
         ok: 'Dziękujemy! Zadzwonimy wkrótce.',
+        okTitle: 'Zgłoszenie wysłane',
+        okDone: 'Gotowe',
         err: 'Podaj imię i telefon.'
       },
       about: {
@@ -824,10 +826,8 @@
         contacts: 'Kontakt',
         srv1: 'Sprzedaż aut',
         srv2: 'Trade-in i odkup',
-        srv3: 'Kredyt i leasing',
         srv4: 'Obsługa serwisowa',
         srv5: 'Custom i tuning',
-        srv6: 'Sprowadzanie pod klucz',
         showroom: 'Salon',
         service: 'Serwis',
         addressShowroom: 'Kijów, ul. Berezowa 14',
@@ -910,12 +910,11 @@
         filesHint: 'Можна кілька файлів — загальний вигляд, салон, документи',
         chosen: 'обрано файлів',
         submit: 'Отримати оцінку',
-        ok: 'Дякуємо! Це демо-форма, тому дані нікуди не пішли.'
+        ok: 'Дякуємо! Ми передзвонимо та назвемо ціну.'
       },
       testDrive: {
         title: 'Записатися на тест-драйв',
         hint: 'Залиште імʼя та номер — менеджер передзвонить і підбере зручний час.',
-        namePh: 'Наприклад, Андрій',
         phonePh: '+380 __ ___ __ __'
       },
       meta: {
@@ -998,12 +997,11 @@
         filesHint: 'Several files are fine — exterior, interior, documents',
         chosen: 'files selected',
         submit: 'Get a valuation',
-        ok: 'Thank you! This is a demo form, so nothing was actually sent.'
+        ok: 'Thank you! We will call you back with a valuation.'
       },
       testDrive: {
         title: 'Book a test drive',
         hint: 'Leave your name and number — a manager will call and pick a convenient time.',
-        namePh: 'For example, Andrii',
         phonePh: '+380 __ ___ __ __'
       },
       meta: {
@@ -1086,12 +1084,11 @@
         filesHint: 'Może być kilka plików — auto z zewnątrz, wnętrze, dokumenty',
         chosen: 'wybrano plików',
         submit: 'Poproś o wycenę',
-        ok: 'Dziękujemy! To formularz demo, więc nic nie zostało wysłane.'
+        ok: 'Dziękujemy! Oddzwonimy z wyceną.'
       },
       testDrive: {
         title: 'Umów jazdę próbną',
         hint: 'Zostaw imię i numer — menedżer oddzwoni i dobierze dogodny termin.',
-        namePh: 'Na przykład Andrij',
         phonePh: '+380 __ ___ __ __'
       },
       meta: {
@@ -1158,34 +1155,32 @@
     });
   })();
 
+  // Англійська — мова сайту за замовчуванням; інші доступні через перемикач.
   const LANGS = [
-    { code: 'ua', label: 'UA', full: 'Українська', htmlLang: 'uk' },
     { code: 'en', label: 'EN', full: 'English', htmlLang: 'en' },
-    { code: 'pl', label: 'PL', full: 'Polski', htmlLang: 'pl' }
+    { code: 'ua', label: 'UA', full: 'Ukrainian', htmlLang: 'uk' },
+    { code: 'pl', label: 'PL', full: 'Polish', htmlLang: 'pl' }
   ];
 
-  const STORE_KEY = 'velora.lang';
-  let current = 'ua';
+  const DEFAULT_LANG = 'en';
+  const STORE_KEY = 'velora.lang.v2';
+  let current = DEFAULT_LANG;
 
   function detect() {
     const saved = localStorage.getItem(STORE_KEY);
     if (saved && DICT[saved]) return saved;
-    const nav = (navigator.language || 'uk').toLowerCase();
-    if (nav.startsWith('pl')) return 'pl';
-    if (nav.startsWith('uk') || nav.startsWith('ru')) return 'ua';
-    if (nav.startsWith('en')) return 'en';
-    return 'ua';
+    return DEFAULT_LANG;
   }
 
   function get(lang, path) {
     return path.split('.').reduce((acc, part) => (acc == null ? acc : acc[part]), DICT[lang]);
   }
 
-  /** Переклад за ключем, з відкатом на українську. */
+  /** Переклад за ключем, з відкатом на англійську. */
   function t(path) {
     const value = get(current, path);
     if (value != null) return value;
-    const fallback = get('ua', path);
+    const fallback = get(DEFAULT_LANG, path);
     return fallback != null ? fallback : path;
   }
 
@@ -1193,7 +1188,7 @@
   function tIn(lang, path) {
     const value = get(lang, path);
     if (value != null) return value;
-    const fallback = get('ua', path);
+    const fallback = get(DEFAULT_LANG, path);
     return fallback != null ? fallback : path;
   }
 

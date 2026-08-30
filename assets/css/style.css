@@ -31,6 +31,8 @@
   --forest: #2f4034;
   --forest-2: #3d5344;
   --danger: #a6462f;
+  --danger-strong: #d92d20;
+  --danger-soft: #fdf1ef;
   --ok: #3f6b4a;
 
   --shadow-xs: 0 1px 2px rgba(60, 46, 24, .06);
@@ -214,6 +216,9 @@ h1, h2, h3, h4 {
   transition: gap .25s var(--ease), border-color .25s var(--ease);
 }
 
+/* Layout.icon() віддає <svg> без розмірів — без цього стрілка розтягує кнопку */
+.link-arrow svg { width: 16px; height: 16px; flex: none; }
+.link-arrow span { min-width: 0; }
 .link-arrow:hover { gap: 14px; border-color: currentColor; }
 
 .tag {
@@ -762,16 +767,6 @@ a.brands__item:hover { border-color: currentColor; }
 .vbtn:hover { background: #fff; transform: scale(1.08); }
 .vbtn svg { width: 17px; height: 17px; }
 .vbtn.is-off { background: rgba(30, 26, 20, .55); color: #fff; }
-
-.showcase__num {
-  font-family: var(--display);
-  font-weight: 600;
-  letter-spacing: -.04em;
-  font-size: 3rem;
-  line-height: 1;
-  color: var(--line-2);
-  margin-bottom: 10px;
-}
 
 .showcase__title { font-size: clamp(1.7rem, 2.6vw, 2.4rem); margin-bottom: 6px; }
 
@@ -1388,6 +1383,23 @@ a.brands__item:hover { border-color: currentColor; }
 
 .booking .btn { margin-top: 8px; }
 
+/* незаповнені обовʼязкові поля у вікні запису */
+.booking input.is-err,
+.booking textarea.is-err {
+  border-color: #ff8779;
+  background: rgba(255, 135, 121, .16);
+}
+
+.booking .form-msg.is-err { color: #ff9d92; font-weight: 600; }
+
+.booking.is-err .btn[type="submit"] {
+  background: var(--danger-strong);
+  border-color: var(--danger-strong);
+  color: #fff;
+}
+
+.booking.is-err .btn[type="submit"]:hover { background: #b52415; border-color: #b52415; }
+
 .form-row.is-highlighted textarea {
   border-color: rgba(255, 255, 255, .55);
   background: rgba(255, 255, 255, .18);
@@ -1904,7 +1916,6 @@ a.brands__item:hover { border-color: currentColor; }
   .card__specs { grid-template-columns: 1fr 1fr; }
   .ctaband__inner { flex-direction: column; align-items: flex-start; }
   .toolbar { align-items: flex-start; }
-  .showcase__num { font-size: 2.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2287,6 +2298,26 @@ a.brands__item:hover { border-color: currentColor; }
 .carpage__form input:focus { outline: none; border-color: var(--accent); background: #fff; }
 .carpage__form .btn svg { width: 15px; height: 15px; }
 
+/* незаповнені поля: кнопка, рамки та підпис стають червоними */
+.carpage__form input.is-err {
+  border-color: var(--danger-strong);
+  background: var(--danger-soft);
+}
+
+.carpage__form input.is-err:focus { border-color: var(--danger-strong); background: #fff; }
+
+.carpage__form .form-msg.is-err {
+  color: var(--danger-strong);
+  font-weight: 600;
+}
+
+.carpage__form.is-err .btn--accent {
+  background: var(--danger-strong);
+  box-shadow: 0 6px 18px rgba(217, 45, 32, .28);
+}
+
+.carpage__form.is-err .btn--accent:hover { background: #b52415; }
+
 .carpage__fav {
   display: inline-flex;
   align-items: center;
@@ -2458,7 +2489,9 @@ a.brands__item:hover { border-color: currentColor; }
 
 /* адаптив нових блоків */
 @media (max-width: 1080px) {
-  .carpage { grid-template-columns: 1fr; }
+  /* саме minmax(0, 1fr): при простому 1fr колонка розтягується під вміст
+     і галерея вилазить за екран на вузьких телефонах */
+  .carpage { grid-template-columns: minmax(0, 1fr); }
   .carpage__side { position: static; }
   .contacts__grid { grid-template-columns: 1fr; }
   .about__hero { grid-template-columns: 1fr; }
@@ -2706,16 +2739,45 @@ a.brands__item:hover { border-color: currentColor; }
 .filedrop__list small { color: rgba(255, 255, 255, .6); }
 
 /* вікно з описом авто з ролика */
-.modal__box--clip { width: min(860px, 100%); }
+.modal__box--clip { width: min(1060px, 100%); }
 
-.clipinfo { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+/* фото зліва, опис збоку; кадр видно повністю, без обрізання */
+.clipinfo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  align-items: stretch;
+}
 
-.clipinfo__media { position: relative; min-height: 100%; background: #14120e; }
+.clipinfo__media {
+  position: relative;
+  overflow: hidden;
+  background: #14120e;
+}
+
+/* тримає пропорцію 3:2, якщо колонка з текстом коротша за фото */
+.clipinfo__media::before {
+  content: '';
+  display: block;
+  padding-top: 66.7%;
+}
+
+.clipinfo__bg {
+  position: absolute;
+  inset: -6%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(26px) saturate(1.1);
+  opacity: .45;
+  pointer-events: none;
+}
 
 .clipinfo__media img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  min-height: 260px;
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .clipinfo__badge {
@@ -2746,6 +2808,41 @@ a.brands__item:hover { border-color: currentColor; }
 .clipinfo__text { color: var(--ink-2); font-size: .93rem; margin-bottom: 22px; }
 .clipinfo__actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
+/* підтвердження після запису — на всю картку вікна */
+.sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: clamp(38px, 6vw, 64px) clamp(24px, 5vw, 52px);
+  min-height: 340px;
+  background: var(--forest);
+  color: #fff;
+}
+
+.sent__mark {
+  width: 74px; height: 74px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  border: 2px solid rgba(255, 255, 255, .5);
+  animation: sentPop .45s var(--ease) both;
+}
+
+.sent__mark svg { width: 36px; height: 36px; stroke-width: 2.4; }
+
+@keyframes sentPop {
+  from { opacity: 0; transform: scale(.6); }
+  to { opacity: 1; transform: none; }
+}
+
+.sent h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; }
+.sent p { margin: 0; max-width: 34ch; color: rgba(255, 255, 255, .82); font-size: .95rem; }
+.sent .btn { margin-top: 8px; }
+
 /* заголовок форми тест-драйву */
 .carpage__formhead {
   display: flex;
@@ -2760,7 +2857,9 @@ a.brands__item:hover { border-color: currentColor; }
 /* СТО без бічної форми */
 .sto__grid--wide { grid-template-columns: minmax(0, 1fr); }
 
-@media (max-width: 760px) {
-  .clipinfo { grid-template-columns: 1fr; }
-  .clipinfo__media img { min-height: 200px; max-height: 240px; }
+/* вузький екран: фото зверху, у власних пропорціях і без полів */
+@media (max-width: 900px) {
+  .clipinfo { grid-template-columns: minmax(0, 1fr); }
+  .clipinfo__media::before { display: none; }
+  .clipinfo__media img { position: relative; height: auto; }
 }
