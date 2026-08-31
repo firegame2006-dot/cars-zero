@@ -8,23 +8,27 @@
   const $ = (s) => document.querySelector(s);
 
   function bind() {
-    $('#contactForm').addEventListener('submit', (e) => {
+    const form = $('#contactForm');
+    const name = $('#cName');
+    const phone = Forms.phone($('#cPhone'));
+    const fields = [
+      { el: name, type: 'name' },
+      { el: phone, type: 'phone' }
+    ];
+    Forms.watch(fields);
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const msg = $('#contactMsg');
-      if (!$('#cName').value.trim() || !$('#cPhone').value.trim()) {
-        msg.textContent = t('sto.err');
-        msg.className = 'form-msg is-err';
-        return;
-      }
-      DB.lead({
-        kind: 'contact',
-        name: $('#cName').value,
-        phone: $('#cPhone').value,
-        message: $('#cMessage') ? $('#cMessage').value : ''
+      Forms.submit({
+        form: form,
+        fields: fields,
+        send: () => DB.lead({
+          kind: 'contact',
+          name: name.value,
+          phone: Forms.phoneValue(phone),
+          message: $('#cMessage') ? $('#cMessage').value : ''
+        })
       });
-      msg.textContent = t('contacts.sent');
-      msg.className = 'form-msg is-ok';
-      e.target.reset();
     });
   }
 

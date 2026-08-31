@@ -912,6 +912,18 @@
         submit: 'Отримати оцінку',
         ok: 'Дякуємо! Ми передзвонимо та назвемо ціну.'
       },
+      form: {
+        nameErr: 'Введіть імʼя — щонайменше дві літери.',
+        phoneErr: 'Введіть коректний номер телефону.',
+        emailErr: 'Введіть коректну електронну адресу.',
+        requiredErr: 'Заповніть це поле.',
+        serverErr: 'Не вдалося надіслати заявку. Спробуйте ще раз.',
+        sending: 'Надсилаємо…',
+        successTitle: 'Заявку успішно надіслано!',
+        successText: 'Дякуємо! Ми отримали ваш запит. Наш менеджер звʼяжеться з вами протягом 15 хвилин.',
+        successClose: 'Зрозуміло',
+        country: 'Країна'
+      },
       testDrive: {
         title: 'Записатися на тест-драйв',
         hint: 'Залиште імʼя та номер — менеджер передзвонить і підбере зручний час.',
@@ -999,6 +1011,18 @@
         submit: 'Get a valuation',
         ok: 'Thank you! We will call you back with a valuation.'
       },
+      form: {
+        nameErr: 'Enter your name — at least two letters.',
+        phoneErr: 'Enter a valid phone number.',
+        emailErr: 'Enter a valid email address.',
+        requiredErr: 'Please fill in this field.',
+        serverErr: 'Could not send the request. Please try again.',
+        sending: 'Sending…',
+        successTitle: 'Request sent successfully!',
+        successText: 'Thank you! We have received your request. Our manager will contact you within 15 minutes.',
+        successClose: 'Got it',
+        country: 'Country'
+      },
       testDrive: {
         title: 'Book a test drive',
         hint: 'Leave your name and number — a manager will call and pick a convenient time.',
@@ -1085,6 +1109,18 @@
         chosen: 'wybrano plików',
         submit: 'Poproś o wycenę',
         ok: 'Dziękujemy! Oddzwonimy z wyceną.'
+      },
+      form: {
+        nameErr: 'Podaj imię — co najmniej dwie litery.',
+        phoneErr: 'Podaj poprawny numer telefonu.',
+        emailErr: 'Podaj poprawny adres e-mail.',
+        requiredErr: 'Wypełnij to pole.',
+        serverErr: 'Nie udało się wysłać zgłoszenia. Spróbuj ponownie.',
+        sending: 'Wysyłamy…',
+        successTitle: 'Zgłoszenie wysłane!',
+        successText: 'Dziękujemy! Otrzymaliśmy Twoje zgłoszenie. Nasz menedżer skontaktuje się w ciągu 15 minut.',
+        successClose: 'Rozumiem',
+        country: 'Kraj'
       },
       testDrive: {
         title: 'Umów jazdę próbną',

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Панель керування та службові файли розробника не мають потрапляти в пошук.
+Disallow: /admin.html
+Disallow: /server.py
+Disallow: /tools/
+Disallow: /data/
+Disallow: /README.md

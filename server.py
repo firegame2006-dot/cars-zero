@@ -153,7 +153,7 @@ def main():
     print("\n  Velora Motors")
     print("  " + "-" * 38)
     print(f"  Сайт:      {url}")
-    print(f"  Адмінка:   {url}admin.html   (пароль: admin)")
+    print(f"  Адмінка:   {url}admin.html   (вхід через Supabase)")
     print("  Ctrl+C — зупинити\n")
 
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)

@@ -424,7 +424,9 @@
   .hero { padding: 18px 0 30px; }
   .hero__grid { gap: 22px; }
   .hero__media { max-width: 100%; }
-  .hero__frame { border-radius: 22px; aspect-ratio: 4 / 3; }
+  /* пропорція така сама, як у самого фото (1400x1102), тому авто
+     видно цілком — нічого не обрізається і нічого не розтягується */
+  .hero__frame { border-radius: 22px; aspect-ratio: 4 / 3.15; }
   .hero__note { font-size: .68rem; padding: 6px 11px; }
   .hero__note--1 { left: 10px; bottom: 16%; }
   .hero__note--2 { right: 10px; bottom: 6%; }
@@ -557,9 +559,16 @@
 
   .booking--modal {
     border-radius: 24px 24px 0 0;
+    /* саме dvh: 88vh на телефоні рахується від висоти БЕЗ адресного рядка,
+       тому верх картки (із заголовком) виїжджав за екран */
     max-height: 88vh;
-    padding: 34px 18px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 88dvh;
+    padding: 30px 18px calc(20px + env(safe-area-inset-bottom, 0px));
+    overscroll-behavior: contain;
   }
+
+  /* заголовок не має заповзати під кнопку закриття */
+  .booking--modal h2 { padding-right: 52px; }
 
   .modal__box--form .modal__close { top: 10px; right: 20px; width: 38px; height: 38px; }
 
@@ -595,7 +604,15 @@
 
 /* пейзажна орієнтація телефона */
 @media (max-width: 860px) and (orientation: landscape) {
-  .hero__frame { aspect-ratio: 16 / 9; }
+  /* у горизонтальній орієнтації 16/9 зрізало дах і колеса.
+     Лишаємо пропорцію фото, а компактність тримаємо через висоту. */
+  .hero__frame {
+    aspect-ratio: 4 / 3.15;
+    max-height: 66vh;
+    max-height: 66dvh;
+    width: auto;
+    margin-inline: auto;
+  }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .carpage { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
 }

@@ -45,3 +45,30 @@
   for = "/assets/video/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Службові файли потрібні лише для локальної роботи (server.py, скрипти,
+# README, запасні дані). У репозиторії вони мають лишатися, але з інтернету
+# їх віддавати не треба — сайт бачать клієнти.
+[[redirects]]
+  from = "/server.py"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/data/cars.seed.json"
+  to = "/404.html"
+  status = 404
+  force = true

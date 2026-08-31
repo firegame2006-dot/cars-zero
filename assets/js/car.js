@@ -175,7 +175,7 @@
             <div class="card__spec">${icon('i-drive')}<span>${esc(t('drive.' + car.drive))}</span></div>
           </div>
 
-          <form class="carpage__form" id="leadForm">
+          <form class="carpage__form" id="leadForm" novalidate>
             <div class="carpage__formhead">
               <b>${esc(t('testDrive.title'))}</b>
               <span>${esc(t('testDrive.hint'))}</span>
@@ -192,7 +192,6 @@
             <button class="btn btn--ghost btn--block" type="button" data-demo="phone">
               ${icon('i-phone')}<span>${esc(t('catalog.callback'))}</span>
             </button>
-            <div class="form-msg" id="leadMsg" role="status"></div>
           </form>
 
           <button class="carpage__fav${favOn ? ' is-on' : ''}" id="favBtn">
@@ -258,47 +257,29 @@
     goTo(0);
 
     const leadForm = $('#leadForm');
-    const leadFields = [$('#lName'), $('#lPhone')];
+    const nameInput = $('#lName');
+    const phoneInput = Forms.phone($('#lPhone'));
 
-    /** Знімає червону підсвітку, щойно користувач почав виправляти. */
-    function clearLeadError() {
-      leadForm.classList.remove('is-err');
-      leadFields.forEach((el) => el.classList.remove('is-err'));
-      $('#leadMsg').textContent = '';
-      $('#leadMsg').className = 'form-msg';
-    }
-
-    leadFields.forEach((el) => el.addEventListener('input', () => {
-      if (leadForm.classList.contains('is-err')) clearLeadError();
-    }));
+    const leadFields = [
+      { el: nameInput, type: 'name' },
+      { el: phoneInput, type: 'phone' }
+    ];
+    Forms.watch(leadFields);
 
     leadForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const msg = $('#leadMsg');
-      const empty = leadFields.filter((el) => !el.value.trim());
-
-      if (empty.length) {
-        // форма і кнопка стають червоними, поки поля не заповнені
-        leadForm.classList.add('is-err');
-        leadFields.forEach((el) => el.classList.toggle('is-err', empty.includes(el)));
-        msg.textContent = t('sto.err');
-        msg.className = 'form-msg is-err';
-        empty[0].focus();
-        return;
-      }
-
-      clearLeadError();
-      DB.lead({
-        kind: 'test_drive',
-        name: leadFields[0].value,
-        phone: leadFields[1].value,
-        carId: car.id,
-        carTitle: CarsUI.carName(car) + (car.trim ? ' · ' + car.trim : ''),
-        service: t('catalog.testDrive')
+      Forms.submit({
+        form: leadForm,
+        fields: leadFields,
+        send: () => DB.lead({
+          kind: 'test_drive',
+          name: nameInput.value,
+          phone: Forms.phoneValue(phoneInput),
+          carId: car.id,
+          carTitle: CarsUI.carName(car) + (car.trim ? ' · ' + car.trim : ''),
+          service: t('catalog.testDrive')
+        })
       });
-      msg.textContent = t('modal.sent');
-      msg.className = 'form-msg is-ok';
-      leadForm.reset();
     });
 
     $('#favBtn').addEventListener('click', () => {

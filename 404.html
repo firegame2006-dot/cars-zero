@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Page not found — Velora Motors</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%239c6b33'/><text x='16' y='21' font-size='15' font-family='Arial' font-weight='bold' text-anchor='middle' fill='%23fff'>V</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: only light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+      radial-gradient(900px 520px at 50% -10%, #eadfcb 0%, transparent 70%),
+      #fcfaf6;
+    color: #1e1a14;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .mark {
+    width: 56px; height: 56px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: #9c6b33;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  h1 {
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+  p { margin: 0 0 28px; color: #574f43; max-width: 42ch; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 26px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .primary { background: #1e1a14; color: #fdfbf7; }
+  .primary:hover { background: #9c6b33; }
+  .ghost { border-color: #d8caaf; color: #1e1a14; background: rgba(255,255,255,.6); }
+  .ghost:hover { border-color: #9c6b33; color: #9c6b33; }
+</style>
+</head>
+<body>
+  <main>
+    <div class="mark">V</div>
+    <h1>This page does not exist</h1>
+    <p>The link may be outdated or mistyped. Everything we have is in the catalogue.</p>
+    <div class="row">
+      <a class="primary" href="/index.html">Back to home</a>
+      <a class="ghost" href="/catalog.html">Open the catalogue</a>
+    </div>
+  </main>
+</body>
+</html>

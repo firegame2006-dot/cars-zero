@@ -1691,7 +1691,9 @@ a.brands__item:hover { border-color: currentColor; }
   border-radius: var(--r-lg);
   width: min(1000px, 100%);
   max-height: min(90vh, 900px);
+  max-height: min(90dvh, 900px);
   overflow-y: auto;
+  overscroll-behavior: contain;
   box-shadow: var(--shadow-lg);
   transform: translateY(16px) scale(.98);
   transition: transform .35s var(--ease);
@@ -2874,6 +2876,234 @@ a.brands__item:hover { border-color: currentColor; }
 .sent h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; }
 .sent p { margin: 0; max-width: 34ch; color: rgba(255, 255, 255, .82); font-size: .95rem; }
 .sent .btn { margin-top: 8px; }
+
+/* ==========================================================================
+   Форми: міжнародний телефон, помилки біля полів, підтвердження
+   ========================================================================== */
+
+/* ---------- поле телефону з вибором країни ---------- */
+
+.phone { position: relative; display: flex; align-items: stretch; gap: 8px; }
+
+.phone__country {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--pill);
+  background: var(--paper);
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color .2s var(--ease);
+}
+
+.phone__country:hover { border-color: var(--accent); }
+.phone__country:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.phone__flag { font-size: 1.15em; line-height: 1; }
+.phone__dial { font-variant-numeric: tabular-nums; }
+
+.phone__caret {
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  opacity: .55;
+  transition: transform .2s var(--ease);
+}
+
+.phone.is-open .phone__caret { transform: rotate(180deg); }
+.phone__input { flex: 1 1 auto; min-width: 0; }
+
+.phone__menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  width: min(320px, 100%);
+  max-height: 268px;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-md);
+  -webkit-overflow-scrolling: touch;
+}
+
+.phone__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  font-size: .88rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.phone__option:hover { background: var(--paper-2); }
+.phone__option.is-active { background: var(--accent-soft); font-weight: 600; }
+.phone__name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.phone__option .phone__dial { color: var(--ink-3); flex: none; }
+
+/* у темних вікнах запису поле має бути світлим на темному тлі */
+.booking .phone__country {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .28);
+  color: #fff;
+}
+
+.booking .phone__country:hover { border-color: rgba(255, 255, 255, .6); }
+
+/* ---------- помилка біля конкретного поля ---------- */
+
+.field-err {
+  display: block;
+  margin-top: 6px;
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--danger-strong);
+}
+
+.booking .field-err { color: #ffb0a4; }
+
+.carpage__form input.is-err,
+.booking input.is-err,
+.booking textarea.is-err,
+.contactform input.is-err,
+.contactform textarea.is-err,
+.phone__input.is-err {
+  border-color: var(--danger-strong);
+}
+
+.booking input.is-err,
+.booking textarea.is-err { border-color: #ff9d92; }
+
+/* ---------- помітна помилка сервера ---------- */
+
+.form-alert {
+  display: block;
+  margin: 4px 0 12px;
+  padding: 12px 16px;
+  border-radius: var(--r-sm);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-strong);
+  color: var(--danger-strong);
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.booking .form-alert {
+  background: rgba(255, 120, 100, .16);
+  border-color: rgba(255, 157, 146, .7);
+  color: #ffd3cd;
+}
+
+.btn.is-busy { opacity: .75; cursor: progress; }
+
+/* ---------- підтвердження після відправки ---------- */
+
+.okmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(30, 26, 20, .62);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s var(--ease), visibility .28s;
+}
+
+.okmodal.is-open { opacity: 1; visibility: visible; }
+
+.okmodal__card {
+  width: min(420px, 100%);
+  padding: clamp(30px, 6vw, 44px) clamp(22px, 5vw, 36px) clamp(24px, 5vw, 34px);
+  border-radius: var(--r-lg);
+  background: var(--forest);
+  color: #fff;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(18px) scale(.94);
+  transition: transform .34s var(--ease);
+}
+
+.okmodal.is-open .okmodal__card { transform: none; }
+
+.okmodal__mark {
+  display: block;
+  width: 84px; height: 84px;
+  margin: 0 auto 18px;
+}
+
+.okmodal__mark svg { width: 100%; height: 100%; overflow: visible; }
+
+.okmodal__mark circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, .45);
+  stroke-width: 3;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+}
+
+.okmodal__mark path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+
+.okmodal.is-open .okmodal__mark circle { animation: okRing .5s var(--ease) .1s forwards; }
+.okmodal.is-open .okmodal__mark path { animation: okTick .4s var(--ease) .45s forwards; }
+
+@keyframes okRing { to { stroke-dashoffset: 0; } }
+@keyframes okTick { to { stroke-dashoffset: 0; } }
+
+.okmodal__title {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 5vw, 1.85rem);
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.okmodal__text {
+  margin: 0 0 22px;
+  font-size: .96rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .84);
+}
+
+.okmodal__btn { min-width: 150px; }
+
+@media (max-width: 480px) {
+  .phone { flex-wrap: nowrap; }
+  .phone__country { padding: 0 10px; font-size: .85rem; }
+  .phone__menu { width: 100%; max-height: 52vh; }
+  .okmodal__card { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .okmodal__mark circle,
+  .okmodal__mark path { animation: none !important; stroke-dashoffset: 0 !important; }
+}
 
 /* заголовок форми тест-драйву */
 .carpage__formhead {

@@ -219,7 +219,7 @@
           <span><b data-i18n="footer.hoursTitle"></b>
             <span data-i18n="footer.hours1"></span><br><span data-i18n="footer.hours2"></span></span>
         </div>
-        <form class="subscribe" id="subscribeForm">
+        <form class="subscribe" id="subscribeForm" novalidate>
           <input type="email" id="subEmail" required data-i18n-placeholder="footer.emailPh">
           <button class="btn btn--primary btn--sm" type="submit" data-i18n="footer.subscribe"></button>
         </form>
@@ -249,7 +249,7 @@
 <div class="modal" id="evaluateModal" role="dialog" aria-modal="true" aria-labelledby="evaluateTitle">
   <div class="modal__box modal__box--form">
     <button class="modal__close" data-evaluate-close data-i18n-aria="page.close">${icon('i-x')}</button>
-    <form class="booking booking--modal" id="evaluateForm">
+    <form class="booking booking--modal" id="evaluateForm" novalidate>
       <h2 id="evaluateTitle" data-i18n="evaluate.title"></h2>
       <p data-i18n="evaluate.lead"></p>
       <div class="form-row">
@@ -277,7 +277,6 @@
         <div class="filedrop__list" id="evFilesList"></div>
       </div>
       <button class="btn btn--light btn--block" type="submit" data-i18n="evaluate.submit"></button>
-      <div class="form-msg" id="evaluateMsg" role="status"></div>
     </form>
   </div>
 </div>`;
@@ -288,7 +287,6 @@
     if (!modal) return;
     document.body.classList.remove('menu-open');
     closeOthers(modal);
-    document.getElementById('evaluateMsg').textContent = '';
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
     setTimeout(() => document.getElementById('evName').focus(), 250);
@@ -329,26 +327,29 @@
         : '';
     });
 
-    document.getElementById('evaluateForm').addEventListener('submit', (e) => {
+    const evForm = document.getElementById('evaluateForm');
+    const evName = document.getElementById('evName');
+    const evPhone = Forms.phone(document.getElementById('evPhone'));
+    const evFields = [
+      { el: evName, type: 'name' },
+      { el: evPhone, type: 'phone' }
+    ];
+    Forms.watch(evFields);
+
+    evForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const msg = document.getElementById('evaluateMsg');
-      if (!document.getElementById('evName').value.trim() ||
-          !document.getElementById('evPhone').value.trim()) {
-        msg.textContent = t('sto.err');
-        msg.className = 'form-msg is-err';
-        return;
-      }
-      DB.lead({
-        kind: 'evaluate',
-        name: document.getElementById('evName').value,
-        phone: document.getElementById('evPhone').value,
-        carTitle: document.getElementById('evCar').value,
-        message: document.getElementById('evComment').value
+      Forms.submit({
+        form: evForm,
+        fields: evFields,
+        send: () => DB.lead({
+          kind: 'evaluate',
+          name: evName.value,
+          phone: Forms.phoneValue(evPhone),
+          carTitle: document.getElementById('evCar').value,
+          message: document.getElementById('evComment').value
+        }),
+        after: () => { document.getElementById('evFilesList').innerHTML = ''; }
       });
-      msg.textContent = t('evaluate.ok');
-      msg.className = 'form-msg is-ok';
-      e.target.reset();
-      document.getElementById('evFilesList').innerHTML = '';
     });
   }
 
@@ -366,7 +367,7 @@
 <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
   <div class="modal__box modal__box--form">
     <button class="modal__close" data-booking-close data-i18n-aria="page.close">${icon('i-x')}</button>
-    <form class="booking booking--modal" id="bookingModalForm">
+    <form class="booking booking--modal" id="bookingModalForm" novalidate>
       <h2 id="bookingModalTitle" data-i18n="sto.formTitle"></h2>
       <p data-i18n="sto.formLead"></p>
       <div class="form-row">
@@ -390,15 +391,7 @@
         <textarea id="mComment" rows="2"></textarea>
       </div>
       <button class="btn btn--light btn--block" type="submit" data-i18n="sto.submit"></button>
-      <div class="form-msg" id="bookingModalMsg" role="status"></div>
     </form>
-
-    <div class="sent" id="bookingSent" hidden>
-      <span class="sent__mark">${icon('i-check')}</span>
-      <h2 data-i18n="sto.okTitle"></h2>
-      <p data-i18n="sto.ok"></p>
-      <button class="btn btn--light" type="button" data-booking-close data-i18n="sto.okDone"></button>
-    </div>
   </div>
 </div>`;
   }
@@ -430,9 +423,6 @@
     document.body.classList.remove('menu-open');   // мобільне меню не має лишатися відкритим
     closeOthers(modal);                            // одночасно відкрите лише одне вікно
     fillBookingServices(service);
-    showBookingForm();
-    document.getElementById('bookingModalMsg').textContent = '';
-    document.getElementById('bookingModalMsg').className = 'form-msg';
     document.getElementById('bookingModalForm').classList.remove('is-err');
     ['mName', 'mPhone'].forEach((id) => document.getElementById(id).classList.remove('is-err'));
     modal.classList.add('is-open');
@@ -445,15 +435,6 @@
     if (!modal) return;
     modal.classList.remove('is-open');
     document.body.style.overflow = '';
-  }
-
-  /** Повертає вікно запису у стан форми (після попередньої заявки). */
-  function showBookingForm() {
-    const form = document.getElementById('bookingModalForm');
-    const sent = document.getElementById('bookingSent');
-    if (!form || !sent) return;
-    form.hidden = false;
-    sent.hidden = true;
   }
 
   function bindBooking() {
@@ -485,52 +466,32 @@
     });
 
     const bookingForm = document.getElementById('bookingModalForm');
-    const bookingRequired = ['mName', 'mPhone'].map((id) => document.getElementById(id));
-
-    /** Знімає червону підсвітку, щойно поле починають заповнювати. */
-    function clearBookingError() {
-      bookingForm.classList.remove('is-err');
-      bookingRequired.forEach((el) => el.classList.remove('is-err'));
-      const msg = document.getElementById('bookingModalMsg');
-      msg.textContent = '';
-      msg.className = 'form-msg';
-    }
-
-    bookingRequired.forEach((el) => el.addEventListener('input', () => {
-      if (bookingForm.classList.contains('is-err')) clearBookingError();
-    }));
+    const mName = document.getElementById('mName');
+    const mPhone = Forms.phone(document.getElementById('mPhone'));
+    const bookingFields = [
+      { el: mName, type: 'name' },
+      { el: mPhone, type: 'phone' }
+    ];
+    Forms.watch(bookingFields);
 
     bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const msg = document.getElementById('bookingModalMsg');
-      const empty = bookingRequired.filter((el) => !el.value.trim());
-
-      if (empty.length) {
-        // кнопка й поля стають червоними, поки не заповнені імʼя та телефон
-        bookingForm.classList.add('is-err');
-        bookingRequired.forEach((el) => el.classList.toggle('is-err', empty.includes(el)));
-        msg.textContent = t('sto.err');
-        msg.className = 'form-msg is-err';
-        empty[0].focus();
-        return;
-      }
-
-      clearBookingError();
-      DB.lead({
-        kind: 'booking',
-        name: document.getElementById('mName').value,
-        phone: document.getElementById('mPhone').value,
-        carTitle: document.getElementById('mCar').value,
-        service: document.getElementById('mService').value,
-        message: document.getElementById('mComment').value
+      Forms.submit({
+        form: bookingForm,
+        fields: bookingFields,
+        send: () => DB.lead({
+          kind: 'booking',
+          name: mName.value,
+          phone: Forms.phoneValue(mPhone),
+          carTitle: document.getElementById('mCar').value,
+          service: document.getElementById('mService').value,
+          message: document.getElementById('mComment').value
+        }),
+        after: () => {
+          fillBookingServices();
+          closeBooking();
+        }
       });
-      e.target.reset();
-      fillBookingServices();
-
-      // підтвердження на всю картку — його неможливо не помітити
-      document.getElementById('bookingModalForm').hidden = true;
-      document.getElementById('bookingSent').hidden = false;
-      toast(t('sto.okTitle'));
     });
   }
 
@@ -649,9 +610,14 @@
 
     const sub = document.getElementById('subscribeForm');
     if (sub) {
+      const subEmail = document.getElementById('subEmail');
+      const subFields = [{ el: subEmail, type: 'email' }];
+      Forms.watch(subFields);
+
       sub.addEventListener('submit', (e) => {
         e.preventDefault();
-        DB.lead({ kind: 'subscribe', email: document.getElementById('subEmail').value });
+        if (!Forms.check(subFields)) return;
+        DB.lead({ kind: 'subscribe', email: subEmail.value });
         toast(t('footer.subscribed'));
         sub.reset();
       });
