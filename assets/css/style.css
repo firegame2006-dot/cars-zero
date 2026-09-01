@@ -498,6 +498,13 @@ body.menu-open .burger span::after { top: 0; transform: rotate(-45deg); }
   transform: translateY(-1px);
 }
 
+/* блок підбору в каталозі: та сама картка, лише з відступом під панель фільтрів */
+.searchbar--catalog { margin-bottom: clamp(14px, 2vw, 20px); }
+
+/* на головній лишились самі посилання — без картки їм потрібен нижній відступ */
+.searchbar--links .searchbar__tabs { margin-bottom: 0; }
+.searchbar--links { margin-bottom: clamp(20px, 3vw, 34px); }
+
 .searchbar__panel {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr)) auto;

@@ -21,6 +21,15 @@
     { v: '100000', l: '100 000 km' }, { v: '150000', l: '150 000 km' }
   ];
 
+  // Ті самі діапазони, що були у блоці підбору на головній.
+  const BUDGETS = [
+    { v: '', min: '', max: '' },
+    { v: '0-25000', min: '0', max: '25000', l: '$0 – $25 000' },
+    { v: '25000-50000', min: '25000', max: '50000', l: '$25 000 – $50 000' },
+    { v: '50000-100000', min: '50000', max: '100000', l: '$50 000 – $100 000' },
+    { v: '100000-', min: '100000', max: '', l: '$100 000+' }
+  ];
+
   const KEYS = ['q', 'brand', 'body', 'fuel', 'gearbox', 'drive', 'condition',
     'city', 'year', 'priceMin', 'priceMax', 'mileage', 'fav', 'sort'];
 
@@ -89,6 +98,30 @@
     $('#fPriceMin').value = state.priceMin;
     $('#fPriceMax').value = state.priceMax;
     $('#searchWrap').classList.toggle('has-value', !!state.q);
+
+    fillQuickSearch();
+  }
+
+  /* ---------- швидкий підбір: місто, кузов, бюджет ---------- */
+
+  /** Поточний діапазон бюджету за межами ціни у стані фільтрів. */
+  function currentBudget() {
+    const found = BUDGETS.find((b) => b.v && b.min === String(state.priceMin) && b.max === String(state.priceMax));
+    return found ? found.v : '';
+  }
+
+  function fillQuickSearch() {
+    const budget = currentBudget();
+
+    $('#qsCity').innerHTML = option('', t('hero.cityAny'), !state.city)
+      + CITIES.map((c) => option(c, t('city.' + c), state.city === c)).join('');
+    $('#qsBody').innerHTML = option('', t('hero.typeAny'), !state.body)
+      + BODIES.map((b) => option(b, t('body.' + b), state.body === b)).join('');
+    $('#qsBudget').innerHTML = BUDGETS
+      .map((b) => option(b.v, b.v ? b.l : t('hero.budgetAny'), budget === b.v)).join('');
+
+    // на телефоні кнопка показує підпис — беремо його з перекладу
+    $('#quickSearch .searchbar__submit').setAttribute('data-label', t('hero.search'));
   }
 
   /* ---------- фільтрація ---------- */
@@ -165,6 +198,7 @@
 
     renderChips();
     renderQuick();
+    fillQuickSearch();
     syncFilterButton();
   }
 
@@ -371,6 +405,30 @@
     bindSel('#fYear', 'year');
     bindSel('#fMileage', 'mileage');
     bindSel('#sort', 'sort');
+
+    // Швидкий підбір міняє той самий стан, що й панель фільтрів,
+    // тому обидва набори полів завжди показують одне й те саме.
+    const bindQuick = (sel, apply) => $(sel).addEventListener('change', () => {
+      apply($(sel).value);
+      state.visible = PAGE;
+      fillSelects();      // щоб панель фільтрів показувала те саме
+      render();
+    });
+
+    bindQuick('#qsCity', (v) => { state.city = v; });
+    bindQuick('#qsBody', (v) => { state.body = v; });
+    bindQuick('#qsBudget', (v) => {
+      const pick = BUDGETS.find((b) => b.v === v) || BUDGETS[0];
+      state.priceMin = pick.min;
+      state.priceMax = pick.max;
+    });
+
+    // Кнопка з лупою нічого не перезавантажує — просто веде до результатів.
+    $('#quickSearch').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const grid = $('#grid') || $('#catalogTop');
+      if (grid) grid.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
 
     const onPrice = debounce(() => {
       state.priceMin = $('#fPriceMin').value;

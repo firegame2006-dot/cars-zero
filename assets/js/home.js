@@ -10,29 +10,11 @@
   const esc = Layout.esc;
   const icon = Layout.icon;
 
-  const BODIES = ['sedan', 'suv', 'crossover', 'coupe', 'hatchback', 'wagon', 'convertible'];
-  const CITIES = ['kyiv', 'lviv', 'odesa', 'dnipro', 'kharkiv', 'ivano-frankivsk'];
-  const BUDGETS = [
-    { v: '', l: 'hero.budgetAny' },
-    { v: '0-25000', l: '$0 – $25 000' },
-    { v: '25000-50000', l: '$25 000 – $50 000' },
-    { v: '50000-100000', l: '$50 000 – $100 000' },
-    { v: '100000-', l: '$100 000+' }
-  ];
-
   let cars = [];
 
-  const option = (v, l, sel) => `<option value="${esc(v)}"${sel ? ' selected' : ''}>${esc(l)}</option>`;
-
+  /* Підбір авто переїхав у каталог — тут лишилась тільки лічба авто. */
   function fillHero() {
-    $('#heroCity').innerHTML = option('', t('hero.cityAny')) +
-      CITIES.map((c) => option(c, t('city.' + c))).join('');
-    $('#heroBody').innerHTML = option('', t('hero.typeAny')) +
-      BODIES.map((b) => option(b, t('body.' + b))).join('');
-    $('#heroBudget').innerHTML = BUDGETS.map((b) => option(b.v, b.v ? b.l : t(b.l))).join('');
     $('#statCars').innerHTML = cars.length + '<span>+</span>';
-    // на телефоні кнопка пошуку показує підпис — беремо його з перекладу
-    $('.searchbar__submit').setAttribute('data-label', t('hero.search'));
   }
 
   /* ---------- ролики ---------- */
@@ -125,19 +107,6 @@
 
   /* ---------- пошук у герої ---------- */
 
-  function bindHero() {
-    $('#heroSearch').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const p = new URLSearchParams();
-      if ($('#heroCity').value) p.set('city', $('#heroCity').value);
-      if ($('#heroBody').value) p.set('body', $('#heroBody').value);
-      if ($('#heroBudget').value) p.set('budget', $('#heroBudget').value);
-      const qs = p.toString();
-      location.href = 'catalog.html' + (qs ? '?' + qs : '');
-    });
-
-  }
-
   async function start() {
     I18N.init();
     Layout.mount('home');
@@ -148,7 +117,6 @@
     renderClips();
     renderPicks();
     renderServices();
-    bindHero();
     countUp();
     Layout.reveal();
     I18N.applyDom();
