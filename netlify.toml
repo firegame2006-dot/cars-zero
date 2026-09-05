@@ -9,6 +9,10 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Сайт не має вбудовуватись у чужі фрейми — захист від клікджекінгу.
+    X-Frame-Options = "SAMEORIGIN"
+    # Нічого з цього сайт не використовує, тож вимикаємо одразу.
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
 
 # Сторінки ніколи не кешуємо: правки мають бути видні одразу після деплою.
 [[headers]]
