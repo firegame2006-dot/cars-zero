@@ -49,6 +49,7 @@
   --wrap: 1260px;
   --gutter: clamp(18px, 4vw, 44px);
   --header-h: 76px;
+  --zoom: 1; /* дзеркалить zoom великих моніторів, щоб vh/vw не роздувались */
 
   --display: 'Inter Tight', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -1697,8 +1698,8 @@ a.brands__item:hover { border-color: currentColor; }
   background: var(--paper);
   border-radius: var(--r-lg);
   width: min(1000px, 100%);
-  max-height: min(90vh, 900px);
-  max-height: min(90dvh, 900px);
+  max-height: min(90vh / var(--zoom), 900px);
+  max-height: min(90dvh / var(--zoom), 900px);
   overflow-y: auto;
   overscroll-behavior: contain;
   box-shadow: var(--shadow-lg);
@@ -1726,7 +1727,7 @@ a.brands__item:hover { border-color: currentColor; }
 .modal__close svg { width: 17px; height: 17px; }
 
 .modal--video .modal__box { background: #14120e; width: min(880px, 100%); }
-.modal--video video { width: 100%; max-height: 82vh; background: #000; }
+.modal--video video { width: 100%; max-height: calc(82vh / var(--zoom)); background: #000; }
 
 .detail__media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
 .detail__media img { width: 100%; height: 100%; object-fit: cover; }
@@ -1834,7 +1835,7 @@ a.brands__item:hover { border-color: currentColor; }
   font-size: .88rem;
   box-shadow: var(--shadow-lg);
   transition: transform .35s var(--ease), opacity .3s var(--ease), visibility .35s;
-  max-width: calc(100vw - 40px);
+  max-width: calc(100vw / var(--zoom) - 40px);
   text-align: center;
   pointer-events: none;
 }
@@ -2566,7 +2567,7 @@ a.brands__item:hover { border-color: currentColor; }
 .booking--modal {
   margin: 0;
   box-shadow: var(--shadow-lg);
-  max-height: min(88vh, 760px);
+  max-height: min(88vh / var(--zoom), 760px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, .3) transparent;
@@ -3132,3 +3133,15 @@ a.brands__item:hover { border-color: currentColor; }
   .clipinfo__media::before { display: none; }
   .clipinfo__media img { position: relative; height: auto; }
 }
+
+/* --------------------------------------------------------------------------
+   Великі монітори (1680px+, 2K, 4K): макет розрахований на ~1440px і всі
+   розміри в px, тож без цього сайт стискається в дрібну колонку по центру.
+   zoom пропорційно збільшує весь сайт; медіазапити від нього не залежать.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1680px) { :root { zoom: 1.1; --zoom: 1.1; } }
+@media (min-width: 1900px) { :root { zoom: 1.25; --zoom: 1.25; } }
+@media (min-width: 2200px) { :root { zoom: 1.4; --zoom: 1.4; } }
+@media (min-width: 2500px) { :root { zoom: 1.6; --zoom: 1.6; } }
+@media (min-width: 3000px) { :root { zoom: 1.9; --zoom: 1.9; } }
+@media (min-width: 3600px) { :root { zoom: 2.3; --zoom: 2.3; } }
